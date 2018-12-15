@@ -31,16 +31,24 @@ def main():
         for mass in masspoints:
 
             miniaod = CondorTask(
+
                     ## Dummy sample as no input is needed in generating the events
                     #sample = DummySample(
                     #    N=3000,
                     #    dataset="/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/PRIVATE-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM"
                     #    ),
                     # Dummy sample as no input is needed in generating the events
+
+                    #sample = DummySample(
+                    #    N=10,
+                    #    dataset="/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/PRIVATE-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext2-v1/MINIAODSIM"
+                    #    ),
+
                     sample = DummySample(
-                        N=15000,
-                        dataset="/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/PRIVATE-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext2-v1/MINIAODSIM"
+                        N=10,
+                        dataset="/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/PRIVATE-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_TESTRUN1-v1/MINIAODSIM"
                         ),
+
                     tag                  = job_tag,
                     executable           = exec_path,
                     special_dir          = hadoop_path + "/private_miniaod",

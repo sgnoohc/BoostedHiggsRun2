@@ -1,3 +1,12 @@
 [submodule "hwwbabymaker"]
 	path = hwwbabymaker
 	url = git@github.com:sgnoohc/BabyMaker.git
+[submodule "mcgeneration/vhwww2016/ProjectMetis"]
+	path = mcgeneration/vhwww2016/ProjectMetis
+	url = git@github.com:aminnj/ProjectMetis.git
+[submodule "analysis/rooutil"]
+	path = analysis/rooutil
+	url = git@github.com:sgnoohc/rooutil.git
+[submodule "cms4maker/CMS4_V08-00-06/ProjectMetis"]
+	path = cms4maker/CMS4_V08-00-06/ProjectMetis
+	url = git@github.com:aminnj/ProjectMetis.git
