@@ -50,3 +50,14 @@ cd ..
 rm $CMSSW_BASE/lib/$SCRAM_ARCH/.poisonededmplugincache
 
 cd $CMSSW_BASE/src/CMS3/NtupleMaker/test/
+
+echo """
+cd $CMSSW_BASE/src
+scram b -j 25
+cd ..
+
+# see comment in patchesToSource.sh
+rm $CMSSW_BASE/lib/$SCRAM_ARCH/.poisonededmplugincache
+
+cd $CMSSW_BASE/src/CMS3/NtupleMaker/test/
+""" > compile.sh

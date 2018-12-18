@@ -158,6 +158,9 @@ if do_deepbtag:
 process.hypDilepMaker.TightLepton_PtCut  = cms.double(10.0)
 process.hypDilepMaker.LooseLepton_PtCut  = cms.double(10.0)
 
+# run all pfcands
+process.pfCandidateMaker.minPt = cms.double(0.0)
+
 # Options for Input
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
