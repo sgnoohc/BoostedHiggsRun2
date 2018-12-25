@@ -44,9 +44,14 @@ def main():
                     #    dataset="/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/PRIVATE-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext2-v1/MINIAODSIM"
                     #    ),
 
+                    #sample = DummySample(
+                    #    N=10,
+                    #    dataset="/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/PRIVATE-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_TESTRUN1-v1/MINIAODSIM"
+                    #    ),
+
                     sample = DummySample(
-                        N=10,
-                        dataset="/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/PRIVATE-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_TESTRUN1-v1/MINIAODSIM"
+                        N=10000,
+                        dataset="/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/PRIVATE-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext2-v1/MINIAODSIM"
                         ),
 
                     tag                  = job_tag,
@@ -58,6 +63,8 @@ def main():
                     open_dataset         = True,
                     flush                = True,
                     #no_load_from_backup  = True,
+
+
                     )
 
             tasks.extend([miniaod])

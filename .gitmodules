@@ -10,3 +10,6 @@
 [submodule "cms4maker/CMS4_V08-00-06/ProjectMetis"]
 	path = cms4maker/CMS4_V08-00-06/ProjectMetis
 	url = git@github.com:aminnj/ProjectMetis.git
+[submodule "mcgeneration/gghzz2016/ProjectMetis"]
+	path = mcgeneration/gghzz2016/ProjectMetis
+	url = git@github.com:aminnj/ProjectMetis.git
