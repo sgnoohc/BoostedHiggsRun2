@@ -16,3 +16,6 @@
 	path = mcgeneration/gghzz2016/ProjectMetis
 	url = git@github.com:aminnj/ProjectMetis.git
 	ignore = dirty
+[submodule "cms4maker/CMS4_V08-00-06/NtupleTools"]
+	path = cms4maker/CMS4_V08-00-06/NtupleTools
+	url = git@github.com:cmstas/NtupleTools.git

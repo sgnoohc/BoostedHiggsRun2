@@ -54,14 +54,38 @@ void hwwtree::Init(TTree *tree) {
   if (H_p4_branch) H_p4_branch->SetAddress(&H_p4_);
   Hp_p4_branch = tree->GetBranch("Hp_p4");
   if (Hp_p4_branch) Hp_p4_branch->SetAddress(&Hp_p4_);
-  v_p4_branch = tree->GetBranch("v_p4");
-  if (v_p4_branch) v_p4_branch->SetAddress(&v_p4_);
+  neu_p4_branch = tree->GetBranch("neu_p4");
+  if (neu_p4_branch) neu_p4_branch->SetAddress(&neu_p4_);
+  neu_p4_sol1_branch = tree->GetBranch("neu_p4_sol1");
+  if (neu_p4_sol1_branch) neu_p4_sol1_branch->SetAddress(&neu_p4_sol1_);
+  neu_p4_sol2_branch = tree->GetBranch("neu_p4_sol2");
+  if (neu_p4_sol2_branch) neu_p4_sol2_branch->SetAddress(&neu_p4_sol2_);
+  neu_p4_invsol1_branch = tree->GetBranch("neu_p4_invsol1");
+  if (neu_p4_invsol1_branch) neu_p4_invsol1_branch->SetAddress(&neu_p4_invsol1_);
+  neu_p4_invsol2_branch = tree->GetBranch("neu_p4_invsol2");
+  if (neu_p4_invsol2_branch) neu_p4_invsol2_branch->SetAddress(&neu_p4_invsol2_);
+  V_p4_branch = tree->GetBranch("V_p4");
+  if (V_p4_branch) V_p4_branch->SetAddress(&V_p4_);
   J_near_ak4jets_p4_branch = tree->GetBranch("J_near_ak4jets_p4");
   if (J_near_ak4jets_p4_branch) J_near_ak4jets_p4_branch->SetAddress(&J_near_ak4jets_p4_);
   L_subjet1_p4_branch = tree->GetBranch("L_subjet1_p4");
   if (L_subjet1_p4_branch) L_subjet1_p4_branch->SetAddress(&L_subjet1_p4_);
   L_subjet2_p4_branch = tree->GetBranch("L_subjet2_p4");
   if (L_subjet2_p4_branch) L_subjet2_p4_branch->SetAddress(&L_subjet2_p4_);
+  Htag_J_p4_branch = tree->GetBranch("Htag_J_p4");
+  if (Htag_J_p4_branch) Htag_J_p4_branch->SetAddress(&Htag_J_p4_);
+  Htag_L_p4_branch = tree->GetBranch("Htag_L_p4");
+  if (Htag_L_p4_branch) Htag_L_p4_branch->SetAddress(&Htag_L_p4_);
+  Htag_pf_p4_branch = tree->GetBranch("Htag_pf_p4");
+  if (Htag_pf_p4_branch) Htag_pf_p4_branch->SetAddress(&Htag_pf_p4_);
+  Htag_pf_nolep_p4_branch = tree->GetBranch("Htag_pf_nolep_p4");
+  if (Htag_pf_nolep_p4_branch) Htag_pf_nolep_p4_branch->SetAddress(&Htag_pf_nolep_p4_);
+  Htag_ak4_p4_branch = tree->GetBranch("Htag_ak4_p4");
+  if (Htag_ak4_p4_branch) Htag_ak4_p4_branch->SetAddress(&Htag_ak4_p4_);
+  Htag_subjet1_p4_branch = tree->GetBranch("Htag_subjet1_p4");
+  if (Htag_subjet1_p4_branch) Htag_subjet1_p4_branch->SetAddress(&Htag_subjet1_p4_);
+  Htag_subjet2_p4_branch = tree->GetBranch("Htag_subjet2_p4");
+  if (Htag_subjet2_p4_branch) Htag_subjet2_p4_branch->SetAddress(&Htag_subjet2_p4_);
   Recoil_p4_branch = tree->GetBranch("Recoil_p4");
   if (Recoil_p4_branch) Recoil_p4_branch->SetAddress(&Recoil_p4_);
   Recoil_leadak4_p4_branch = tree->GetBranch("Recoil_leadak4_p4");
@@ -247,6 +271,18 @@ void hwwtree::Init(TTree *tree) {
   if (J_deep_rawdisc_z_branch) J_deep_rawdisc_z_branch->SetAddress(&J_deep_rawdisc_z_);
   J_deep_rawdisc_zbb_branch = tree->GetBranch("J_deep_rawdisc_zbb");
   if (J_deep_rawdisc_zbb_branch) J_deep_rawdisc_zbb_branch->SetAddress(&J_deep_rawdisc_zbb_);
+  J_deep_bindisc_h4q_branch = tree->GetBranch("J_deep_bindisc_h4q");
+  if (J_deep_bindisc_h4q_branch) J_deep_bindisc_h4q_branch->SetAddress(&J_deep_bindisc_h4q_);
+  J_deep_bindisc_hbb_branch = tree->GetBranch("J_deep_bindisc_hbb");
+  if (J_deep_bindisc_hbb_branch) J_deep_bindisc_hbb_branch->SetAddress(&J_deep_bindisc_hbb_);
+  J_deep_bindisc_top_branch = tree->GetBranch("J_deep_bindisc_top");
+  if (J_deep_bindisc_top_branch) J_deep_bindisc_top_branch->SetAddress(&J_deep_bindisc_top_);
+  J_deep_bindisc_w_branch = tree->GetBranch("J_deep_bindisc_w");
+  if (J_deep_bindisc_w_branch) J_deep_bindisc_w_branch->SetAddress(&J_deep_bindisc_w_);
+  J_deep_bindisc_z_branch = tree->GetBranch("J_deep_bindisc_z");
+  if (J_deep_bindisc_z_branch) J_deep_bindisc_z_branch->SetAddress(&J_deep_bindisc_z_);
+  J_deep_bindisc_zbb_branch = tree->GetBranch("J_deep_bindisc_zbb");
+  if (J_deep_bindisc_zbb_branch) J_deep_bindisc_zbb_branch->SetAddress(&J_deep_bindisc_zbb_);
   J_softdropPuppiSubjet1_pt_branch = tree->GetBranch("J_softdropPuppiSubjet1_pt");
   if (J_softdropPuppiSubjet1_pt_branch) J_softdropPuppiSubjet1_pt_branch->SetAddress(&J_softdropPuppiSubjet1_pt_);
   J_softdropPuppiSubjet1_eta_branch = tree->GetBranch("J_softdropPuppiSubjet1_eta");
@@ -293,6 +329,192 @@ void hwwtree::Init(TTree *tree) {
   if (L_subjet1_deg_branch) L_subjet1_deg_branch->SetAddress(&L_subjet1_deg_);
   L_subjet2_deg_branch = tree->GetBranch("L_subjet2_deg");
   if (L_subjet2_deg_branch) L_subjet2_deg_branch->SetAddress(&L_subjet2_deg_);
+  V_area_branch = tree->GetBranch("V_area");
+  if (V_area_branch) V_area_branch->SetAddress(&V_area_);
+  V_mass_branch = tree->GetBranch("V_mass");
+  if (V_mass_branch) V_mass_branch->SetAddress(&V_mass_);
+  V_softdropMass_branch = tree->GetBranch("V_softdropMass");
+  if (V_softdropMass_branch) V_softdropMass_branch->SetAddress(&V_softdropMass_);
+  V_nJettinessTau1_branch = tree->GetBranch("V_nJettinessTau1");
+  if (V_nJettinessTau1_branch) V_nJettinessTau1_branch->SetAddress(&V_nJettinessTau1_);
+  V_nJettinessTau2_branch = tree->GetBranch("V_nJettinessTau2");
+  if (V_nJettinessTau2_branch) V_nJettinessTau2_branch->SetAddress(&V_nJettinessTau2_);
+  V_nJettinessTau3_branch = tree->GetBranch("V_nJettinessTau3");
+  if (V_nJettinessTau3_branch) V_nJettinessTau3_branch->SetAddress(&V_nJettinessTau3_);
+  V_deep_rawdisc_h4q_branch = tree->GetBranch("V_deep_rawdisc_h4q");
+  if (V_deep_rawdisc_h4q_branch) V_deep_rawdisc_h4q_branch->SetAddress(&V_deep_rawdisc_h4q_);
+  V_deep_rawdisc_hbb_branch = tree->GetBranch("V_deep_rawdisc_hbb");
+  if (V_deep_rawdisc_hbb_branch) V_deep_rawdisc_hbb_branch->SetAddress(&V_deep_rawdisc_hbb_);
+  V_deep_rawdisc_qcd_branch = tree->GetBranch("V_deep_rawdisc_qcd");
+  if (V_deep_rawdisc_qcd_branch) V_deep_rawdisc_qcd_branch->SetAddress(&V_deep_rawdisc_qcd_);
+  V_deep_rawdisc_top_branch = tree->GetBranch("V_deep_rawdisc_top");
+  if (V_deep_rawdisc_top_branch) V_deep_rawdisc_top_branch->SetAddress(&V_deep_rawdisc_top_);
+  V_deep_rawdisc_w_branch = tree->GetBranch("V_deep_rawdisc_w");
+  if (V_deep_rawdisc_w_branch) V_deep_rawdisc_w_branch->SetAddress(&V_deep_rawdisc_w_);
+  V_deep_rawdisc_z_branch = tree->GetBranch("V_deep_rawdisc_z");
+  if (V_deep_rawdisc_z_branch) V_deep_rawdisc_z_branch->SetAddress(&V_deep_rawdisc_z_);
+  V_deep_rawdisc_zbb_branch = tree->GetBranch("V_deep_rawdisc_zbb");
+  if (V_deep_rawdisc_zbb_branch) V_deep_rawdisc_zbb_branch->SetAddress(&V_deep_rawdisc_zbb_);
+  V_deep_bindisc_h4q_branch = tree->GetBranch("V_deep_bindisc_h4q");
+  if (V_deep_bindisc_h4q_branch) V_deep_bindisc_h4q_branch->SetAddress(&V_deep_bindisc_h4q_);
+  V_deep_bindisc_hbb_branch = tree->GetBranch("V_deep_bindisc_hbb");
+  if (V_deep_bindisc_hbb_branch) V_deep_bindisc_hbb_branch->SetAddress(&V_deep_bindisc_hbb_);
+  V_deep_bindisc_top_branch = tree->GetBranch("V_deep_bindisc_top");
+  if (V_deep_bindisc_top_branch) V_deep_bindisc_top_branch->SetAddress(&V_deep_bindisc_top_);
+  V_deep_bindisc_w_branch = tree->GetBranch("V_deep_bindisc_w");
+  if (V_deep_bindisc_w_branch) V_deep_bindisc_w_branch->SetAddress(&V_deep_bindisc_w_);
+  V_deep_bindisc_z_branch = tree->GetBranch("V_deep_bindisc_z");
+  if (V_deep_bindisc_z_branch) V_deep_bindisc_z_branch->SetAddress(&V_deep_bindisc_z_);
+  V_deep_bindisc_zbb_branch = tree->GetBranch("V_deep_bindisc_zbb");
+  if (V_deep_bindisc_zbb_branch) V_deep_bindisc_zbb_branch->SetAddress(&V_deep_bindisc_zbb_);
+  V_softdropPuppiSubjet1_pt_branch = tree->GetBranch("V_softdropPuppiSubjet1_pt");
+  if (V_softdropPuppiSubjet1_pt_branch) V_softdropPuppiSubjet1_pt_branch->SetAddress(&V_softdropPuppiSubjet1_pt_);
+  V_softdropPuppiSubjet1_eta_branch = tree->GetBranch("V_softdropPuppiSubjet1_eta");
+  if (V_softdropPuppiSubjet1_eta_branch) V_softdropPuppiSubjet1_eta_branch->SetAddress(&V_softdropPuppiSubjet1_eta_);
+  V_softdropPuppiSubjet1_phi_branch = tree->GetBranch("V_softdropPuppiSubjet1_phi");
+  if (V_softdropPuppiSubjet1_phi_branch) V_softdropPuppiSubjet1_phi_branch->SetAddress(&V_softdropPuppiSubjet1_phi_);
+  V_softdropPuppiSubjet1_mass_branch = tree->GetBranch("V_softdropPuppiSubjet1_mass");
+  if (V_softdropPuppiSubjet1_mass_branch) V_softdropPuppiSubjet1_mass_branch->SetAddress(&V_softdropPuppiSubjet1_mass_);
+  V_softdropPuppiSubjet1_energy_branch = tree->GetBranch("V_softdropPuppiSubjet1_energy");
+  if (V_softdropPuppiSubjet1_energy_branch) V_softdropPuppiSubjet1_energy_branch->SetAddress(&V_softdropPuppiSubjet1_energy_);
+  V_softdropPuppiSubjet2_pt_branch = tree->GetBranch("V_softdropPuppiSubjet2_pt");
+  if (V_softdropPuppiSubjet2_pt_branch) V_softdropPuppiSubjet2_pt_branch->SetAddress(&V_softdropPuppiSubjet2_pt_);
+  V_softdropPuppiSubjet2_eta_branch = tree->GetBranch("V_softdropPuppiSubjet2_eta");
+  if (V_softdropPuppiSubjet2_eta_branch) V_softdropPuppiSubjet2_eta_branch->SetAddress(&V_softdropPuppiSubjet2_eta_);
+  V_softdropPuppiSubjet2_phi_branch = tree->GetBranch("V_softdropPuppiSubjet2_phi");
+  if (V_softdropPuppiSubjet2_phi_branch) V_softdropPuppiSubjet2_phi_branch->SetAddress(&V_softdropPuppiSubjet2_phi_);
+  V_softdropPuppiSubjet2_mass_branch = tree->GetBranch("V_softdropPuppiSubjet2_mass");
+  if (V_softdropPuppiSubjet2_mass_branch) V_softdropPuppiSubjet2_mass_branch->SetAddress(&V_softdropPuppiSubjet2_mass_);
+  V_softdropPuppiSubjet2_energy_branch = tree->GetBranch("V_softdropPuppiSubjet2_energy");
+  if (V_softdropPuppiSubjet2_energy_branch) V_softdropPuppiSubjet2_energy_branch->SetAddress(&V_softdropPuppiSubjet2_energy_);
+  V_npfcands_branch = tree->GetBranch("V_npfcands");
+  if (V_npfcands_branch) V_npfcands_branch->SetAddress(&V_npfcands_);
+  V_partonFlavour_branch = tree->GetBranch("V_partonFlavour");
+  if (V_partonFlavour_branch) V_partonFlavour_branch->SetAddress(&V_partonFlavour_);
+  Htag_J_pt_branch = tree->GetBranch("Htag_J_pt");
+  if (Htag_J_pt_branch) Htag_J_pt_branch->SetAddress(&Htag_J_pt_);
+  Htag_J_eta_branch = tree->GetBranch("Htag_J_eta");
+  if (Htag_J_eta_branch) Htag_J_eta_branch->SetAddress(&Htag_J_eta_);
+  Htag_J_phi_branch = tree->GetBranch("Htag_J_phi");
+  if (Htag_J_phi_branch) Htag_J_phi_branch->SetAddress(&Htag_J_phi_);
+  Htag_J_mass_branch = tree->GetBranch("Htag_J_mass");
+  if (Htag_J_mass_branch) Htag_J_mass_branch->SetAddress(&Htag_J_mass_);
+  Htag_J_softdropMass_branch = tree->GetBranch("Htag_J_softdropMass");
+  if (Htag_J_softdropMass_branch) Htag_J_softdropMass_branch->SetAddress(&Htag_J_softdropMass_);
+  Htag_L_pt_branch = tree->GetBranch("Htag_L_pt");
+  if (Htag_L_pt_branch) Htag_L_pt_branch->SetAddress(&Htag_L_pt_);
+  Htag_L_eta_branch = tree->GetBranch("Htag_L_eta");
+  if (Htag_L_eta_branch) Htag_L_eta_branch->SetAddress(&Htag_L_eta_);
+  Htag_L_phi_branch = tree->GetBranch("Htag_L_phi");
+  if (Htag_L_phi_branch) Htag_L_phi_branch->SetAddress(&Htag_L_phi_);
+  Htag_L_dr_branch = tree->GetBranch("Htag_L_dr");
+  if (Htag_L_dr_branch) Htag_L_dr_branch->SetAddress(&Htag_L_dr_);
+  Htag_L_alpha_branch = tree->GetBranch("Htag_L_alpha");
+  if (Htag_L_alpha_branch) Htag_L_alpha_branch->SetAddress(&Htag_L_alpha_);
+  Htag_pf_pt_branch = tree->GetBranch("Htag_pf_pt");
+  if (Htag_pf_pt_branch) Htag_pf_pt_branch->SetAddress(&Htag_pf_pt_);
+  Htag_pf_eta_branch = tree->GetBranch("Htag_pf_eta");
+  if (Htag_pf_eta_branch) Htag_pf_eta_branch->SetAddress(&Htag_pf_eta_);
+  Htag_pf_phi_branch = tree->GetBranch("Htag_pf_phi");
+  if (Htag_pf_phi_branch) Htag_pf_phi_branch->SetAddress(&Htag_pf_phi_);
+  Htag_pf_id_branch = tree->GetBranch("Htag_pf_id");
+  if (Htag_pf_id_branch) Htag_pf_id_branch->SetAddress(&Htag_pf_id_);
+  Htag_pf_dr_branch = tree->GetBranch("Htag_pf_dr");
+  if (Htag_pf_dr_branch) Htag_pf_dr_branch->SetAddress(&Htag_pf_dr_);
+  Htag_pf_alpha_branch = tree->GetBranch("Htag_pf_alpha");
+  if (Htag_pf_alpha_branch) Htag_pf_alpha_branch->SetAddress(&Htag_pf_alpha_);
+  Htag_pf_puppi_wgt_branch = tree->GetBranch("Htag_pf_puppi_wgt");
+  if (Htag_pf_puppi_wgt_branch) Htag_pf_puppi_wgt_branch->SetAddress(&Htag_pf_puppi_wgt_);
+  Htag_pf_ptfrac_branch = tree->GetBranch("Htag_pf_ptfrac");
+  if (Htag_pf_ptfrac_branch) Htag_pf_ptfrac_branch->SetAddress(&Htag_pf_ptfrac_);
+  Htag_pf_ptrel_branch = tree->GetBranch("Htag_pf_ptrel");
+  if (Htag_pf_ptrel_branch) Htag_pf_ptrel_branch->SetAddress(&Htag_pf_ptrel_);
+  Htag_pf_nolep_pt_branch = tree->GetBranch("Htag_pf_nolep_pt");
+  if (Htag_pf_nolep_pt_branch) Htag_pf_nolep_pt_branch->SetAddress(&Htag_pf_nolep_pt_);
+  Htag_pf_nolep_eta_branch = tree->GetBranch("Htag_pf_nolep_eta");
+  if (Htag_pf_nolep_eta_branch) Htag_pf_nolep_eta_branch->SetAddress(&Htag_pf_nolep_eta_);
+  Htag_pf_nolep_phi_branch = tree->GetBranch("Htag_pf_nolep_phi");
+  if (Htag_pf_nolep_phi_branch) Htag_pf_nolep_phi_branch->SetAddress(&Htag_pf_nolep_phi_);
+  Htag_pf_nolep_id_branch = tree->GetBranch("Htag_pf_nolep_id");
+  if (Htag_pf_nolep_id_branch) Htag_pf_nolep_id_branch->SetAddress(&Htag_pf_nolep_id_);
+  Htag_pf_nolep_dr_branch = tree->GetBranch("Htag_pf_nolep_dr");
+  if (Htag_pf_nolep_dr_branch) Htag_pf_nolep_dr_branch->SetAddress(&Htag_pf_nolep_dr_);
+  Htag_pf_nolep_alpha_branch = tree->GetBranch("Htag_pf_nolep_alpha");
+  if (Htag_pf_nolep_alpha_branch) Htag_pf_nolep_alpha_branch->SetAddress(&Htag_pf_nolep_alpha_);
+  Htag_pf_nolep_puppi_wgt_branch = tree->GetBranch("Htag_pf_nolep_puppi_wgt");
+  if (Htag_pf_nolep_puppi_wgt_branch) Htag_pf_nolep_puppi_wgt_branch->SetAddress(&Htag_pf_nolep_puppi_wgt_);
+  Htag_pf_nolep_ptfrac_branch = tree->GetBranch("Htag_pf_nolep_ptfrac");
+  if (Htag_pf_nolep_ptfrac_branch) Htag_pf_nolep_ptfrac_branch->SetAddress(&Htag_pf_nolep_ptfrac_);
+  Htag_pf_nolep_ptrel_branch = tree->GetBranch("Htag_pf_nolep_ptrel");
+  if (Htag_pf_nolep_ptrel_branch) Htag_pf_nolep_ptrel_branch->SetAddress(&Htag_pf_nolep_ptrel_);
+  Htag_ak4_pt_branch = tree->GetBranch("Htag_ak4_pt");
+  if (Htag_ak4_pt_branch) Htag_ak4_pt_branch->SetAddress(&Htag_ak4_pt_);
+  Htag_ak4_eta_branch = tree->GetBranch("Htag_ak4_eta");
+  if (Htag_ak4_eta_branch) Htag_ak4_eta_branch->SetAddress(&Htag_ak4_eta_);
+  Htag_ak4_phi_branch = tree->GetBranch("Htag_ak4_phi");
+  if (Htag_ak4_phi_branch) Htag_ak4_phi_branch->SetAddress(&Htag_ak4_phi_);
+  Htag_ak4_dr_branch = tree->GetBranch("Htag_ak4_dr");
+  if (Htag_ak4_dr_branch) Htag_ak4_dr_branch->SetAddress(&Htag_ak4_dr_);
+  Htag_ak4_alpha_branch = tree->GetBranch("Htag_ak4_alpha");
+  if (Htag_ak4_alpha_branch) Htag_ak4_alpha_branch->SetAddress(&Htag_ak4_alpha_);
+  Htag_ak4_L_dr_branch = tree->GetBranch("Htag_ak4_L_dr");
+  if (Htag_ak4_L_dr_branch) Htag_ak4_L_dr_branch->SetAddress(&Htag_ak4_L_dr_);
+  Htag_ak4_L_dpt_branch = tree->GetBranch("Htag_ak4_L_dpt");
+  if (Htag_ak4_L_dpt_branch) Htag_ak4_L_dpt_branch->SetAddress(&Htag_ak4_L_dpt_);
+  Htag_fromPV_branch = tree->GetBranch("Htag_fromPV");
+  if (Htag_fromPV_branch) Htag_fromPV_branch->SetAddress(&Htag_fromPV_);
+  Htag_pv_quality_branch = tree->GetBranch("Htag_pv_quality");
+  if (Htag_pv_quality_branch) Htag_pv_quality_branch->SetAddress(&Htag_pv_quality_);
+  Htag_leppffound_branch = tree->GetBranch("Htag_leppffound");
+  if (Htag_leppffound_branch) Htag_leppffound_branch->SetAddress(&Htag_leppffound_);
+  Htag_subjet1_pt_branch = tree->GetBranch("Htag_subjet1_pt");
+  if (Htag_subjet1_pt_branch) Htag_subjet1_pt_branch->SetAddress(&Htag_subjet1_pt_);
+  Htag_subjet1_eta_branch = tree->GetBranch("Htag_subjet1_eta");
+  if (Htag_subjet1_eta_branch) Htag_subjet1_eta_branch->SetAddress(&Htag_subjet1_eta_);
+  Htag_subjet1_phi_branch = tree->GetBranch("Htag_subjet1_phi");
+  if (Htag_subjet1_phi_branch) Htag_subjet1_phi_branch->SetAddress(&Htag_subjet1_phi_);
+  Htag_subjet1_dr_branch = tree->GetBranch("Htag_subjet1_dr");
+  if (Htag_subjet1_dr_branch) Htag_subjet1_dr_branch->SetAddress(&Htag_subjet1_dr_);
+  Htag_subjet1_alpha_branch = tree->GetBranch("Htag_subjet1_alpha");
+  if (Htag_subjet1_alpha_branch) Htag_subjet1_alpha_branch->SetAddress(&Htag_subjet1_alpha_);
+  Htag_subjet2_pt_branch = tree->GetBranch("Htag_subjet2_pt");
+  if (Htag_subjet2_pt_branch) Htag_subjet2_pt_branch->SetAddress(&Htag_subjet2_pt_);
+  Htag_subjet2_eta_branch = tree->GetBranch("Htag_subjet2_eta");
+  if (Htag_subjet2_eta_branch) Htag_subjet2_eta_branch->SetAddress(&Htag_subjet2_eta_);
+  Htag_subjet2_phi_branch = tree->GetBranch("Htag_subjet2_phi");
+  if (Htag_subjet2_phi_branch) Htag_subjet2_phi_branch->SetAddress(&Htag_subjet2_phi_);
+  Htag_subjet2_dr_branch = tree->GetBranch("Htag_subjet2_dr");
+  if (Htag_subjet2_dr_branch) Htag_subjet2_dr_branch->SetAddress(&Htag_subjet2_dr_);
+  Htag_subjet2_alpha_branch = tree->GetBranch("Htag_subjet2_alpha");
+  if (Htag_subjet2_alpha_branch) Htag_subjet2_alpha_branch->SetAddress(&Htag_subjet2_alpha_);
+  Htag_gen_higgs_dr_branch = tree->GetBranch("Htag_gen_higgs_dr");
+  if (Htag_gen_higgs_dr_branch) Htag_gen_higgs_dr_branch->SetAddress(&Htag_gen_higgs_dr_);
+  Htag_gen_higgs_alpha_branch = tree->GetBranch("Htag_gen_higgs_alpha");
+  if (Htag_gen_higgs_alpha_branch) Htag_gen_higgs_alpha_branch->SetAddress(&Htag_gen_higgs_alpha_);
+  Htag_gen_whad_dr_branch = tree->GetBranch("Htag_gen_whad_dr");
+  if (Htag_gen_whad_dr_branch) Htag_gen_whad_dr_branch->SetAddress(&Htag_gen_whad_dr_);
+  Htag_gen_whad_alpha_branch = tree->GetBranch("Htag_gen_whad_alpha");
+  if (Htag_gen_whad_alpha_branch) Htag_gen_whad_alpha_branch->SetAddress(&Htag_gen_whad_alpha_);
+  Htag_gen_wlep_dr_branch = tree->GetBranch("Htag_gen_wlep_dr");
+  if (Htag_gen_wlep_dr_branch) Htag_gen_wlep_dr_branch->SetAddress(&Htag_gen_wlep_dr_);
+  Htag_gen_wlep_alpha_branch = tree->GetBranch("Htag_gen_wlep_alpha");
+  if (Htag_gen_wlep_alpha_branch) Htag_gen_wlep_alpha_branch->SetAddress(&Htag_gen_wlep_alpha_);
+  Htag_gen_q0_dr_branch = tree->GetBranch("Htag_gen_q0_dr");
+  if (Htag_gen_q0_dr_branch) Htag_gen_q0_dr_branch->SetAddress(&Htag_gen_q0_dr_);
+  Htag_gen_q0_alpha_branch = tree->GetBranch("Htag_gen_q0_alpha");
+  if (Htag_gen_q0_alpha_branch) Htag_gen_q0_alpha_branch->SetAddress(&Htag_gen_q0_alpha_);
+  Htag_gen_q1_dr_branch = tree->GetBranch("Htag_gen_q1_dr");
+  if (Htag_gen_q1_dr_branch) Htag_gen_q1_dr_branch->SetAddress(&Htag_gen_q1_dr_);
+  Htag_gen_q1_alpha_branch = tree->GetBranch("Htag_gen_q1_alpha");
+  if (Htag_gen_q1_alpha_branch) Htag_gen_q1_alpha_branch->SetAddress(&Htag_gen_q1_alpha_);
+  Htag_gen_lep_dr_branch = tree->GetBranch("Htag_gen_lep_dr");
+  if (Htag_gen_lep_dr_branch) Htag_gen_lep_dr_branch->SetAddress(&Htag_gen_lep_dr_);
+  Htag_gen_lep_alpha_branch = tree->GetBranch("Htag_gen_lep_alpha");
+  if (Htag_gen_lep_alpha_branch) Htag_gen_lep_alpha_branch->SetAddress(&Htag_gen_lep_alpha_);
+  Htag_gen_neu_dr_branch = tree->GetBranch("Htag_gen_neu_dr");
+  if (Htag_gen_neu_dr_branch) Htag_gen_neu_dr_branch->SetAddress(&Htag_gen_neu_dr_);
+  Htag_gen_neu_alpha_branch = tree->GetBranch("Htag_gen_neu_alpha");
+  if (Htag_gen_neu_alpha_branch) Htag_gen_neu_alpha_branch->SetAddress(&Htag_gen_neu_alpha_);
   Recoil_leadak4_npfcands_branch = tree->GetBranch("Recoil_leadak4_npfcands");
   if (Recoil_leadak4_npfcands_branch) Recoil_leadak4_npfcands_branch->SetAddress(&Recoil_leadak4_npfcands_);
   Recoil_leadak4_chargedHadronMultiplicity_branch = tree->GetBranch("Recoil_leadak4_chargedHadronMultiplicity");
@@ -395,6 +617,10 @@ void hwwtree::Init(TTree *tree) {
   if (Recoil_j_3_4_leadak4_puppi_photonMultiplicity_branch) Recoil_j_3_4_leadak4_puppi_photonMultiplicity_branch->SetAddress(&Recoil_j_3_4_leadak4_puppi_photonMultiplicity_);
   Recoil_j_3_4_leadak4_puppi_totalMultiplicity_branch = tree->GetBranch("Recoil_j_3_4_leadak4_puppi_totalMultiplicity");
   if (Recoil_j_3_4_leadak4_puppi_totalMultiplicity_branch) Recoil_j_3_4_leadak4_puppi_totalMultiplicity_branch->SetAddress(&Recoil_j_3_4_leadak4_puppi_totalMultiplicity_);
+  gen_ht_branch = tree->GetBranch("gen_ht");
+  if (gen_ht_branch) gen_ht_branch->SetAddress(&gen_ht_);
+  nvtx_branch = tree->GetBranch("nvtx");
+  if (nvtx_branch) nvtx_branch->SetAddress(&nvtx_);
 
   tree->SetMakeClass(0);
 }
@@ -500,7 +726,12 @@ void hwwtree::GetEntry(unsigned int idx) {
   H_p4_isLoaded = false;
   Hp_p4_isLoaded = false;
   is_whad_lead_isLoaded = false;
-  v_p4_isLoaded = false;
+  neu_p4_isLoaded = false;
+  neu_p4_sol1_isLoaded = false;
+  neu_p4_sol2_isLoaded = false;
+  neu_p4_invsol1_isLoaded = false;
+  neu_p4_invsol2_isLoaded = false;
+  V_p4_isLoaded = false;
   J_area_isLoaded = false;
   J_mass_isLoaded = false;
   J_softdropMass_isLoaded = false;
@@ -514,6 +745,12 @@ void hwwtree::GetEntry(unsigned int idx) {
   J_deep_rawdisc_w_isLoaded = false;
   J_deep_rawdisc_z_isLoaded = false;
   J_deep_rawdisc_zbb_isLoaded = false;
+  J_deep_bindisc_h4q_isLoaded = false;
+  J_deep_bindisc_hbb_isLoaded = false;
+  J_deep_bindisc_top_isLoaded = false;
+  J_deep_bindisc_w_isLoaded = false;
+  J_deep_bindisc_z_isLoaded = false;
+  J_deep_bindisc_zbb_isLoaded = false;
   J_softdropPuppiSubjet1_pt_isLoaded = false;
   J_softdropPuppiSubjet1_eta_isLoaded = false;
   J_softdropPuppiSubjet1_phi_isLoaded = false;
@@ -540,6 +777,106 @@ void hwwtree::GetEntry(unsigned int idx) {
   L_subjet2_dr_isLoaded = false;
   L_subjet1_deg_isLoaded = false;
   L_subjet2_deg_isLoaded = false;
+  V_area_isLoaded = false;
+  V_mass_isLoaded = false;
+  V_softdropMass_isLoaded = false;
+  V_nJettinessTau1_isLoaded = false;
+  V_nJettinessTau2_isLoaded = false;
+  V_nJettinessTau3_isLoaded = false;
+  V_deep_rawdisc_h4q_isLoaded = false;
+  V_deep_rawdisc_hbb_isLoaded = false;
+  V_deep_rawdisc_qcd_isLoaded = false;
+  V_deep_rawdisc_top_isLoaded = false;
+  V_deep_rawdisc_w_isLoaded = false;
+  V_deep_rawdisc_z_isLoaded = false;
+  V_deep_rawdisc_zbb_isLoaded = false;
+  V_deep_bindisc_h4q_isLoaded = false;
+  V_deep_bindisc_hbb_isLoaded = false;
+  V_deep_bindisc_top_isLoaded = false;
+  V_deep_bindisc_w_isLoaded = false;
+  V_deep_bindisc_z_isLoaded = false;
+  V_deep_bindisc_zbb_isLoaded = false;
+  V_softdropPuppiSubjet1_pt_isLoaded = false;
+  V_softdropPuppiSubjet1_eta_isLoaded = false;
+  V_softdropPuppiSubjet1_phi_isLoaded = false;
+  V_softdropPuppiSubjet1_mass_isLoaded = false;
+  V_softdropPuppiSubjet1_energy_isLoaded = false;
+  V_softdropPuppiSubjet2_pt_isLoaded = false;
+  V_softdropPuppiSubjet2_eta_isLoaded = false;
+  V_softdropPuppiSubjet2_phi_isLoaded = false;
+  V_softdropPuppiSubjet2_mass_isLoaded = false;
+  V_softdropPuppiSubjet2_energy_isLoaded = false;
+  V_npfcands_isLoaded = false;
+  V_partonFlavour_isLoaded = false;
+  Htag_J_p4_isLoaded = false;
+  Htag_J_pt_isLoaded = false;
+  Htag_J_eta_isLoaded = false;
+  Htag_J_phi_isLoaded = false;
+  Htag_J_mass_isLoaded = false;
+  Htag_J_softdropMass_isLoaded = false;
+  Htag_L_p4_isLoaded = false;
+  Htag_L_pt_isLoaded = false;
+  Htag_L_eta_isLoaded = false;
+  Htag_L_phi_isLoaded = false;
+  Htag_L_dr_isLoaded = false;
+  Htag_L_alpha_isLoaded = false;
+  Htag_pf_p4_isLoaded = false;
+  Htag_pf_pt_isLoaded = false;
+  Htag_pf_eta_isLoaded = false;
+  Htag_pf_phi_isLoaded = false;
+  Htag_pf_id_isLoaded = false;
+  Htag_pf_dr_isLoaded = false;
+  Htag_pf_alpha_isLoaded = false;
+  Htag_pf_puppi_wgt_isLoaded = false;
+  Htag_pf_ptfrac_isLoaded = false;
+  Htag_pf_ptrel_isLoaded = false;
+  Htag_pf_nolep_p4_isLoaded = false;
+  Htag_pf_nolep_pt_isLoaded = false;
+  Htag_pf_nolep_eta_isLoaded = false;
+  Htag_pf_nolep_phi_isLoaded = false;
+  Htag_pf_nolep_id_isLoaded = false;
+  Htag_pf_nolep_dr_isLoaded = false;
+  Htag_pf_nolep_alpha_isLoaded = false;
+  Htag_pf_nolep_puppi_wgt_isLoaded = false;
+  Htag_pf_nolep_ptfrac_isLoaded = false;
+  Htag_pf_nolep_ptrel_isLoaded = false;
+  Htag_ak4_p4_isLoaded = false;
+  Htag_ak4_pt_isLoaded = false;
+  Htag_ak4_eta_isLoaded = false;
+  Htag_ak4_phi_isLoaded = false;
+  Htag_ak4_dr_isLoaded = false;
+  Htag_ak4_alpha_isLoaded = false;
+  Htag_ak4_L_dr_isLoaded = false;
+  Htag_ak4_L_dpt_isLoaded = false;
+  Htag_fromPV_isLoaded = false;
+  Htag_pv_quality_isLoaded = false;
+  Htag_leppffound_isLoaded = false;
+  Htag_subjet1_p4_isLoaded = false;
+  Htag_subjet1_pt_isLoaded = false;
+  Htag_subjet1_eta_isLoaded = false;
+  Htag_subjet1_phi_isLoaded = false;
+  Htag_subjet1_dr_isLoaded = false;
+  Htag_subjet1_alpha_isLoaded = false;
+  Htag_subjet2_p4_isLoaded = false;
+  Htag_subjet2_pt_isLoaded = false;
+  Htag_subjet2_eta_isLoaded = false;
+  Htag_subjet2_phi_isLoaded = false;
+  Htag_subjet2_dr_isLoaded = false;
+  Htag_subjet2_alpha_isLoaded = false;
+  Htag_gen_higgs_dr_isLoaded = false;
+  Htag_gen_higgs_alpha_isLoaded = false;
+  Htag_gen_whad_dr_isLoaded = false;
+  Htag_gen_whad_alpha_isLoaded = false;
+  Htag_gen_wlep_dr_isLoaded = false;
+  Htag_gen_wlep_alpha_isLoaded = false;
+  Htag_gen_q0_dr_isLoaded = false;
+  Htag_gen_q0_alpha_isLoaded = false;
+  Htag_gen_q1_dr_isLoaded = false;
+  Htag_gen_q1_alpha_isLoaded = false;
+  Htag_gen_lep_dr_isLoaded = false;
+  Htag_gen_lep_alpha_isLoaded = false;
+  Htag_gen_neu_dr_isLoaded = false;
+  Htag_gen_neu_alpha_isLoaded = false;
   Recoil_p4_isLoaded = false;
   Recoil_leadak4_p4_isLoaded = false;
   Recoil_leadak4_npfcands_isLoaded = false;
@@ -597,6 +934,8 @@ void hwwtree::GetEntry(unsigned int idx) {
   Recoil_j_3_4_leadak4_puppi_neutralMultiplicity_isLoaded = false;
   Recoil_j_3_4_leadak4_puppi_photonMultiplicity_isLoaded = false;
   Recoil_j_3_4_leadak4_puppi_totalMultiplicity_isLoaded = false;
+  gen_ht_isLoaded = false;
+  nvtx_isLoaded = false;
 }
 
 void hwwtree::LoadAllBranches() {
@@ -699,7 +1038,12 @@ void hwwtree::LoadAllBranches() {
   if (H_p4_branch != 0) H_p4();
   if (Hp_p4_branch != 0) Hp_p4();
   if (is_whad_lead_branch != 0) is_whad_lead();
-  if (v_p4_branch != 0) v_p4();
+  if (neu_p4_branch != 0) neu_p4();
+  if (neu_p4_sol1_branch != 0) neu_p4_sol1();
+  if (neu_p4_sol2_branch != 0) neu_p4_sol2();
+  if (neu_p4_invsol1_branch != 0) neu_p4_invsol1();
+  if (neu_p4_invsol2_branch != 0) neu_p4_invsol2();
+  if (V_p4_branch != 0) V_p4();
   if (J_area_branch != 0) J_area();
   if (J_mass_branch != 0) J_mass();
   if (J_softdropMass_branch != 0) J_softdropMass();
@@ -713,6 +1057,12 @@ void hwwtree::LoadAllBranches() {
   if (J_deep_rawdisc_w_branch != 0) J_deep_rawdisc_w();
   if (J_deep_rawdisc_z_branch != 0) J_deep_rawdisc_z();
   if (J_deep_rawdisc_zbb_branch != 0) J_deep_rawdisc_zbb();
+  if (J_deep_bindisc_h4q_branch != 0) J_deep_bindisc_h4q();
+  if (J_deep_bindisc_hbb_branch != 0) J_deep_bindisc_hbb();
+  if (J_deep_bindisc_top_branch != 0) J_deep_bindisc_top();
+  if (J_deep_bindisc_w_branch != 0) J_deep_bindisc_w();
+  if (J_deep_bindisc_z_branch != 0) J_deep_bindisc_z();
+  if (J_deep_bindisc_zbb_branch != 0) J_deep_bindisc_zbb();
   if (J_softdropPuppiSubjet1_pt_branch != 0) J_softdropPuppiSubjet1_pt();
   if (J_softdropPuppiSubjet1_eta_branch != 0) J_softdropPuppiSubjet1_eta();
   if (J_softdropPuppiSubjet1_phi_branch != 0) J_softdropPuppiSubjet1_phi();
@@ -739,6 +1089,106 @@ void hwwtree::LoadAllBranches() {
   if (L_subjet2_dr_branch != 0) L_subjet2_dr();
   if (L_subjet1_deg_branch != 0) L_subjet1_deg();
   if (L_subjet2_deg_branch != 0) L_subjet2_deg();
+  if (V_area_branch != 0) V_area();
+  if (V_mass_branch != 0) V_mass();
+  if (V_softdropMass_branch != 0) V_softdropMass();
+  if (V_nJettinessTau1_branch != 0) V_nJettinessTau1();
+  if (V_nJettinessTau2_branch != 0) V_nJettinessTau2();
+  if (V_nJettinessTau3_branch != 0) V_nJettinessTau3();
+  if (V_deep_rawdisc_h4q_branch != 0) V_deep_rawdisc_h4q();
+  if (V_deep_rawdisc_hbb_branch != 0) V_deep_rawdisc_hbb();
+  if (V_deep_rawdisc_qcd_branch != 0) V_deep_rawdisc_qcd();
+  if (V_deep_rawdisc_top_branch != 0) V_deep_rawdisc_top();
+  if (V_deep_rawdisc_w_branch != 0) V_deep_rawdisc_w();
+  if (V_deep_rawdisc_z_branch != 0) V_deep_rawdisc_z();
+  if (V_deep_rawdisc_zbb_branch != 0) V_deep_rawdisc_zbb();
+  if (V_deep_bindisc_h4q_branch != 0) V_deep_bindisc_h4q();
+  if (V_deep_bindisc_hbb_branch != 0) V_deep_bindisc_hbb();
+  if (V_deep_bindisc_top_branch != 0) V_deep_bindisc_top();
+  if (V_deep_bindisc_w_branch != 0) V_deep_bindisc_w();
+  if (V_deep_bindisc_z_branch != 0) V_deep_bindisc_z();
+  if (V_deep_bindisc_zbb_branch != 0) V_deep_bindisc_zbb();
+  if (V_softdropPuppiSubjet1_pt_branch != 0) V_softdropPuppiSubjet1_pt();
+  if (V_softdropPuppiSubjet1_eta_branch != 0) V_softdropPuppiSubjet1_eta();
+  if (V_softdropPuppiSubjet1_phi_branch != 0) V_softdropPuppiSubjet1_phi();
+  if (V_softdropPuppiSubjet1_mass_branch != 0) V_softdropPuppiSubjet1_mass();
+  if (V_softdropPuppiSubjet1_energy_branch != 0) V_softdropPuppiSubjet1_energy();
+  if (V_softdropPuppiSubjet2_pt_branch != 0) V_softdropPuppiSubjet2_pt();
+  if (V_softdropPuppiSubjet2_eta_branch != 0) V_softdropPuppiSubjet2_eta();
+  if (V_softdropPuppiSubjet2_phi_branch != 0) V_softdropPuppiSubjet2_phi();
+  if (V_softdropPuppiSubjet2_mass_branch != 0) V_softdropPuppiSubjet2_mass();
+  if (V_softdropPuppiSubjet2_energy_branch != 0) V_softdropPuppiSubjet2_energy();
+  if (V_npfcands_branch != 0) V_npfcands();
+  if (V_partonFlavour_branch != 0) V_partonFlavour();
+  if (Htag_J_p4_branch != 0) Htag_J_p4();
+  if (Htag_J_pt_branch != 0) Htag_J_pt();
+  if (Htag_J_eta_branch != 0) Htag_J_eta();
+  if (Htag_J_phi_branch != 0) Htag_J_phi();
+  if (Htag_J_mass_branch != 0) Htag_J_mass();
+  if (Htag_J_softdropMass_branch != 0) Htag_J_softdropMass();
+  if (Htag_L_p4_branch != 0) Htag_L_p4();
+  if (Htag_L_pt_branch != 0) Htag_L_pt();
+  if (Htag_L_eta_branch != 0) Htag_L_eta();
+  if (Htag_L_phi_branch != 0) Htag_L_phi();
+  if (Htag_L_dr_branch != 0) Htag_L_dr();
+  if (Htag_L_alpha_branch != 0) Htag_L_alpha();
+  if (Htag_pf_p4_branch != 0) Htag_pf_p4();
+  if (Htag_pf_pt_branch != 0) Htag_pf_pt();
+  if (Htag_pf_eta_branch != 0) Htag_pf_eta();
+  if (Htag_pf_phi_branch != 0) Htag_pf_phi();
+  if (Htag_pf_id_branch != 0) Htag_pf_id();
+  if (Htag_pf_dr_branch != 0) Htag_pf_dr();
+  if (Htag_pf_alpha_branch != 0) Htag_pf_alpha();
+  if (Htag_pf_puppi_wgt_branch != 0) Htag_pf_puppi_wgt();
+  if (Htag_pf_ptfrac_branch != 0) Htag_pf_ptfrac();
+  if (Htag_pf_ptrel_branch != 0) Htag_pf_ptrel();
+  if (Htag_pf_nolep_p4_branch != 0) Htag_pf_nolep_p4();
+  if (Htag_pf_nolep_pt_branch != 0) Htag_pf_nolep_pt();
+  if (Htag_pf_nolep_eta_branch != 0) Htag_pf_nolep_eta();
+  if (Htag_pf_nolep_phi_branch != 0) Htag_pf_nolep_phi();
+  if (Htag_pf_nolep_id_branch != 0) Htag_pf_nolep_id();
+  if (Htag_pf_nolep_dr_branch != 0) Htag_pf_nolep_dr();
+  if (Htag_pf_nolep_alpha_branch != 0) Htag_pf_nolep_alpha();
+  if (Htag_pf_nolep_puppi_wgt_branch != 0) Htag_pf_nolep_puppi_wgt();
+  if (Htag_pf_nolep_ptfrac_branch != 0) Htag_pf_nolep_ptfrac();
+  if (Htag_pf_nolep_ptrel_branch != 0) Htag_pf_nolep_ptrel();
+  if (Htag_ak4_p4_branch != 0) Htag_ak4_p4();
+  if (Htag_ak4_pt_branch != 0) Htag_ak4_pt();
+  if (Htag_ak4_eta_branch != 0) Htag_ak4_eta();
+  if (Htag_ak4_phi_branch != 0) Htag_ak4_phi();
+  if (Htag_ak4_dr_branch != 0) Htag_ak4_dr();
+  if (Htag_ak4_alpha_branch != 0) Htag_ak4_alpha();
+  if (Htag_ak4_L_dr_branch != 0) Htag_ak4_L_dr();
+  if (Htag_ak4_L_dpt_branch != 0) Htag_ak4_L_dpt();
+  if (Htag_fromPV_branch != 0) Htag_fromPV();
+  if (Htag_pv_quality_branch != 0) Htag_pv_quality();
+  if (Htag_leppffound_branch != 0) Htag_leppffound();
+  if (Htag_subjet1_p4_branch != 0) Htag_subjet1_p4();
+  if (Htag_subjet1_pt_branch != 0) Htag_subjet1_pt();
+  if (Htag_subjet1_eta_branch != 0) Htag_subjet1_eta();
+  if (Htag_subjet1_phi_branch != 0) Htag_subjet1_phi();
+  if (Htag_subjet1_dr_branch != 0) Htag_subjet1_dr();
+  if (Htag_subjet1_alpha_branch != 0) Htag_subjet1_alpha();
+  if (Htag_subjet2_p4_branch != 0) Htag_subjet2_p4();
+  if (Htag_subjet2_pt_branch != 0) Htag_subjet2_pt();
+  if (Htag_subjet2_eta_branch != 0) Htag_subjet2_eta();
+  if (Htag_subjet2_phi_branch != 0) Htag_subjet2_phi();
+  if (Htag_subjet2_dr_branch != 0) Htag_subjet2_dr();
+  if (Htag_subjet2_alpha_branch != 0) Htag_subjet2_alpha();
+  if (Htag_gen_higgs_dr_branch != 0) Htag_gen_higgs_dr();
+  if (Htag_gen_higgs_alpha_branch != 0) Htag_gen_higgs_alpha();
+  if (Htag_gen_whad_dr_branch != 0) Htag_gen_whad_dr();
+  if (Htag_gen_whad_alpha_branch != 0) Htag_gen_whad_alpha();
+  if (Htag_gen_wlep_dr_branch != 0) Htag_gen_wlep_dr();
+  if (Htag_gen_wlep_alpha_branch != 0) Htag_gen_wlep_alpha();
+  if (Htag_gen_q0_dr_branch != 0) Htag_gen_q0_dr();
+  if (Htag_gen_q0_alpha_branch != 0) Htag_gen_q0_alpha();
+  if (Htag_gen_q1_dr_branch != 0) Htag_gen_q1_dr();
+  if (Htag_gen_q1_alpha_branch != 0) Htag_gen_q1_alpha();
+  if (Htag_gen_lep_dr_branch != 0) Htag_gen_lep_dr();
+  if (Htag_gen_lep_alpha_branch != 0) Htag_gen_lep_alpha();
+  if (Htag_gen_neu_dr_branch != 0) Htag_gen_neu_dr();
+  if (Htag_gen_neu_alpha_branch != 0) Htag_gen_neu_alpha();
   if (Recoil_p4_branch != 0) Recoil_p4();
   if (Recoil_leadak4_p4_branch != 0) Recoil_leadak4_p4();
   if (Recoil_leadak4_npfcands_branch != 0) Recoil_leadak4_npfcands();
@@ -796,6 +1246,8 @@ void hwwtree::LoadAllBranches() {
   if (Recoil_j_3_4_leadak4_puppi_neutralMultiplicity_branch != 0) Recoil_j_3_4_leadak4_puppi_neutralMultiplicity();
   if (Recoil_j_3_4_leadak4_puppi_photonMultiplicity_branch != 0) Recoil_j_3_4_leadak4_puppi_photonMultiplicity();
   if (Recoil_j_3_4_leadak4_puppi_totalMultiplicity_branch != 0) Recoil_j_3_4_leadak4_puppi_totalMultiplicity();
+  if (gen_ht_branch != 0) gen_ht();
+  if (nvtx_branch != 0) nvtx();
 }
 
 const int &hwwtree::run() {
@@ -2072,17 +2524,82 @@ const int &hwwtree::is_whad_lead() {
   return is_whad_lead_;
 }
 
-const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &hwwtree::v_p4() {
-  if (not v_p4_isLoaded) {
-    if (v_p4_branch != 0) {
-      v_p4_branch->GetEntry(index);
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &hwwtree::neu_p4() {
+  if (not neu_p4_isLoaded) {
+    if (neu_p4_branch != 0) {
+      neu_p4_branch->GetEntry(index);
     } else {
-      printf("branch v_p4_branch does not exist!\n");
+      printf("branch neu_p4_branch does not exist!\n");
       exit(1);
     }
-    v_p4_isLoaded = true;
+    neu_p4_isLoaded = true;
   }
-  return *v_p4_;
+  return *neu_p4_;
+}
+
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &hwwtree::neu_p4_sol1() {
+  if (not neu_p4_sol1_isLoaded) {
+    if (neu_p4_sol1_branch != 0) {
+      neu_p4_sol1_branch->GetEntry(index);
+    } else {
+      printf("branch neu_p4_sol1_branch does not exist!\n");
+      exit(1);
+    }
+    neu_p4_sol1_isLoaded = true;
+  }
+  return *neu_p4_sol1_;
+}
+
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &hwwtree::neu_p4_sol2() {
+  if (not neu_p4_sol2_isLoaded) {
+    if (neu_p4_sol2_branch != 0) {
+      neu_p4_sol2_branch->GetEntry(index);
+    } else {
+      printf("branch neu_p4_sol2_branch does not exist!\n");
+      exit(1);
+    }
+    neu_p4_sol2_isLoaded = true;
+  }
+  return *neu_p4_sol2_;
+}
+
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &hwwtree::neu_p4_invsol1() {
+  if (not neu_p4_invsol1_isLoaded) {
+    if (neu_p4_invsol1_branch != 0) {
+      neu_p4_invsol1_branch->GetEntry(index);
+    } else {
+      printf("branch neu_p4_invsol1_branch does not exist!\n");
+      exit(1);
+    }
+    neu_p4_invsol1_isLoaded = true;
+  }
+  return *neu_p4_invsol1_;
+}
+
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &hwwtree::neu_p4_invsol2() {
+  if (not neu_p4_invsol2_isLoaded) {
+    if (neu_p4_invsol2_branch != 0) {
+      neu_p4_invsol2_branch->GetEntry(index);
+    } else {
+      printf("branch neu_p4_invsol2_branch does not exist!\n");
+      exit(1);
+    }
+    neu_p4_invsol2_isLoaded = true;
+  }
+  return *neu_p4_invsol2_;
+}
+
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &hwwtree::V_p4() {
+  if (not V_p4_isLoaded) {
+    if (V_p4_branch != 0) {
+      V_p4_branch->GetEntry(index);
+    } else {
+      printf("branch V_p4_branch does not exist!\n");
+      exit(1);
+    }
+    V_p4_isLoaded = true;
+  }
+  return *V_p4_;
 }
 
 const float &hwwtree::J_area() {
@@ -2252,6 +2769,84 @@ const float &hwwtree::J_deep_rawdisc_zbb() {
     J_deep_rawdisc_zbb_isLoaded = true;
   }
   return J_deep_rawdisc_zbb_;
+}
+
+const float &hwwtree::J_deep_bindisc_h4q() {
+  if (not J_deep_bindisc_h4q_isLoaded) {
+    if (J_deep_bindisc_h4q_branch != 0) {
+      J_deep_bindisc_h4q_branch->GetEntry(index);
+    } else {
+      printf("branch J_deep_bindisc_h4q_branch does not exist!\n");
+      exit(1);
+    }
+    J_deep_bindisc_h4q_isLoaded = true;
+  }
+  return J_deep_bindisc_h4q_;
+}
+
+const float &hwwtree::J_deep_bindisc_hbb() {
+  if (not J_deep_bindisc_hbb_isLoaded) {
+    if (J_deep_bindisc_hbb_branch != 0) {
+      J_deep_bindisc_hbb_branch->GetEntry(index);
+    } else {
+      printf("branch J_deep_bindisc_hbb_branch does not exist!\n");
+      exit(1);
+    }
+    J_deep_bindisc_hbb_isLoaded = true;
+  }
+  return J_deep_bindisc_hbb_;
+}
+
+const float &hwwtree::J_deep_bindisc_top() {
+  if (not J_deep_bindisc_top_isLoaded) {
+    if (J_deep_bindisc_top_branch != 0) {
+      J_deep_bindisc_top_branch->GetEntry(index);
+    } else {
+      printf("branch J_deep_bindisc_top_branch does not exist!\n");
+      exit(1);
+    }
+    J_deep_bindisc_top_isLoaded = true;
+  }
+  return J_deep_bindisc_top_;
+}
+
+const float &hwwtree::J_deep_bindisc_w() {
+  if (not J_deep_bindisc_w_isLoaded) {
+    if (J_deep_bindisc_w_branch != 0) {
+      J_deep_bindisc_w_branch->GetEntry(index);
+    } else {
+      printf("branch J_deep_bindisc_w_branch does not exist!\n");
+      exit(1);
+    }
+    J_deep_bindisc_w_isLoaded = true;
+  }
+  return J_deep_bindisc_w_;
+}
+
+const float &hwwtree::J_deep_bindisc_z() {
+  if (not J_deep_bindisc_z_isLoaded) {
+    if (J_deep_bindisc_z_branch != 0) {
+      J_deep_bindisc_z_branch->GetEntry(index);
+    } else {
+      printf("branch J_deep_bindisc_z_branch does not exist!\n");
+      exit(1);
+    }
+    J_deep_bindisc_z_isLoaded = true;
+  }
+  return J_deep_bindisc_z_;
+}
+
+const float &hwwtree::J_deep_bindisc_zbb() {
+  if (not J_deep_bindisc_zbb_isLoaded) {
+    if (J_deep_bindisc_zbb_branch != 0) {
+      J_deep_bindisc_zbb_branch->GetEntry(index);
+    } else {
+      printf("branch J_deep_bindisc_zbb_branch does not exist!\n");
+      exit(1);
+    }
+    J_deep_bindisc_zbb_isLoaded = true;
+  }
+  return J_deep_bindisc_zbb_;
 }
 
 const float &hwwtree::J_softdropPuppiSubjet1_pt() {
@@ -2590,6 +3185,1306 @@ const float &hwwtree::L_subjet2_deg() {
     L_subjet2_deg_isLoaded = true;
   }
   return L_subjet2_deg_;
+}
+
+const float &hwwtree::V_area() {
+  if (not V_area_isLoaded) {
+    if (V_area_branch != 0) {
+      V_area_branch->GetEntry(index);
+    } else {
+      printf("branch V_area_branch does not exist!\n");
+      exit(1);
+    }
+    V_area_isLoaded = true;
+  }
+  return V_area_;
+}
+
+const float &hwwtree::V_mass() {
+  if (not V_mass_isLoaded) {
+    if (V_mass_branch != 0) {
+      V_mass_branch->GetEntry(index);
+    } else {
+      printf("branch V_mass_branch does not exist!\n");
+      exit(1);
+    }
+    V_mass_isLoaded = true;
+  }
+  return V_mass_;
+}
+
+const float &hwwtree::V_softdropMass() {
+  if (not V_softdropMass_isLoaded) {
+    if (V_softdropMass_branch != 0) {
+      V_softdropMass_branch->GetEntry(index);
+    } else {
+      printf("branch V_softdropMass_branch does not exist!\n");
+      exit(1);
+    }
+    V_softdropMass_isLoaded = true;
+  }
+  return V_softdropMass_;
+}
+
+const float &hwwtree::V_nJettinessTau1() {
+  if (not V_nJettinessTau1_isLoaded) {
+    if (V_nJettinessTau1_branch != 0) {
+      V_nJettinessTau1_branch->GetEntry(index);
+    } else {
+      printf("branch V_nJettinessTau1_branch does not exist!\n");
+      exit(1);
+    }
+    V_nJettinessTau1_isLoaded = true;
+  }
+  return V_nJettinessTau1_;
+}
+
+const float &hwwtree::V_nJettinessTau2() {
+  if (not V_nJettinessTau2_isLoaded) {
+    if (V_nJettinessTau2_branch != 0) {
+      V_nJettinessTau2_branch->GetEntry(index);
+    } else {
+      printf("branch V_nJettinessTau2_branch does not exist!\n");
+      exit(1);
+    }
+    V_nJettinessTau2_isLoaded = true;
+  }
+  return V_nJettinessTau2_;
+}
+
+const float &hwwtree::V_nJettinessTau3() {
+  if (not V_nJettinessTau3_isLoaded) {
+    if (V_nJettinessTau3_branch != 0) {
+      V_nJettinessTau3_branch->GetEntry(index);
+    } else {
+      printf("branch V_nJettinessTau3_branch does not exist!\n");
+      exit(1);
+    }
+    V_nJettinessTau3_isLoaded = true;
+  }
+  return V_nJettinessTau3_;
+}
+
+const float &hwwtree::V_deep_rawdisc_h4q() {
+  if (not V_deep_rawdisc_h4q_isLoaded) {
+    if (V_deep_rawdisc_h4q_branch != 0) {
+      V_deep_rawdisc_h4q_branch->GetEntry(index);
+    } else {
+      printf("branch V_deep_rawdisc_h4q_branch does not exist!\n");
+      exit(1);
+    }
+    V_deep_rawdisc_h4q_isLoaded = true;
+  }
+  return V_deep_rawdisc_h4q_;
+}
+
+const float &hwwtree::V_deep_rawdisc_hbb() {
+  if (not V_deep_rawdisc_hbb_isLoaded) {
+    if (V_deep_rawdisc_hbb_branch != 0) {
+      V_deep_rawdisc_hbb_branch->GetEntry(index);
+    } else {
+      printf("branch V_deep_rawdisc_hbb_branch does not exist!\n");
+      exit(1);
+    }
+    V_deep_rawdisc_hbb_isLoaded = true;
+  }
+  return V_deep_rawdisc_hbb_;
+}
+
+const float &hwwtree::V_deep_rawdisc_qcd() {
+  if (not V_deep_rawdisc_qcd_isLoaded) {
+    if (V_deep_rawdisc_qcd_branch != 0) {
+      V_deep_rawdisc_qcd_branch->GetEntry(index);
+    } else {
+      printf("branch V_deep_rawdisc_qcd_branch does not exist!\n");
+      exit(1);
+    }
+    V_deep_rawdisc_qcd_isLoaded = true;
+  }
+  return V_deep_rawdisc_qcd_;
+}
+
+const float &hwwtree::V_deep_rawdisc_top() {
+  if (not V_deep_rawdisc_top_isLoaded) {
+    if (V_deep_rawdisc_top_branch != 0) {
+      V_deep_rawdisc_top_branch->GetEntry(index);
+    } else {
+      printf("branch V_deep_rawdisc_top_branch does not exist!\n");
+      exit(1);
+    }
+    V_deep_rawdisc_top_isLoaded = true;
+  }
+  return V_deep_rawdisc_top_;
+}
+
+const float &hwwtree::V_deep_rawdisc_w() {
+  if (not V_deep_rawdisc_w_isLoaded) {
+    if (V_deep_rawdisc_w_branch != 0) {
+      V_deep_rawdisc_w_branch->GetEntry(index);
+    } else {
+      printf("branch V_deep_rawdisc_w_branch does not exist!\n");
+      exit(1);
+    }
+    V_deep_rawdisc_w_isLoaded = true;
+  }
+  return V_deep_rawdisc_w_;
+}
+
+const float &hwwtree::V_deep_rawdisc_z() {
+  if (not V_deep_rawdisc_z_isLoaded) {
+    if (V_deep_rawdisc_z_branch != 0) {
+      V_deep_rawdisc_z_branch->GetEntry(index);
+    } else {
+      printf("branch V_deep_rawdisc_z_branch does not exist!\n");
+      exit(1);
+    }
+    V_deep_rawdisc_z_isLoaded = true;
+  }
+  return V_deep_rawdisc_z_;
+}
+
+const float &hwwtree::V_deep_rawdisc_zbb() {
+  if (not V_deep_rawdisc_zbb_isLoaded) {
+    if (V_deep_rawdisc_zbb_branch != 0) {
+      V_deep_rawdisc_zbb_branch->GetEntry(index);
+    } else {
+      printf("branch V_deep_rawdisc_zbb_branch does not exist!\n");
+      exit(1);
+    }
+    V_deep_rawdisc_zbb_isLoaded = true;
+  }
+  return V_deep_rawdisc_zbb_;
+}
+
+const float &hwwtree::V_deep_bindisc_h4q() {
+  if (not V_deep_bindisc_h4q_isLoaded) {
+    if (V_deep_bindisc_h4q_branch != 0) {
+      V_deep_bindisc_h4q_branch->GetEntry(index);
+    } else {
+      printf("branch V_deep_bindisc_h4q_branch does not exist!\n");
+      exit(1);
+    }
+    V_deep_bindisc_h4q_isLoaded = true;
+  }
+  return V_deep_bindisc_h4q_;
+}
+
+const float &hwwtree::V_deep_bindisc_hbb() {
+  if (not V_deep_bindisc_hbb_isLoaded) {
+    if (V_deep_bindisc_hbb_branch != 0) {
+      V_deep_bindisc_hbb_branch->GetEntry(index);
+    } else {
+      printf("branch V_deep_bindisc_hbb_branch does not exist!\n");
+      exit(1);
+    }
+    V_deep_bindisc_hbb_isLoaded = true;
+  }
+  return V_deep_bindisc_hbb_;
+}
+
+const float &hwwtree::V_deep_bindisc_top() {
+  if (not V_deep_bindisc_top_isLoaded) {
+    if (V_deep_bindisc_top_branch != 0) {
+      V_deep_bindisc_top_branch->GetEntry(index);
+    } else {
+      printf("branch V_deep_bindisc_top_branch does not exist!\n");
+      exit(1);
+    }
+    V_deep_bindisc_top_isLoaded = true;
+  }
+  return V_deep_bindisc_top_;
+}
+
+const float &hwwtree::V_deep_bindisc_w() {
+  if (not V_deep_bindisc_w_isLoaded) {
+    if (V_deep_bindisc_w_branch != 0) {
+      V_deep_bindisc_w_branch->GetEntry(index);
+    } else {
+      printf("branch V_deep_bindisc_w_branch does not exist!\n");
+      exit(1);
+    }
+    V_deep_bindisc_w_isLoaded = true;
+  }
+  return V_deep_bindisc_w_;
+}
+
+const float &hwwtree::V_deep_bindisc_z() {
+  if (not V_deep_bindisc_z_isLoaded) {
+    if (V_deep_bindisc_z_branch != 0) {
+      V_deep_bindisc_z_branch->GetEntry(index);
+    } else {
+      printf("branch V_deep_bindisc_z_branch does not exist!\n");
+      exit(1);
+    }
+    V_deep_bindisc_z_isLoaded = true;
+  }
+  return V_deep_bindisc_z_;
+}
+
+const float &hwwtree::V_deep_bindisc_zbb() {
+  if (not V_deep_bindisc_zbb_isLoaded) {
+    if (V_deep_bindisc_zbb_branch != 0) {
+      V_deep_bindisc_zbb_branch->GetEntry(index);
+    } else {
+      printf("branch V_deep_bindisc_zbb_branch does not exist!\n");
+      exit(1);
+    }
+    V_deep_bindisc_zbb_isLoaded = true;
+  }
+  return V_deep_bindisc_zbb_;
+}
+
+const float &hwwtree::V_softdropPuppiSubjet1_pt() {
+  if (not V_softdropPuppiSubjet1_pt_isLoaded) {
+    if (V_softdropPuppiSubjet1_pt_branch != 0) {
+      V_softdropPuppiSubjet1_pt_branch->GetEntry(index);
+    } else {
+      printf("branch V_softdropPuppiSubjet1_pt_branch does not exist!\n");
+      exit(1);
+    }
+    V_softdropPuppiSubjet1_pt_isLoaded = true;
+  }
+  return V_softdropPuppiSubjet1_pt_;
+}
+
+const float &hwwtree::V_softdropPuppiSubjet1_eta() {
+  if (not V_softdropPuppiSubjet1_eta_isLoaded) {
+    if (V_softdropPuppiSubjet1_eta_branch != 0) {
+      V_softdropPuppiSubjet1_eta_branch->GetEntry(index);
+    } else {
+      printf("branch V_softdropPuppiSubjet1_eta_branch does not exist!\n");
+      exit(1);
+    }
+    V_softdropPuppiSubjet1_eta_isLoaded = true;
+  }
+  return V_softdropPuppiSubjet1_eta_;
+}
+
+const float &hwwtree::V_softdropPuppiSubjet1_phi() {
+  if (not V_softdropPuppiSubjet1_phi_isLoaded) {
+    if (V_softdropPuppiSubjet1_phi_branch != 0) {
+      V_softdropPuppiSubjet1_phi_branch->GetEntry(index);
+    } else {
+      printf("branch V_softdropPuppiSubjet1_phi_branch does not exist!\n");
+      exit(1);
+    }
+    V_softdropPuppiSubjet1_phi_isLoaded = true;
+  }
+  return V_softdropPuppiSubjet1_phi_;
+}
+
+const float &hwwtree::V_softdropPuppiSubjet1_mass() {
+  if (not V_softdropPuppiSubjet1_mass_isLoaded) {
+    if (V_softdropPuppiSubjet1_mass_branch != 0) {
+      V_softdropPuppiSubjet1_mass_branch->GetEntry(index);
+    } else {
+      printf("branch V_softdropPuppiSubjet1_mass_branch does not exist!\n");
+      exit(1);
+    }
+    V_softdropPuppiSubjet1_mass_isLoaded = true;
+  }
+  return V_softdropPuppiSubjet1_mass_;
+}
+
+const float &hwwtree::V_softdropPuppiSubjet1_energy() {
+  if (not V_softdropPuppiSubjet1_energy_isLoaded) {
+    if (V_softdropPuppiSubjet1_energy_branch != 0) {
+      V_softdropPuppiSubjet1_energy_branch->GetEntry(index);
+    } else {
+      printf("branch V_softdropPuppiSubjet1_energy_branch does not exist!\n");
+      exit(1);
+    }
+    V_softdropPuppiSubjet1_energy_isLoaded = true;
+  }
+  return V_softdropPuppiSubjet1_energy_;
+}
+
+const float &hwwtree::V_softdropPuppiSubjet2_pt() {
+  if (not V_softdropPuppiSubjet2_pt_isLoaded) {
+    if (V_softdropPuppiSubjet2_pt_branch != 0) {
+      V_softdropPuppiSubjet2_pt_branch->GetEntry(index);
+    } else {
+      printf("branch V_softdropPuppiSubjet2_pt_branch does not exist!\n");
+      exit(1);
+    }
+    V_softdropPuppiSubjet2_pt_isLoaded = true;
+  }
+  return V_softdropPuppiSubjet2_pt_;
+}
+
+const float &hwwtree::V_softdropPuppiSubjet2_eta() {
+  if (not V_softdropPuppiSubjet2_eta_isLoaded) {
+    if (V_softdropPuppiSubjet2_eta_branch != 0) {
+      V_softdropPuppiSubjet2_eta_branch->GetEntry(index);
+    } else {
+      printf("branch V_softdropPuppiSubjet2_eta_branch does not exist!\n");
+      exit(1);
+    }
+    V_softdropPuppiSubjet2_eta_isLoaded = true;
+  }
+  return V_softdropPuppiSubjet2_eta_;
+}
+
+const float &hwwtree::V_softdropPuppiSubjet2_phi() {
+  if (not V_softdropPuppiSubjet2_phi_isLoaded) {
+    if (V_softdropPuppiSubjet2_phi_branch != 0) {
+      V_softdropPuppiSubjet2_phi_branch->GetEntry(index);
+    } else {
+      printf("branch V_softdropPuppiSubjet2_phi_branch does not exist!\n");
+      exit(1);
+    }
+    V_softdropPuppiSubjet2_phi_isLoaded = true;
+  }
+  return V_softdropPuppiSubjet2_phi_;
+}
+
+const float &hwwtree::V_softdropPuppiSubjet2_mass() {
+  if (not V_softdropPuppiSubjet2_mass_isLoaded) {
+    if (V_softdropPuppiSubjet2_mass_branch != 0) {
+      V_softdropPuppiSubjet2_mass_branch->GetEntry(index);
+    } else {
+      printf("branch V_softdropPuppiSubjet2_mass_branch does not exist!\n");
+      exit(1);
+    }
+    V_softdropPuppiSubjet2_mass_isLoaded = true;
+  }
+  return V_softdropPuppiSubjet2_mass_;
+}
+
+const float &hwwtree::V_softdropPuppiSubjet2_energy() {
+  if (not V_softdropPuppiSubjet2_energy_isLoaded) {
+    if (V_softdropPuppiSubjet2_energy_branch != 0) {
+      V_softdropPuppiSubjet2_energy_branch->GetEntry(index);
+    } else {
+      printf("branch V_softdropPuppiSubjet2_energy_branch does not exist!\n");
+      exit(1);
+    }
+    V_softdropPuppiSubjet2_energy_isLoaded = true;
+  }
+  return V_softdropPuppiSubjet2_energy_;
+}
+
+const int &hwwtree::V_npfcands() {
+  if (not V_npfcands_isLoaded) {
+    if (V_npfcands_branch != 0) {
+      V_npfcands_branch->GetEntry(index);
+    } else {
+      printf("branch V_npfcands_branch does not exist!\n");
+      exit(1);
+    }
+    V_npfcands_isLoaded = true;
+  }
+  return V_npfcands_;
+}
+
+const int &hwwtree::V_partonFlavour() {
+  if (not V_partonFlavour_isLoaded) {
+    if (V_partonFlavour_branch != 0) {
+      V_partonFlavour_branch->GetEntry(index);
+    } else {
+      printf("branch V_partonFlavour_branch does not exist!\n");
+      exit(1);
+    }
+    V_partonFlavour_isLoaded = true;
+  }
+  return V_partonFlavour_;
+}
+
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &hwwtree::Htag_J_p4() {
+  if (not Htag_J_p4_isLoaded) {
+    if (Htag_J_p4_branch != 0) {
+      Htag_J_p4_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_J_p4_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_J_p4_isLoaded = true;
+  }
+  return *Htag_J_p4_;
+}
+
+const float &hwwtree::Htag_J_pt() {
+  if (not Htag_J_pt_isLoaded) {
+    if (Htag_J_pt_branch != 0) {
+      Htag_J_pt_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_J_pt_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_J_pt_isLoaded = true;
+  }
+  return Htag_J_pt_;
+}
+
+const float &hwwtree::Htag_J_eta() {
+  if (not Htag_J_eta_isLoaded) {
+    if (Htag_J_eta_branch != 0) {
+      Htag_J_eta_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_J_eta_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_J_eta_isLoaded = true;
+  }
+  return Htag_J_eta_;
+}
+
+const float &hwwtree::Htag_J_phi() {
+  if (not Htag_J_phi_isLoaded) {
+    if (Htag_J_phi_branch != 0) {
+      Htag_J_phi_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_J_phi_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_J_phi_isLoaded = true;
+  }
+  return Htag_J_phi_;
+}
+
+const float &hwwtree::Htag_J_mass() {
+  if (not Htag_J_mass_isLoaded) {
+    if (Htag_J_mass_branch != 0) {
+      Htag_J_mass_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_J_mass_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_J_mass_isLoaded = true;
+  }
+  return Htag_J_mass_;
+}
+
+const float &hwwtree::Htag_J_softdropMass() {
+  if (not Htag_J_softdropMass_isLoaded) {
+    if (Htag_J_softdropMass_branch != 0) {
+      Htag_J_softdropMass_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_J_softdropMass_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_J_softdropMass_isLoaded = true;
+  }
+  return Htag_J_softdropMass_;
+}
+
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &hwwtree::Htag_L_p4() {
+  if (not Htag_L_p4_isLoaded) {
+    if (Htag_L_p4_branch != 0) {
+      Htag_L_p4_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_L_p4_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_L_p4_isLoaded = true;
+  }
+  return *Htag_L_p4_;
+}
+
+const float &hwwtree::Htag_L_pt() {
+  if (not Htag_L_pt_isLoaded) {
+    if (Htag_L_pt_branch != 0) {
+      Htag_L_pt_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_L_pt_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_L_pt_isLoaded = true;
+  }
+  return Htag_L_pt_;
+}
+
+const float &hwwtree::Htag_L_eta() {
+  if (not Htag_L_eta_isLoaded) {
+    if (Htag_L_eta_branch != 0) {
+      Htag_L_eta_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_L_eta_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_L_eta_isLoaded = true;
+  }
+  return Htag_L_eta_;
+}
+
+const float &hwwtree::Htag_L_phi() {
+  if (not Htag_L_phi_isLoaded) {
+    if (Htag_L_phi_branch != 0) {
+      Htag_L_phi_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_L_phi_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_L_phi_isLoaded = true;
+  }
+  return Htag_L_phi_;
+}
+
+const float &hwwtree::Htag_L_dr() {
+  if (not Htag_L_dr_isLoaded) {
+    if (Htag_L_dr_branch != 0) {
+      Htag_L_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_L_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_L_dr_isLoaded = true;
+  }
+  return Htag_L_dr_;
+}
+
+const float &hwwtree::Htag_L_alpha() {
+  if (not Htag_L_alpha_isLoaded) {
+    if (Htag_L_alpha_branch != 0) {
+      Htag_L_alpha_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_L_alpha_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_L_alpha_isLoaded = true;
+  }
+  return Htag_L_alpha_;
+}
+
+const vector<ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > > &hwwtree::Htag_pf_p4() {
+  if (not Htag_pf_p4_isLoaded) {
+    if (Htag_pf_p4_branch != 0) {
+      Htag_pf_p4_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_p4_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_p4_isLoaded = true;
+  }
+  return *Htag_pf_p4_;
+}
+
+const vector<float> &hwwtree::Htag_pf_pt() {
+  if (not Htag_pf_pt_isLoaded) {
+    if (Htag_pf_pt_branch != 0) {
+      Htag_pf_pt_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_pt_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_pt_isLoaded = true;
+  }
+  return *Htag_pf_pt_;
+}
+
+const vector<float> &hwwtree::Htag_pf_eta() {
+  if (not Htag_pf_eta_isLoaded) {
+    if (Htag_pf_eta_branch != 0) {
+      Htag_pf_eta_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_eta_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_eta_isLoaded = true;
+  }
+  return *Htag_pf_eta_;
+}
+
+const vector<float> &hwwtree::Htag_pf_phi() {
+  if (not Htag_pf_phi_isLoaded) {
+    if (Htag_pf_phi_branch != 0) {
+      Htag_pf_phi_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_phi_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_phi_isLoaded = true;
+  }
+  return *Htag_pf_phi_;
+}
+
+const vector<int> &hwwtree::Htag_pf_id() {
+  if (not Htag_pf_id_isLoaded) {
+    if (Htag_pf_id_branch != 0) {
+      Htag_pf_id_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_id_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_id_isLoaded = true;
+  }
+  return *Htag_pf_id_;
+}
+
+const vector<float> &hwwtree::Htag_pf_dr() {
+  if (not Htag_pf_dr_isLoaded) {
+    if (Htag_pf_dr_branch != 0) {
+      Htag_pf_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_dr_isLoaded = true;
+  }
+  return *Htag_pf_dr_;
+}
+
+const vector<float> &hwwtree::Htag_pf_alpha() {
+  if (not Htag_pf_alpha_isLoaded) {
+    if (Htag_pf_alpha_branch != 0) {
+      Htag_pf_alpha_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_alpha_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_alpha_isLoaded = true;
+  }
+  return *Htag_pf_alpha_;
+}
+
+const vector<float> &hwwtree::Htag_pf_puppi_wgt() {
+  if (not Htag_pf_puppi_wgt_isLoaded) {
+    if (Htag_pf_puppi_wgt_branch != 0) {
+      Htag_pf_puppi_wgt_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_puppi_wgt_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_puppi_wgt_isLoaded = true;
+  }
+  return *Htag_pf_puppi_wgt_;
+}
+
+const vector<float> &hwwtree::Htag_pf_ptfrac() {
+  if (not Htag_pf_ptfrac_isLoaded) {
+    if (Htag_pf_ptfrac_branch != 0) {
+      Htag_pf_ptfrac_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_ptfrac_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_ptfrac_isLoaded = true;
+  }
+  return *Htag_pf_ptfrac_;
+}
+
+const vector<float> &hwwtree::Htag_pf_ptrel() {
+  if (not Htag_pf_ptrel_isLoaded) {
+    if (Htag_pf_ptrel_branch != 0) {
+      Htag_pf_ptrel_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_ptrel_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_ptrel_isLoaded = true;
+  }
+  return *Htag_pf_ptrel_;
+}
+
+const vector<ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > > &hwwtree::Htag_pf_nolep_p4() {
+  if (not Htag_pf_nolep_p4_isLoaded) {
+    if (Htag_pf_nolep_p4_branch != 0) {
+      Htag_pf_nolep_p4_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_nolep_p4_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_nolep_p4_isLoaded = true;
+  }
+  return *Htag_pf_nolep_p4_;
+}
+
+const vector<float> &hwwtree::Htag_pf_nolep_pt() {
+  if (not Htag_pf_nolep_pt_isLoaded) {
+    if (Htag_pf_nolep_pt_branch != 0) {
+      Htag_pf_nolep_pt_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_nolep_pt_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_nolep_pt_isLoaded = true;
+  }
+  return *Htag_pf_nolep_pt_;
+}
+
+const vector<float> &hwwtree::Htag_pf_nolep_eta() {
+  if (not Htag_pf_nolep_eta_isLoaded) {
+    if (Htag_pf_nolep_eta_branch != 0) {
+      Htag_pf_nolep_eta_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_nolep_eta_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_nolep_eta_isLoaded = true;
+  }
+  return *Htag_pf_nolep_eta_;
+}
+
+const vector<float> &hwwtree::Htag_pf_nolep_phi() {
+  if (not Htag_pf_nolep_phi_isLoaded) {
+    if (Htag_pf_nolep_phi_branch != 0) {
+      Htag_pf_nolep_phi_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_nolep_phi_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_nolep_phi_isLoaded = true;
+  }
+  return *Htag_pf_nolep_phi_;
+}
+
+const vector<int> &hwwtree::Htag_pf_nolep_id() {
+  if (not Htag_pf_nolep_id_isLoaded) {
+    if (Htag_pf_nolep_id_branch != 0) {
+      Htag_pf_nolep_id_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_nolep_id_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_nolep_id_isLoaded = true;
+  }
+  return *Htag_pf_nolep_id_;
+}
+
+const vector<float> &hwwtree::Htag_pf_nolep_dr() {
+  if (not Htag_pf_nolep_dr_isLoaded) {
+    if (Htag_pf_nolep_dr_branch != 0) {
+      Htag_pf_nolep_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_nolep_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_nolep_dr_isLoaded = true;
+  }
+  return *Htag_pf_nolep_dr_;
+}
+
+const vector<float> &hwwtree::Htag_pf_nolep_alpha() {
+  if (not Htag_pf_nolep_alpha_isLoaded) {
+    if (Htag_pf_nolep_alpha_branch != 0) {
+      Htag_pf_nolep_alpha_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_nolep_alpha_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_nolep_alpha_isLoaded = true;
+  }
+  return *Htag_pf_nolep_alpha_;
+}
+
+const vector<float> &hwwtree::Htag_pf_nolep_puppi_wgt() {
+  if (not Htag_pf_nolep_puppi_wgt_isLoaded) {
+    if (Htag_pf_nolep_puppi_wgt_branch != 0) {
+      Htag_pf_nolep_puppi_wgt_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_nolep_puppi_wgt_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_nolep_puppi_wgt_isLoaded = true;
+  }
+  return *Htag_pf_nolep_puppi_wgt_;
+}
+
+const vector<float> &hwwtree::Htag_pf_nolep_ptfrac() {
+  if (not Htag_pf_nolep_ptfrac_isLoaded) {
+    if (Htag_pf_nolep_ptfrac_branch != 0) {
+      Htag_pf_nolep_ptfrac_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_nolep_ptfrac_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_nolep_ptfrac_isLoaded = true;
+  }
+  return *Htag_pf_nolep_ptfrac_;
+}
+
+const vector<float> &hwwtree::Htag_pf_nolep_ptrel() {
+  if (not Htag_pf_nolep_ptrel_isLoaded) {
+    if (Htag_pf_nolep_ptrel_branch != 0) {
+      Htag_pf_nolep_ptrel_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pf_nolep_ptrel_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pf_nolep_ptrel_isLoaded = true;
+  }
+  return *Htag_pf_nolep_ptrel_;
+}
+
+const vector<ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > > &hwwtree::Htag_ak4_p4() {
+  if (not Htag_ak4_p4_isLoaded) {
+    if (Htag_ak4_p4_branch != 0) {
+      Htag_ak4_p4_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_ak4_p4_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_ak4_p4_isLoaded = true;
+  }
+  return *Htag_ak4_p4_;
+}
+
+const vector<float> &hwwtree::Htag_ak4_pt() {
+  if (not Htag_ak4_pt_isLoaded) {
+    if (Htag_ak4_pt_branch != 0) {
+      Htag_ak4_pt_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_ak4_pt_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_ak4_pt_isLoaded = true;
+  }
+  return *Htag_ak4_pt_;
+}
+
+const vector<float> &hwwtree::Htag_ak4_eta() {
+  if (not Htag_ak4_eta_isLoaded) {
+    if (Htag_ak4_eta_branch != 0) {
+      Htag_ak4_eta_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_ak4_eta_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_ak4_eta_isLoaded = true;
+  }
+  return *Htag_ak4_eta_;
+}
+
+const vector<float> &hwwtree::Htag_ak4_phi() {
+  if (not Htag_ak4_phi_isLoaded) {
+    if (Htag_ak4_phi_branch != 0) {
+      Htag_ak4_phi_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_ak4_phi_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_ak4_phi_isLoaded = true;
+  }
+  return *Htag_ak4_phi_;
+}
+
+const vector<float> &hwwtree::Htag_ak4_dr() {
+  if (not Htag_ak4_dr_isLoaded) {
+    if (Htag_ak4_dr_branch != 0) {
+      Htag_ak4_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_ak4_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_ak4_dr_isLoaded = true;
+  }
+  return *Htag_ak4_dr_;
+}
+
+const vector<float> &hwwtree::Htag_ak4_alpha() {
+  if (not Htag_ak4_alpha_isLoaded) {
+    if (Htag_ak4_alpha_branch != 0) {
+      Htag_ak4_alpha_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_ak4_alpha_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_ak4_alpha_isLoaded = true;
+  }
+  return *Htag_ak4_alpha_;
+}
+
+const vector<float> &hwwtree::Htag_ak4_L_dr() {
+  if (not Htag_ak4_L_dr_isLoaded) {
+    if (Htag_ak4_L_dr_branch != 0) {
+      Htag_ak4_L_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_ak4_L_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_ak4_L_dr_isLoaded = true;
+  }
+  return *Htag_ak4_L_dr_;
+}
+
+const vector<float> &hwwtree::Htag_ak4_L_dpt() {
+  if (not Htag_ak4_L_dpt_isLoaded) {
+    if (Htag_ak4_L_dpt_branch != 0) {
+      Htag_ak4_L_dpt_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_ak4_L_dpt_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_ak4_L_dpt_isLoaded = true;
+  }
+  return *Htag_ak4_L_dpt_;
+}
+
+const vector<int> &hwwtree::Htag_fromPV() {
+  if (not Htag_fromPV_isLoaded) {
+    if (Htag_fromPV_branch != 0) {
+      Htag_fromPV_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_fromPV_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_fromPV_isLoaded = true;
+  }
+  return *Htag_fromPV_;
+}
+
+const vector<int> &hwwtree::Htag_pv_quality() {
+  if (not Htag_pv_quality_isLoaded) {
+    if (Htag_pv_quality_branch != 0) {
+      Htag_pv_quality_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_pv_quality_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_pv_quality_isLoaded = true;
+  }
+  return *Htag_pv_quality_;
+}
+
+const int &hwwtree::Htag_leppffound() {
+  if (not Htag_leppffound_isLoaded) {
+    if (Htag_leppffound_branch != 0) {
+      Htag_leppffound_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_leppffound_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_leppffound_isLoaded = true;
+  }
+  return Htag_leppffound_;
+}
+
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &hwwtree::Htag_subjet1_p4() {
+  if (not Htag_subjet1_p4_isLoaded) {
+    if (Htag_subjet1_p4_branch != 0) {
+      Htag_subjet1_p4_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_subjet1_p4_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_subjet1_p4_isLoaded = true;
+  }
+  return *Htag_subjet1_p4_;
+}
+
+const float &hwwtree::Htag_subjet1_pt() {
+  if (not Htag_subjet1_pt_isLoaded) {
+    if (Htag_subjet1_pt_branch != 0) {
+      Htag_subjet1_pt_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_subjet1_pt_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_subjet1_pt_isLoaded = true;
+  }
+  return Htag_subjet1_pt_;
+}
+
+const float &hwwtree::Htag_subjet1_eta() {
+  if (not Htag_subjet1_eta_isLoaded) {
+    if (Htag_subjet1_eta_branch != 0) {
+      Htag_subjet1_eta_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_subjet1_eta_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_subjet1_eta_isLoaded = true;
+  }
+  return Htag_subjet1_eta_;
+}
+
+const float &hwwtree::Htag_subjet1_phi() {
+  if (not Htag_subjet1_phi_isLoaded) {
+    if (Htag_subjet1_phi_branch != 0) {
+      Htag_subjet1_phi_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_subjet1_phi_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_subjet1_phi_isLoaded = true;
+  }
+  return Htag_subjet1_phi_;
+}
+
+const float &hwwtree::Htag_subjet1_dr() {
+  if (not Htag_subjet1_dr_isLoaded) {
+    if (Htag_subjet1_dr_branch != 0) {
+      Htag_subjet1_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_subjet1_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_subjet1_dr_isLoaded = true;
+  }
+  return Htag_subjet1_dr_;
+}
+
+const float &hwwtree::Htag_subjet1_alpha() {
+  if (not Htag_subjet1_alpha_isLoaded) {
+    if (Htag_subjet1_alpha_branch != 0) {
+      Htag_subjet1_alpha_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_subjet1_alpha_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_subjet1_alpha_isLoaded = true;
+  }
+  return Htag_subjet1_alpha_;
+}
+
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &hwwtree::Htag_subjet2_p4() {
+  if (not Htag_subjet2_p4_isLoaded) {
+    if (Htag_subjet2_p4_branch != 0) {
+      Htag_subjet2_p4_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_subjet2_p4_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_subjet2_p4_isLoaded = true;
+  }
+  return *Htag_subjet2_p4_;
+}
+
+const float &hwwtree::Htag_subjet2_pt() {
+  if (not Htag_subjet2_pt_isLoaded) {
+    if (Htag_subjet2_pt_branch != 0) {
+      Htag_subjet2_pt_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_subjet2_pt_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_subjet2_pt_isLoaded = true;
+  }
+  return Htag_subjet2_pt_;
+}
+
+const float &hwwtree::Htag_subjet2_eta() {
+  if (not Htag_subjet2_eta_isLoaded) {
+    if (Htag_subjet2_eta_branch != 0) {
+      Htag_subjet2_eta_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_subjet2_eta_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_subjet2_eta_isLoaded = true;
+  }
+  return Htag_subjet2_eta_;
+}
+
+const float &hwwtree::Htag_subjet2_phi() {
+  if (not Htag_subjet2_phi_isLoaded) {
+    if (Htag_subjet2_phi_branch != 0) {
+      Htag_subjet2_phi_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_subjet2_phi_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_subjet2_phi_isLoaded = true;
+  }
+  return Htag_subjet2_phi_;
+}
+
+const float &hwwtree::Htag_subjet2_dr() {
+  if (not Htag_subjet2_dr_isLoaded) {
+    if (Htag_subjet2_dr_branch != 0) {
+      Htag_subjet2_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_subjet2_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_subjet2_dr_isLoaded = true;
+  }
+  return Htag_subjet2_dr_;
+}
+
+const float &hwwtree::Htag_subjet2_alpha() {
+  if (not Htag_subjet2_alpha_isLoaded) {
+    if (Htag_subjet2_alpha_branch != 0) {
+      Htag_subjet2_alpha_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_subjet2_alpha_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_subjet2_alpha_isLoaded = true;
+  }
+  return Htag_subjet2_alpha_;
+}
+
+const float &hwwtree::Htag_gen_higgs_dr() {
+  if (not Htag_gen_higgs_dr_isLoaded) {
+    if (Htag_gen_higgs_dr_branch != 0) {
+      Htag_gen_higgs_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_higgs_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_higgs_dr_isLoaded = true;
+  }
+  return Htag_gen_higgs_dr_;
+}
+
+const float &hwwtree::Htag_gen_higgs_alpha() {
+  if (not Htag_gen_higgs_alpha_isLoaded) {
+    if (Htag_gen_higgs_alpha_branch != 0) {
+      Htag_gen_higgs_alpha_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_higgs_alpha_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_higgs_alpha_isLoaded = true;
+  }
+  return Htag_gen_higgs_alpha_;
+}
+
+const float &hwwtree::Htag_gen_whad_dr() {
+  if (not Htag_gen_whad_dr_isLoaded) {
+    if (Htag_gen_whad_dr_branch != 0) {
+      Htag_gen_whad_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_whad_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_whad_dr_isLoaded = true;
+  }
+  return Htag_gen_whad_dr_;
+}
+
+const float &hwwtree::Htag_gen_whad_alpha() {
+  if (not Htag_gen_whad_alpha_isLoaded) {
+    if (Htag_gen_whad_alpha_branch != 0) {
+      Htag_gen_whad_alpha_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_whad_alpha_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_whad_alpha_isLoaded = true;
+  }
+  return Htag_gen_whad_alpha_;
+}
+
+const float &hwwtree::Htag_gen_wlep_dr() {
+  if (not Htag_gen_wlep_dr_isLoaded) {
+    if (Htag_gen_wlep_dr_branch != 0) {
+      Htag_gen_wlep_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_wlep_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_wlep_dr_isLoaded = true;
+  }
+  return Htag_gen_wlep_dr_;
+}
+
+const float &hwwtree::Htag_gen_wlep_alpha() {
+  if (not Htag_gen_wlep_alpha_isLoaded) {
+    if (Htag_gen_wlep_alpha_branch != 0) {
+      Htag_gen_wlep_alpha_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_wlep_alpha_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_wlep_alpha_isLoaded = true;
+  }
+  return Htag_gen_wlep_alpha_;
+}
+
+const float &hwwtree::Htag_gen_q0_dr() {
+  if (not Htag_gen_q0_dr_isLoaded) {
+    if (Htag_gen_q0_dr_branch != 0) {
+      Htag_gen_q0_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_q0_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_q0_dr_isLoaded = true;
+  }
+  return Htag_gen_q0_dr_;
+}
+
+const float &hwwtree::Htag_gen_q0_alpha() {
+  if (not Htag_gen_q0_alpha_isLoaded) {
+    if (Htag_gen_q0_alpha_branch != 0) {
+      Htag_gen_q0_alpha_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_q0_alpha_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_q0_alpha_isLoaded = true;
+  }
+  return Htag_gen_q0_alpha_;
+}
+
+const float &hwwtree::Htag_gen_q1_dr() {
+  if (not Htag_gen_q1_dr_isLoaded) {
+    if (Htag_gen_q1_dr_branch != 0) {
+      Htag_gen_q1_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_q1_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_q1_dr_isLoaded = true;
+  }
+  return Htag_gen_q1_dr_;
+}
+
+const float &hwwtree::Htag_gen_q1_alpha() {
+  if (not Htag_gen_q1_alpha_isLoaded) {
+    if (Htag_gen_q1_alpha_branch != 0) {
+      Htag_gen_q1_alpha_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_q1_alpha_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_q1_alpha_isLoaded = true;
+  }
+  return Htag_gen_q1_alpha_;
+}
+
+const float &hwwtree::Htag_gen_lep_dr() {
+  if (not Htag_gen_lep_dr_isLoaded) {
+    if (Htag_gen_lep_dr_branch != 0) {
+      Htag_gen_lep_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_lep_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_lep_dr_isLoaded = true;
+  }
+  return Htag_gen_lep_dr_;
+}
+
+const float &hwwtree::Htag_gen_lep_alpha() {
+  if (not Htag_gen_lep_alpha_isLoaded) {
+    if (Htag_gen_lep_alpha_branch != 0) {
+      Htag_gen_lep_alpha_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_lep_alpha_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_lep_alpha_isLoaded = true;
+  }
+  return Htag_gen_lep_alpha_;
+}
+
+const float &hwwtree::Htag_gen_neu_dr() {
+  if (not Htag_gen_neu_dr_isLoaded) {
+    if (Htag_gen_neu_dr_branch != 0) {
+      Htag_gen_neu_dr_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_neu_dr_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_neu_dr_isLoaded = true;
+  }
+  return Htag_gen_neu_dr_;
+}
+
+const float &hwwtree::Htag_gen_neu_alpha() {
+  if (not Htag_gen_neu_alpha_isLoaded) {
+    if (Htag_gen_neu_alpha_branch != 0) {
+      Htag_gen_neu_alpha_branch->GetEntry(index);
+    } else {
+      printf("branch Htag_gen_neu_alpha_branch does not exist!\n");
+      exit(1);
+    }
+    Htag_gen_neu_alpha_isLoaded = true;
+  }
+  return Htag_gen_neu_alpha_;
 }
 
 const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &hwwtree::Recoil_p4() {
@@ -3333,6 +5228,32 @@ const int &hwwtree::Recoil_j_3_4_leadak4_puppi_totalMultiplicity() {
   return Recoil_j_3_4_leadak4_puppi_totalMultiplicity_;
 }
 
+const float &hwwtree::gen_ht() {
+  if (not gen_ht_isLoaded) {
+    if (gen_ht_branch != 0) {
+      gen_ht_branch->GetEntry(index);
+    } else {
+      printf("branch gen_ht_branch does not exist!\n");
+      exit(1);
+    }
+    gen_ht_isLoaded = true;
+  }
+  return gen_ht_;
+}
+
+const float &hwwtree::nvtx() {
+  if (not nvtx_isLoaded) {
+    if (nvtx_branch != 0) {
+      nvtx_branch->GetEntry(index);
+    } else {
+      printf("branch nvtx_branch does not exist!\n");
+      exit(1);
+    }
+    nvtx_isLoaded = true;
+  }
+  return nvtx_;
+}
+
 
 void hwwtree::progress( int nEventsTotal, int nEventsChain ){
   int period = 1000;
@@ -3454,7 +5375,12 @@ const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &LQQp_p4() { retu
 const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &H_p4() { return hww.H_p4(); }
 const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &Hp_p4() { return hww.Hp_p4(); }
 const int &is_whad_lead() { return hww.is_whad_lead(); }
-const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &v_p4() { return hww.v_p4(); }
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &neu_p4() { return hww.neu_p4(); }
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &neu_p4_sol1() { return hww.neu_p4_sol1(); }
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &neu_p4_sol2() { return hww.neu_p4_sol2(); }
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &neu_p4_invsol1() { return hww.neu_p4_invsol1(); }
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &neu_p4_invsol2() { return hww.neu_p4_invsol2(); }
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &V_p4() { return hww.V_p4(); }
 const float &J_area() { return hww.J_area(); }
 const float &J_mass() { return hww.J_mass(); }
 const float &J_softdropMass() { return hww.J_softdropMass(); }
@@ -3468,6 +5394,12 @@ const float &J_deep_rawdisc_top() { return hww.J_deep_rawdisc_top(); }
 const float &J_deep_rawdisc_w() { return hww.J_deep_rawdisc_w(); }
 const float &J_deep_rawdisc_z() { return hww.J_deep_rawdisc_z(); }
 const float &J_deep_rawdisc_zbb() { return hww.J_deep_rawdisc_zbb(); }
+const float &J_deep_bindisc_h4q() { return hww.J_deep_bindisc_h4q(); }
+const float &J_deep_bindisc_hbb() { return hww.J_deep_bindisc_hbb(); }
+const float &J_deep_bindisc_top() { return hww.J_deep_bindisc_top(); }
+const float &J_deep_bindisc_w() { return hww.J_deep_bindisc_w(); }
+const float &J_deep_bindisc_z() { return hww.J_deep_bindisc_z(); }
+const float &J_deep_bindisc_zbb() { return hww.J_deep_bindisc_zbb(); }
 const float &J_softdropPuppiSubjet1_pt() { return hww.J_softdropPuppiSubjet1_pt(); }
 const float &J_softdropPuppiSubjet1_eta() { return hww.J_softdropPuppiSubjet1_eta(); }
 const float &J_softdropPuppiSubjet1_phi() { return hww.J_softdropPuppiSubjet1_phi(); }
@@ -3494,6 +5426,106 @@ const float &L_subjet1_dr() { return hww.L_subjet1_dr(); }
 const float &L_subjet2_dr() { return hww.L_subjet2_dr(); }
 const float &L_subjet1_deg() { return hww.L_subjet1_deg(); }
 const float &L_subjet2_deg() { return hww.L_subjet2_deg(); }
+const float &V_area() { return hww.V_area(); }
+const float &V_mass() { return hww.V_mass(); }
+const float &V_softdropMass() { return hww.V_softdropMass(); }
+const float &V_nJettinessTau1() { return hww.V_nJettinessTau1(); }
+const float &V_nJettinessTau2() { return hww.V_nJettinessTau2(); }
+const float &V_nJettinessTau3() { return hww.V_nJettinessTau3(); }
+const float &V_deep_rawdisc_h4q() { return hww.V_deep_rawdisc_h4q(); }
+const float &V_deep_rawdisc_hbb() { return hww.V_deep_rawdisc_hbb(); }
+const float &V_deep_rawdisc_qcd() { return hww.V_deep_rawdisc_qcd(); }
+const float &V_deep_rawdisc_top() { return hww.V_deep_rawdisc_top(); }
+const float &V_deep_rawdisc_w() { return hww.V_deep_rawdisc_w(); }
+const float &V_deep_rawdisc_z() { return hww.V_deep_rawdisc_z(); }
+const float &V_deep_rawdisc_zbb() { return hww.V_deep_rawdisc_zbb(); }
+const float &V_deep_bindisc_h4q() { return hww.V_deep_bindisc_h4q(); }
+const float &V_deep_bindisc_hbb() { return hww.V_deep_bindisc_hbb(); }
+const float &V_deep_bindisc_top() { return hww.V_deep_bindisc_top(); }
+const float &V_deep_bindisc_w() { return hww.V_deep_bindisc_w(); }
+const float &V_deep_bindisc_z() { return hww.V_deep_bindisc_z(); }
+const float &V_deep_bindisc_zbb() { return hww.V_deep_bindisc_zbb(); }
+const float &V_softdropPuppiSubjet1_pt() { return hww.V_softdropPuppiSubjet1_pt(); }
+const float &V_softdropPuppiSubjet1_eta() { return hww.V_softdropPuppiSubjet1_eta(); }
+const float &V_softdropPuppiSubjet1_phi() { return hww.V_softdropPuppiSubjet1_phi(); }
+const float &V_softdropPuppiSubjet1_mass() { return hww.V_softdropPuppiSubjet1_mass(); }
+const float &V_softdropPuppiSubjet1_energy() { return hww.V_softdropPuppiSubjet1_energy(); }
+const float &V_softdropPuppiSubjet2_pt() { return hww.V_softdropPuppiSubjet2_pt(); }
+const float &V_softdropPuppiSubjet2_eta() { return hww.V_softdropPuppiSubjet2_eta(); }
+const float &V_softdropPuppiSubjet2_phi() { return hww.V_softdropPuppiSubjet2_phi(); }
+const float &V_softdropPuppiSubjet2_mass() { return hww.V_softdropPuppiSubjet2_mass(); }
+const float &V_softdropPuppiSubjet2_energy() { return hww.V_softdropPuppiSubjet2_energy(); }
+const int &V_npfcands() { return hww.V_npfcands(); }
+const int &V_partonFlavour() { return hww.V_partonFlavour(); }
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &Htag_J_p4() { return hww.Htag_J_p4(); }
+const float &Htag_J_pt() { return hww.Htag_J_pt(); }
+const float &Htag_J_eta() { return hww.Htag_J_eta(); }
+const float &Htag_J_phi() { return hww.Htag_J_phi(); }
+const float &Htag_J_mass() { return hww.Htag_J_mass(); }
+const float &Htag_J_softdropMass() { return hww.Htag_J_softdropMass(); }
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &Htag_L_p4() { return hww.Htag_L_p4(); }
+const float &Htag_L_pt() { return hww.Htag_L_pt(); }
+const float &Htag_L_eta() { return hww.Htag_L_eta(); }
+const float &Htag_L_phi() { return hww.Htag_L_phi(); }
+const float &Htag_L_dr() { return hww.Htag_L_dr(); }
+const float &Htag_L_alpha() { return hww.Htag_L_alpha(); }
+const vector<ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > > &Htag_pf_p4() { return hww.Htag_pf_p4(); }
+const vector<float> &Htag_pf_pt() { return hww.Htag_pf_pt(); }
+const vector<float> &Htag_pf_eta() { return hww.Htag_pf_eta(); }
+const vector<float> &Htag_pf_phi() { return hww.Htag_pf_phi(); }
+const vector<int> &Htag_pf_id() { return hww.Htag_pf_id(); }
+const vector<float> &Htag_pf_dr() { return hww.Htag_pf_dr(); }
+const vector<float> &Htag_pf_alpha() { return hww.Htag_pf_alpha(); }
+const vector<float> &Htag_pf_puppi_wgt() { return hww.Htag_pf_puppi_wgt(); }
+const vector<float> &Htag_pf_ptfrac() { return hww.Htag_pf_ptfrac(); }
+const vector<float> &Htag_pf_ptrel() { return hww.Htag_pf_ptrel(); }
+const vector<ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > > &Htag_pf_nolep_p4() { return hww.Htag_pf_nolep_p4(); }
+const vector<float> &Htag_pf_nolep_pt() { return hww.Htag_pf_nolep_pt(); }
+const vector<float> &Htag_pf_nolep_eta() { return hww.Htag_pf_nolep_eta(); }
+const vector<float> &Htag_pf_nolep_phi() { return hww.Htag_pf_nolep_phi(); }
+const vector<int> &Htag_pf_nolep_id() { return hww.Htag_pf_nolep_id(); }
+const vector<float> &Htag_pf_nolep_dr() { return hww.Htag_pf_nolep_dr(); }
+const vector<float> &Htag_pf_nolep_alpha() { return hww.Htag_pf_nolep_alpha(); }
+const vector<float> &Htag_pf_nolep_puppi_wgt() { return hww.Htag_pf_nolep_puppi_wgt(); }
+const vector<float> &Htag_pf_nolep_ptfrac() { return hww.Htag_pf_nolep_ptfrac(); }
+const vector<float> &Htag_pf_nolep_ptrel() { return hww.Htag_pf_nolep_ptrel(); }
+const vector<ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > > &Htag_ak4_p4() { return hww.Htag_ak4_p4(); }
+const vector<float> &Htag_ak4_pt() { return hww.Htag_ak4_pt(); }
+const vector<float> &Htag_ak4_eta() { return hww.Htag_ak4_eta(); }
+const vector<float> &Htag_ak4_phi() { return hww.Htag_ak4_phi(); }
+const vector<float> &Htag_ak4_dr() { return hww.Htag_ak4_dr(); }
+const vector<float> &Htag_ak4_alpha() { return hww.Htag_ak4_alpha(); }
+const vector<float> &Htag_ak4_L_dr() { return hww.Htag_ak4_L_dr(); }
+const vector<float> &Htag_ak4_L_dpt() { return hww.Htag_ak4_L_dpt(); }
+const vector<int> &Htag_fromPV() { return hww.Htag_fromPV(); }
+const vector<int> &Htag_pv_quality() { return hww.Htag_pv_quality(); }
+const int &Htag_leppffound() { return hww.Htag_leppffound(); }
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &Htag_subjet1_p4() { return hww.Htag_subjet1_p4(); }
+const float &Htag_subjet1_pt() { return hww.Htag_subjet1_pt(); }
+const float &Htag_subjet1_eta() { return hww.Htag_subjet1_eta(); }
+const float &Htag_subjet1_phi() { return hww.Htag_subjet1_phi(); }
+const float &Htag_subjet1_dr() { return hww.Htag_subjet1_dr(); }
+const float &Htag_subjet1_alpha() { return hww.Htag_subjet1_alpha(); }
+const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &Htag_subjet2_p4() { return hww.Htag_subjet2_p4(); }
+const float &Htag_subjet2_pt() { return hww.Htag_subjet2_pt(); }
+const float &Htag_subjet2_eta() { return hww.Htag_subjet2_eta(); }
+const float &Htag_subjet2_phi() { return hww.Htag_subjet2_phi(); }
+const float &Htag_subjet2_dr() { return hww.Htag_subjet2_dr(); }
+const float &Htag_subjet2_alpha() { return hww.Htag_subjet2_alpha(); }
+const float &Htag_gen_higgs_dr() { return hww.Htag_gen_higgs_dr(); }
+const float &Htag_gen_higgs_alpha() { return hww.Htag_gen_higgs_alpha(); }
+const float &Htag_gen_whad_dr() { return hww.Htag_gen_whad_dr(); }
+const float &Htag_gen_whad_alpha() { return hww.Htag_gen_whad_alpha(); }
+const float &Htag_gen_wlep_dr() { return hww.Htag_gen_wlep_dr(); }
+const float &Htag_gen_wlep_alpha() { return hww.Htag_gen_wlep_alpha(); }
+const float &Htag_gen_q0_dr() { return hww.Htag_gen_q0_dr(); }
+const float &Htag_gen_q0_alpha() { return hww.Htag_gen_q0_alpha(); }
+const float &Htag_gen_q1_dr() { return hww.Htag_gen_q1_dr(); }
+const float &Htag_gen_q1_alpha() { return hww.Htag_gen_q1_alpha(); }
+const float &Htag_gen_lep_dr() { return hww.Htag_gen_lep_dr(); }
+const float &Htag_gen_lep_alpha() { return hww.Htag_gen_lep_alpha(); }
+const float &Htag_gen_neu_dr() { return hww.Htag_gen_neu_dr(); }
+const float &Htag_gen_neu_alpha() { return hww.Htag_gen_neu_alpha(); }
 const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &Recoil_p4() { return hww.Recoil_p4(); }
 const ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > &Recoil_leadak4_p4() { return hww.Recoil_leadak4_p4(); }
 const int &Recoil_leadak4_npfcands() { return hww.Recoil_leadak4_npfcands(); }
@@ -3551,7 +5583,9 @@ const int &Recoil_j_3_4_leadak4_puppi_neutralHadronMultiplicity() { return hww.R
 const int &Recoil_j_3_4_leadak4_puppi_neutralMultiplicity() { return hww.Recoil_j_3_4_leadak4_puppi_neutralMultiplicity(); }
 const int &Recoil_j_3_4_leadak4_puppi_photonMultiplicity() { return hww.Recoil_j_3_4_leadak4_puppi_photonMultiplicity(); }
 const int &Recoil_j_3_4_leadak4_puppi_totalMultiplicity() { return hww.Recoil_j_3_4_leadak4_puppi_totalMultiplicity(); }
+const float &gen_ht() { return hww.gen_ht(); }
+const float &nvtx() { return hww.nvtx(); }
 
 }
 
-#include "rooutil/rooutil.cc"
+#include "rooutil.cc"
