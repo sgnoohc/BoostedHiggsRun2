@@ -12,6 +12,7 @@ parser.add_argument('-n' , '--nbins'      , dest='nbins'      , help='number of 
 parser.add_argument('-y' , '--yaxis_range', dest='yaxis_range', help='Y-axis range set by user'               , default=None                               ) 
 parser.add_argument('-l' , '--yaxis_log'  , dest='yaxis_log'  , help='Y-axis set to log'                      , default=False         , action='store_true') 
 parser.add_argument('-s' , '--sig_scale'  , dest='sig_scale'  , help='Signal scale'                           , default=-1                                 ) 
+parser.add_argument('-u' , '--rm_udflow'  , dest='rm_udflow'  , help='Remove underflow'                       , default=False         , action='store_true') 
 parser.add_argument('-S' , '--do_scan'    , dest='do_scan'    , help='do cut scan'                            , default=False         , action='store_true') 
 
 parser.add_argument('filter_patterns', metavar='FILTER_PATTERN', type=str, nargs='+', help='patterns to use to filter histograms to dump')
@@ -37,10 +38,10 @@ jobtag  = input_path_dir.rsplit("outputs/")[1].split("/")[1].split("/")[0]
 output_dir = args.output_dir + "/" + babytag + "/" + jobtag
 
 bkg_fnames = [
-        "{}/merged/QCD_merged.root".format(input_path_dir),
         "{}/merged/TT_merged.root".format(input_path_dir),
         "{}/merged/W_merged.root".format(input_path_dir),
         "{}/merged/WW_merged.root".format(input_path_dir),
+        "{}/merged/QCD_merged.root".format(input_path_dir),
         ]
 
 sig_fnames = [
@@ -60,6 +61,7 @@ p.dump_plot(
             "print_yield":True,
             "yaxis_log":args.yaxis_log,
             "yaxis_range":args.yaxis_range.split(',') if args.yaxis_range else [],
+            "remove_underflow":args.rm_udflow,
             "bkg_sort_method": "unsorted",
             },
         # _plotter=p.plot_cut_scan,

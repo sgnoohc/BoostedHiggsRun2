@@ -331,22 +331,50 @@ void util::create_histograms()
 {
     //_____________________________________________________________________________
     // Histogram defintiions
-    ana::histograms.addHistogram("nj"        ,   6 ,     0 ,    6 , [&]() { return hww.nj();          } );
-    ana::histograms.addHistogram("nb"        ,   4 ,     0 ,    4 , [&]() { return hww.nb();          } );
-    ana::histograms.addHistogram("nbmed"     ,   4 ,     0 ,    4 , [&]() { return hww.nbmed();       } );
-    ana::histograms.addHistogram("nbtight"   ,   4 ,     0 ,    4 , [&]() { return hww.nbtight();     } );
 
-    ana::histograms.addHistogram("L_pt"      , 180 ,     0 ,  600 , [&]() { return hww.L_p4().pt();   } );
-    ana::histograms.addHistogram("L_eta"     , 180 ,    -3 ,    3 , [&]() { return hww.L_p4().eta();  } );
-    ana::histograms.addHistogram("J_pt"      , 180 ,     0 , 1000 , [&]() { return hww.J_p4().pt();   } );
-    ana::histograms.addHistogram("J_eta"     , 180 ,    -5 ,    5 , [&]() { return hww.J_p4().eta();  } );
-    ana::histograms.addHistogram("H_pt"      , 180 ,     0 , 1000 , [&]() { return hww.H_p4().pt();   } );
-    ana::histograms.addHistogram("H_eta"     , 180 ,    -5 ,    5 , [&]() { return hww.H_p4().eta();  } );
-    ana::histograms.addHistogram("QQ_pt"     , 180 ,     0 , 1000 , [&]() { return hww.QQ_p4().pt();  } );
-    ana::histograms.addHistogram("QQ_eta"    , 180 ,    -5 ,    5 , [&]() { return hww.QQ_p4().eta(); } );
-    ana::histograms.addHistogram("deltaFrac" , 180 ,    -2 ,    2 , [&]() { return hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt(); } );
-    ana::histograms.addHistogram("RecoH_max" , 180 ,     0 , 1000 , [&]() { return (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() > (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass() ? (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() : (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass();} );
-    ana::histograms.addHistogram("RecoH_min" , 180 ,     0 , 1000 , [&]() { return (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() < (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass() ? (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() : (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass();} );
+    // Object multiplicities
+    ana::histograms.addHistogram("nj"        ,  10 ,     0 ,   10 , [&]() { return hww.nj();                                             } );
+    ana::histograms.addHistogram("nb"        ,   4 ,     0 ,    4 , [&]() { return hww.nb();                                             } );
+    ana::histograms.addHistogram("nbmed"     ,   4 ,     0 ,    4 , [&]() { return hww.nbmed();                                          } );
+    ana::histograms.addHistogram("nbtight"   ,   4 ,     0 ,    4 , [&]() { return hww.nbtight();                                        } );
+    ana::histograms.addHistogram("nak8jets"  ,   6 ,     0 ,    6 , [&]() { return hww.nak8jets();                                       } );
+    ana::histograms.addHistogram("nrecolep"  ,   4 ,     0 ,    4 , [&]() { return hww.nrecolep();                                       } );
+
+    // Object kinematics
+    ana::histograms.addHistogram("ak8_pt0"   , 180 ,     0 , 1000 , [&]() { return hww.ak8jets_p4().size() > 0 ? hww.ak8jets_p4()[0].pt() : -999;                       } );
+    ana::histograms.addHistogram("ak8_pt1"   , 180 ,     0 , 1000 , [&]() { return hww.ak8jets_p4().size() > 1 ? hww.ak8jets_p4()[1].pt() : -999;                       } );
+    ana::histograms.addHistogram("L_pt"      , 180 ,     0 ,  600 , [&]() { return hww.L_p4().pt();                                                                     } );
+    ana::histograms.addHistogram("L_eta"     , 180 ,    -3 ,    3 , [&]() { return hww.L_p4().eta();                                                                    } );
+    ana::histograms.addHistogram("J_pt"      , 180 ,     0 , 1000 , [&]() { return hww.J_p4().pt();                                                                     } );
+    ana::histograms.addHistogram("J_eta"     , 180 ,    -5 ,    5 , [&]() { return hww.J_p4().eta();                                                                    } );
+    ana::histograms.addHistogram("H_pt"      , 180 ,     0 , 1000 , [&]() { return hww.H_p4().pt();                                                                     } );
+    ana::histograms.addHistogram("H_eta"     , 180 ,    -5 ,    5 , [&]() { return hww.H_p4().eta();                                                                    } );
+    ana::histograms.addHistogram("QQ_pt"     , 180 ,     0 , 1000 , [&]() { return hww.QQ_p4().pt();                                                                    } );
+    ana::histograms.addHistogram("QQ_eta"    , 180 ,    -5 ,    5 , [&]() { return hww.QQ_p4().eta();                                                                   } );
+    ana::histograms.addHistogram("V_pt"      , 180 ,     0 , 1000 , [&]() { return hww.V_p4().pt();                                                                     } );
+    ana::histograms.addHistogram("V_eta"     , 180 ,    -5 ,    5 , [&]() { return hww.V_p4().eta();                                                                    } );
+    ana::histograms.addHistogram("R_pt"      , 180 ,     0 , 1000 , [&]() { return hww.Recoil_p4().pt();                                                                } );
+    ana::histograms.addHistogram("R_eta"     , 180 ,    -5 ,    5 , [&]() { return hww.Recoil_p4().eta();                                                               } );
+
+    // Lepton property
+    ana::histograms.addHistogram("L_ip3d"    , 180 ,    -1 ,    1 , [&]() { return hww.L_ip3d();                                                                        } );
+    ana::histograms.addHistogram("L_dxy"     , 180 ,    -1 ,    1 , [&]() { return hww.L_dxy();                                                                         } );
+    ana::histograms.addHistogram("L_dz"      , 180 ,    -1 ,    1 , [&]() { return hww.L_dz();                                                                          } );
+    ana::histograms.addHistogram("L_absip3d" , 180 ,     0 ,    1 , [&]() { return fabs(hww.L_ip3d());                                                                  } );
+    ana::histograms.addHistogram("L_absdxy"  , 180 ,     0 ,    1 , [&]() { return fabs(hww.L_dxy());                                                                   } );
+    ana::histograms.addHistogram("L_absdz"   , 180 ,     0 ,    1 , [&]() { return fabs(hww.L_dz());                                                                    } );
+    ana::histograms.addHistogram("L_mini"    , 180 ,     0 ,  0.2 , [&]() { return hww.L_miniIsoEA();                                                                   } );
+    ana::histograms.addHistogram("L_03EA"    , 180 ,     0 ,    1 , [&]() { return hww.L_relIso03EA();                                                                  } );
+    ana::histograms.addHistogram("L_04DB"    , 180 ,     0 ,    1 , [&]() { return hww.L_relIso04DB();                                                                  } );
+
+    // Masses
+    ana::histograms.addHistogram("mQQ"       , 180 ,     0 ,  300 , [&]() { return hww.QQ_p4().mass();                                                                                                                                                                                                            } );
+    ana::histograms.addHistogram("mV"        , 180 ,     0 ,  300 , [&]() { return hww.V_p4().mass();                                                                                                                                                                                                             } );
+    ana::histograms.addHistogram("mJ"        , 180 ,     0 ,  300 , [&]() { return hww.J_p4().mass();                                                                                                                                                                                                             } );
+    ana::histograms.addHistogram("mJ_SD"     , 180 ,     0 ,  300 , [&]() { return hww.J_softdropMass();                                                                                                                                                                                                          } );
+    ana::histograms.addHistogram("mRecoil"   , 180 ,     0 , 1000 , [&]() { return hww.Recoil_p4().mass();                                                                                                                                                                                                        } );
+    ana::histograms.addHistogram("RecoH_max" , 180 ,     0 , 1000 , [&]() { return (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() > (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass() ? (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() : (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass(); } );
+    ana::histograms.addHistogram("RecoH_min" , 180 ,     0 , 1000 , [&]() { return (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() < (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass() ? (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() : (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass(); } );
     ana::histograms.addHistogram("mDmax"     , 180 ,     0 , 1000 ,
             [&]()
             {
@@ -373,6 +401,13 @@ void util::create_histograms()
                 float mD2 = DR2 * Pt2 / 2.;
                 return mD1 > mD2 ? mD1 : mD2;
             });
+
+    // Correlations
+    ana::histograms.addHistogram("dr_L_QQ"   , 180 ,     0 ,    4 , [&]() { return hww.dr_L_QQ();                                                                       } );
+    ana::histograms.addHistogram("deltaFrac" , 180 ,    -2 ,    2 , [&]() { return hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt(); } );
+    ana::histograms.addHistogram("mRatio"    , 180 ,     0 ,    2 , [&]() { return hww.V_p4().mass() / hww.J_p4().mass();                                               } );
+    ana::histograms.addHistogram("mRatio_SD" , 180 ,     0 ,    2 , [&]() { return hww.V_softdropMass() / hww.J_softdropMass();                                         } );
+
 }
 
 //_____________________________________________________________________________
