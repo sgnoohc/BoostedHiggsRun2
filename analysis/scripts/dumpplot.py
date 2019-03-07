@@ -19,8 +19,6 @@ args = parser.parse_args()
 
 print args
 
-sys.exit()
-
 if args.sig_scale < 0:
     sig_scale = "auto"
 else:
