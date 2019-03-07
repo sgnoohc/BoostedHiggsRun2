@@ -200,6 +200,11 @@ void util::set_cuts()
                 }
 
                 ana::cutflow.getCut("CutISR"+ISRbin+lepton+charge);
+                ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+lepton+charge+"GenHad", [&]() { return ana::input_file_list_tstring.Contains("M125") ? hww.gen_whad_p4().pt() >= hww.gen_wlep_p4().pt() : 1; }, UNITY);
+                ana::cutflow.getCut("CutISR"+ISRbin+lepton+charge);
+                ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+lepton+charge+"GenLep", [&]() { return ana::input_file_list_tstring.Contains("M125") ? hww.gen_whad_p4().pt() <  hww.gen_wlep_p4().pt() : 1; }, UNITY);
+
+                ana::cutflow.getCut("CutISR"+ISRbin+lepton+charge);
                 ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+lepton+charge+"Had", [&]() { return (hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt() < 0); }, UNITY);
                 {
                     ana::cutflow.getCut("CutISR"+ISRbin+lepton+charge+"Had");
