@@ -142,6 +142,30 @@ void util::set_cuts()
             {
                 return hww.evt_scale1fb() * 35.9;
             });
+    ana::cutflow.addCutToLastActiveCut("CutTrigger" ,
+            [&]()
+            {
+                return
+                hww.HLT_Ele27_WPLoose_Gsf() ||
+                hww.HLT_Ele30_WPLoose_Gsf() ||
+                hww.HLT_Ele45_WPLoose_Gsf() ||
+                hww.HLT_Ele105_CaloIdVT_GsfTrkIdT() ||
+                hww.HLT_Ele115_CaloIdVT_GsfTrkIdT() ||
+                hww.HLT_IsoTkMu24() ||
+                hww.HLT_IsoMu24() ||
+                hww.HLT_SingleMu50() ||
+                hww.HLT_SingleEl40() ||
+                hww.HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165() ||
+                hww.HLT_Mu50() ||
+                hww.HLT_TkMu50() ||
+                hww.HLT_AK8PFHT700_TrimR0p1PT0p03Mass50() ||
+                hww.HLT_AK8PFJet360_TrimMass30() ||
+                hww.HLT_PFHT800() ||
+                hww.HLT_PFHT900() ||
+                hww.HLT_PFHT650_WideJetMJJ900DEtaJJ1p5() ||
+                hww.HLT_PFHT650_WideJetMJJ950DEtaJJ1p5() ||
+                hww.HLT_AK8PFDiJet280_200_TrimMass30_CSVM_0p20();
+            } , UNITY);
     ana::cutflow.addCutToLastActiveCut("CutBVeto" , [&]() { return hww.nbmed() == 0; } , UNITY );
     ana::cutflow.addCutToLastActiveCut("CutNLep" , [&]() { return hww.L_p4().pt() > 0; } , UNITY );
     ana::cutflow.addCutToLastActiveCut("CutNAK8" , [&]() { return hww.J_p4().pt() > 0; } , UNITY );
@@ -307,16 +331,23 @@ void util::create_histograms()
 {
     //_____________________________________________________________________________
     // Histogram defintiions
+    ana::histograms.addHistogram("nj"        ,   6 ,     0 ,    6 , [&]() { return hww.nj();          } );
+    ana::histograms.addHistogram("nb"        ,   4 ,     0 ,    4 , [&]() { return hww.nb();          } );
+    ana::histograms.addHistogram("nbmed"     ,   4 ,     0 ,    4 , [&]() { return hww.nbmed();       } );
+    ana::histograms.addHistogram("nbtight"   ,   4 ,     0 ,    4 , [&]() { return hww.nbtight();     } );
+
     ana::histograms.addHistogram("L_pt"      , 180 ,     0 ,  600 , [&]() { return hww.L_p4().pt();   } );
     ana::histograms.addHistogram("L_eta"     , 180 ,    -3 ,    3 , [&]() { return hww.L_p4().eta();  } );
     ana::histograms.addHistogram("J_pt"      , 180 ,     0 , 1000 , [&]() { return hww.J_p4().pt();   } );
     ana::histograms.addHistogram("J_eta"     , 180 ,    -5 ,    5 , [&]() { return hww.J_p4().eta();  } );
     ana::histograms.addHistogram("H_pt"      , 180 ,     0 , 1000 , [&]() { return hww.H_p4().pt();   } );
     ana::histograms.addHistogram("H_eta"     , 180 ,    -5 ,    5 , [&]() { return hww.H_p4().eta();  } );
-    ana::histograms.addHistogram("QQ_pt"     , 180 ,     0 ,  600 , [&]() { return hww.QQ_p4().pt();  } );
+    ana::histograms.addHistogram("QQ_pt"     , 180 ,     0 , 1000 , [&]() { return hww.QQ_p4().pt();  } );
     ana::histograms.addHistogram("QQ_eta"    , 180 ,    -5 ,    5 , [&]() { return hww.QQ_p4().eta(); } );
     ana::histograms.addHistogram("deltaFrac" , 180 ,    -2 ,    2 , [&]() { return hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt(); } );
-    ana::histograms.addHistogram("mDmax"     , 180 ,     0 ,  600 ,
+    ana::histograms.addHistogram("RecoH_max" , 180 ,     0 , 1000 , [&]() { return (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() > (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass() ? (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() : (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass();} );
+    ana::histograms.addHistogram("RecoH_min" , 180 ,     0 , 1000 , [&]() { return (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() < (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass() ? (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() : (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass();} );
+    ana::histograms.addHistogram("mDmax"     , 180 ,     0 , 1000 ,
             [&]()
             {
                 LV Lv1 = hww.L_p4() + hww.neu_p4_sol1();
@@ -329,7 +360,7 @@ void util::create_histograms()
                 float mD2 = DR2 * Pt2 / 2.;
                 return mD1 > mD2 ? mD1 : mD2;
             });
-    ana::histograms.addHistogram("mDmin"     , 180 ,     0 ,  600 ,
+    ana::histograms.addHistogram("mDmin"     , 180 ,     0 , 1000 ,
             [&]()
             {
                 LV Lv1 = hww.L_p4() + hww.neu_p4_sol1();

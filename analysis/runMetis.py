@@ -12,7 +12,7 @@ def main():
     else:
         force = False
 
-    job_tag = "test_20190307"
+    job_tag = "test3_20190307"
     input_ntup_tag = "HWW2016_v5.0.3"
     base_dir_path = "/hadoop/cms/store/user/phchang/metis/baby/{}/".format(input_ntup_tag)
     tar_files = ["doAnalysis", "setup.sh"]
@@ -53,7 +53,7 @@ def main():
         else:
             files_per_output_map[sample_name] = 30
 
-    ru.submit_metis(job_tag, samples_map, tar_files=tar_files, hadoop_dirname=hadoop_dirname+"/"+input_ntup_tag, files_per_output=files_per_output_map, sites="T2_US_UCSD")
+    ru.submit_metis(job_tag, samples_map, tar_files=tar_files, hadoop_dirname=hadoop_dirname+"/"+input_ntup_tag, files_per_output=files_per_output_map, sites="T2_US_UCSD,UAF")
 
     #os.system("mkdir -p outputs/condor/{}/{}/".format(input_ntup_tag, job_tag))
 

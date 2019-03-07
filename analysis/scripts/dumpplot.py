@@ -12,6 +12,7 @@ parser.add_argument('-n' , '--nbins'      , dest='nbins'      , help='number of 
 parser.add_argument('-y' , '--yaxis_range', dest='yaxis_range', help='Y-axis range set by user'               , default=None                               ) 
 parser.add_argument('-l' , '--yaxis_log'  , dest='yaxis_log'  , help='Y-axis set to log'                      , default=False         , action='store_true') 
 parser.add_argument('-s' , '--sig_scale'  , dest='sig_scale'  , help='Signal scale'                           , default=-1                                 ) 
+parser.add_argument('-S' , '--do_scan'    , dest='do_scan'    , help='do cut scan'                            , default=False         , action='store_true') 
 
 parser.add_argument('filter_patterns', metavar='FILTER_PATTERN', type=str, nargs='+', help='patterns to use to filter histograms to dump')
 
@@ -28,11 +29,18 @@ filter_pattern = ','.join(args.filter_patterns)
 
 input_path_dir = args.input_dir
 
+# parsing input job tag based on the structure that it is outputs/BABYTAG/JOBTAG/merged
+babytag = input_path_dir.rsplit("outputs/")[1].split("/")[0]
+jobtag  = input_path_dir.rsplit("outputs/")[1].split("/")[1].split("/")[0]
+
+# then create plot output with a directory structure like plots/BABYTAG/JOBTAG/
+output_dir = args.output_dir + "/" + babytag + "/" + jobtag
+
 bkg_fnames = [
+        "{}/merged/QCD_merged.root".format(input_path_dir),
         "{}/merged/TT_merged.root".format(input_path_dir),
         "{}/merged/W_merged.root".format(input_path_dir),
         "{}/merged/WW_merged.root".format(input_path_dir),
-        "{}/merged/QCD_merged.root".format(input_path_dir),
         ]
 
 sig_fnames = [
@@ -42,7 +50,7 @@ sig_fnames = [
         ]
 
 p.dump_plot(
-        dirname=args.output_dir,
+        dirname=output_dir+"/log" if args.yaxis_log else output_dir+"/lin",
         fnames=bkg_fnames,
         sig_fnames=sig_fnames,
         filter_pattern=filter_pattern,
@@ -52,6 +60,20 @@ p.dump_plot(
             "print_yield":True,
             "yaxis_log":args.yaxis_log,
             "yaxis_range":args.yaxis_range.split(',') if args.yaxis_range else [],
+            "bkg_sort_method": "unsorted",
             },
         # _plotter=p.plot_cut_scan,
         )
+
+if args.do_scan:
+    p.dump_plot(
+            dirname=output_dir + "/scan",
+            fnames=bkg_fnames,
+            sig_fnames=sig_fnames,
+            filter_pattern=filter_pattern,
+            signal_scale=sig_scale,
+            extraoptions={
+                "nbins":180,
+                },
+            _plotter=p.plot_cut_scan,
+            )
