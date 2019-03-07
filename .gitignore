@@ -1,0 +1,10 @@
+analysis/outputs/
+cms4maker/CMS4_V08-00-06/tasks
+cms4maker/CMS4_combined/CMSSW_10_2_5
+mcgeneration/gghzz2016/test
+analysis/src/*.o
+analysis/archive
+analysis/ProjectMetis
+analysis/.*
+analysis/doAnalysis
+analysis/*.root
