@@ -12,8 +12,8 @@ def main():
     else:
         force = False
 
-    job_tag = "test52_20180303"
-    input_ntup_tag = "HWW2016_v5.0.1"
+    job_tag = "test_20190307"
+    input_ntup_tag = "HWW2016_v5.0.3"
     base_dir_path = "/hadoop/cms/store/user/phchang/metis/baby/{}/".format(input_ntup_tag)
     tar_files = ["doAnalysis", "setup.sh"]
     hadoop_dirname = "hwwanalysis"
@@ -43,10 +43,12 @@ def main():
         if "M125" in sample_name:
             files_per_output_map[sample_name] = 30
         elif "TT" in sample_name:
-            files_per_output_map[sample_name] = 30
+            files_per_output_map[sample_name] = 15
         elif "WJets" in sample_name:
-            files_per_output_map[sample_name] = 10
+            files_per_output_map[sample_name] =  5
         elif "WW" in sample_name:
+            files_per_output_map[sample_name] = 30
+        elif "QCD" in sample_name:
             files_per_output_map[sample_name] = 30
         else:
             files_per_output_map[sample_name] = 30
@@ -78,6 +80,11 @@ def main():
 
     # higgs
     cmd = "if [ ! -f {}/higgs.root ]; then hadd {}/higgs.root {}/GluGlu*_merged.root {}/VH*_merged.root {}/VBF*_merged.root; fi".format(output_dir_path, output_dir_path, output_dir_path, output_dir_path, output_dir_path)
+    print cmd
+    os.system(cmd)
+
+    # QCD_HT
+    cmd = "if [ ! -f {}/QCD_merged.root ]; then hadd {}/QCD_merged.root {}/QCD_HT*merged.root; fi".format(output_dir_path, output_dir_path, output_dir_path)
     print cmd
     os.system(cmd)
 

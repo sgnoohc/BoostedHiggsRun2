@@ -31,5 +31,16 @@ namespace ana {
     // Histogram utility object that is used to define the histograms
     RooUtil::Histograms histograms;
 
+    // Boolean to control whehter or not to run the histograms
+    bool do_histograms;
+
+    // Boolean to control whehter or not to book cutflow histogram (this can
+    // actually be the bottle neck in speed)
+    bool do_cutflow;
+
+    // Boolean to control whehter or not to write TTree to the output file
+    bool write_ttree;
+
+
 }
 

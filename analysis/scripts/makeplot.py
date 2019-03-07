@@ -57,6 +57,7 @@ def get_hists(histnames):
 
     output_dirpath = "outputs/HWW2016_v5.0.1/test66_20180306/merged" # without QQ mass
     output_dirpath = "outputs/HWW2016_v5.0.2/test71_20180306/merged" # without QQ mass
+    output_dirpath = "outputs/HWW2016_v5.0.3/test_20180307/merged" # without QQ mass
 
     suffix = "*MINIAODSIM"
     suffix = "_merged"
@@ -351,20 +352,20 @@ def main():
     # quick_plot_v2(["CutISR400MuMinusHadMVATT__J_nJettinessTau3"] , "J_nJettinessTau3")
     # quick_plot_v2(["CutISR400MuMinusHadMVATT__L_miniIsoEA"] , "L_miniIsoEA")
 
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__Lmet_mt"], "Lmet_mt", {"nbins": 30, "signal_scale": 30});
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__Lmet_mass"], "Lmet_mass", {"nbins": 30, "signal_scale": 30});
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__Lmet_pt"], "Lmet_pt", {"nbins": 30, "signal_scale": 30});
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__met_pt"], "met_pt", {"nbins": 30, "signal_scale": 30});
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__L_miniIsoEA"], "L_miniIsoEA", {"nbins": 30, "signal_scale": 30});
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__J_mass"], "J_mass", {"nbins": 30, "signal_scale": 30});
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__QQ_mass"], "QQ_mass", {"nbins": 30, "signal_scale": 30});
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__QQ_pt"], "QQ_pt", {"nbins": 30, "signal_scale": 30});
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__LQQ_mass"], "LQQ_mass", {"nbins": 30, "signal_scale": 30});
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__L_pt"], "L_pt", {"nbins": 30, "signal_scale": 30});
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__L_ip3d"], "L_ip3d", {"nbins": 180, "signal_scale": 30});
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__L_dxy"], "L_dxy", {"nbins": 180, "signal_scale": 30});
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__isrbalancev2"], "isrbalancev2", {"nbins": 60, "signal_scale": 30});
-    quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__isrbalance"], "isrbalance", {"nbins": 60, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__Lmet_mt"], "Lmet_mt", {"nbins": 30, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__Lmet_mass"], "Lmet_mass", {"nbins": 30, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__Lmet_pt"], "Lmet_pt", {"nbins": 30, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__met_pt"], "met_pt", {"nbins": 30, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__L_miniIsoEA"], "L_miniIsoEA", {"nbins": 30, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__J_mass"], "J_mass", {"nbins": 30, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__QQ_mass"], "QQ_mass", {"nbins": 30, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__QQ_pt"], "QQ_pt", {"nbins": 30, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__LQQ_mass"], "LQQ_mass", {"nbins": 30, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__L_pt"], "L_pt", {"nbins": 30, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__L_ip3d"], "L_ip3d", {"nbins": 180, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__L_dxy"], "L_dxy", {"nbins": 180, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__isrbalancev2"], "isrbalancev2", {"nbins": 60, "signal_scale": 30});
+    # quick_plot_v2(["CutISR400MuMinusHadStrawManCut6__isrbalance"], "isrbalance", {"nbins": 60, "signal_scale": 30});
     # quick_plot_v2(["CutISR400MuMinusHadGenHadOff__QQ_mass"], "QQ_mass", {"nbins": 60, "signal_scale": 100});
 
     # quick_plot_v2(["CutISR400MuMinusHadStrawManCut2__drlj"], "drlj", {"nbins": 60});
@@ -378,6 +379,9 @@ def main():
     # quick_plot_v2(["CutISR400MuMinusHad__recoil_pt"], "recoil_pt", {"nbins": 60, "signal_scale": 50})
     # quick_plot_v2(["CutISR400MuMinusHad__nrecolep"], "nrecolep", {"nbins": 60, "signal_scale": 50})
     # quick_plot_v2(["CutISR400MuMinusHad__nak8jets"], "nak8jets", {"nbins": 60, "signal_scale": 50})
+
+    quick_plot_v2(["CutISR400MuMinus__L_pt"], "L_pt", {"nbins": 60, "signal_scale": 50})
+    quick_plot_v2(["CutISR400MuMinus__J_pt"], "J_pt", {"nbins": 60, "signal_scale": 50})
 
 
 if __name__ == "__main__":
