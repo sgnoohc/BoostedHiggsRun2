@@ -154,6 +154,9 @@ void util::run_analysis()
     // Writing output file
     ana::cutflow.saveOutput();
 
+    // Writing TTree output to TFile
+    ana::output_ttreex.save(ana::output_tfile);
+
 }
 
 
