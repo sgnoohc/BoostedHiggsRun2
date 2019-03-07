@@ -28,7 +28,7 @@ namespace ana {
     extern    TTree* output_ttree;
 
     // A TTreeX object to handle output_ttree
-    extern    RooUtil::TTreeX* output_ttreex;
+    extern    RooUtil::TTreeX output_ttreex;
 
 }
 

@@ -1,7 +1,7 @@
 #include "utility.h"
 
 //_____________________________________________________________________________
-std::tuple<TString, TFile*, int> util::parse_arguments(int argc, char** argv)
+void util::parse_arguments(int argc, char** argv)
 {
 
     // Argument checking
@@ -25,7 +25,7 @@ std::tuple<TString, TFile*, int> util::parse_arguments(int argc, char** argv)
     // Creating output file where we will put the outputs of the processing
     ana::output_tfile = new TFile(argv[2], "create");
 
-    if (not ofile->IsOpen())
+    if (not ana::output_tfile->IsOpen())
     {
         std::cout << "Error: output already exists! provide new output name or delete old file. OUTPUTFILE=" << argv[2] << std::endl;
         exit(1);

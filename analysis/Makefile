@@ -2,7 +2,10 @@
 
 EXE=doAnalysis
 
-SOURCES=$(wildcard *.cc)
+SRCDIR=src
+OBJDIR=src
+
+SOURCES=$(wildcard $(SRCDIR)/*.cc)
 OBJECTS=$(SOURCES:.cc=.o)
 HEADERS=$(SOURCES:.cc=.h)
 
@@ -18,14 +21,14 @@ ROOTLIBS    = $(shell root-config --libs)
 ROOTCFLAGS  = $(shell root-config --cflags)
 CXXFLAGS   += $(ROOTCFLAGS)
 CFLAGS      = $(ROOTCFLAGS) -Wall -Wno-unused-function -g -O2 -fPIC -fno-var-tracking
-EXTRACFLAGS = $(shell rooutil-config)
+EXTRACFLAGS = $(shell rooutil-config) -Iinc
 EXTRAFLAGS  = -fPIC -ITMultiDrawTreePlayer -Wunused-variable -lTMVA -lEG -lGenVector -lXMLIO -lMLP -lTreePlayer
 
-$(EXE): process.o hwwtree.o
-	$(LD) $(CXXFLAGS) $(LDFLAGS) $^ $(ROOTLIBS) $(EXTRAFLAGS) -o $@
+$(EXE): $(OBJECTS)
+	$(LD) $(CXXFLAGS) $(LDFLAGS) $(OBJECTS) $(ROOTLIBS) $(EXTRAFLAGS) -o $@
 
-%.o: %.cc
-	$(CC) $(CFLAGS) $(EXTRACFLAGS) $< -c
+$(OBJDIR)/%.o: $(SRCDIR)/%.cc
+	$(CC) $(CFLAGS) $(EXTRACFLAGS) -o $@ $< -c 
 
 clean:
-	rm -f *.o $(EXE)
+	rm -f src/*.o $(EXE)
