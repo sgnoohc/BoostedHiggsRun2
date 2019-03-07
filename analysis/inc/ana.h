@@ -9,6 +9,7 @@
 
 // analysis
 #include "rooutil.h"
+#include "hwwtree.h"
 
 namespace ana {
 
@@ -29,6 +30,17 @@ namespace ana {
 
     // A TTreeX object to handle output_ttree
     extern    RooUtil::TTreeX output_ttreex;
+
+    // Looper
+    extern    RooUtil::Looper<hwwtree> looper;
+
+    // Cutflow utility object. This object is responsible for creating various
+    // tree-like cutflow structure and booking cutflows/histograms to each cut
+    // nodes.
+    extern    RooUtil::Cutflow cutflow;
+
+    // Histogram utility object that is used to define the histograms
+    extern    RooUtil::Histograms histograms;
 
 }
 

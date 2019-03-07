@@ -7,6 +7,9 @@ int main(int argc, char** argv)
 {
 
     util::parse_arguments(argc, argv);
+    util::initialize_analysis();
+    util::set_cuts();
+    util::create_histograms();
 
     return 0;
 

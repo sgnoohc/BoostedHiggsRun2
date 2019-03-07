@@ -20,6 +20,16 @@ namespace ana {
     // A TTreeX object to handle output_ttree
     RooUtil::TTreeX output_ttreex;
 
+    // Looper
+    RooUtil::Looper<hwwtree> looper;
+
+    // Cutflow utility object. This object is responsible for creating various
+    // tree-like cutflow structure and booking cutflows/histograms to each cut
+    // nodes.
+    RooUtil::Cutflow cutflow;
+
+    // Histogram utility object that is used to define the histograms
+    RooUtil::Histograms histograms;
 
 }
 

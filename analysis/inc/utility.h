@@ -22,6 +22,12 @@ namespace util
     // Initialize analysis (any basic loading prior to looping will be placed here)
     void initialize_analysis();
 
+    // Set cuts to ana::cutflow
+    void set_cuts();
+
+    // Create histograms
+    void create_histograms();
+
     // Create a TTreeX object for the BDT (either for creating a training set or to evaluate)
     RooUtil::TTreeX create_bdt_ttreex();
 }
