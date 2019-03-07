@@ -367,6 +367,33 @@ void util::create_histograms()
     ana::histograms.addHistogram("L_03EA"    , 180 ,     0 ,    1 , [&]() { return hww.L_relIso03EA();                                                                  } );
     ana::histograms.addHistogram("L_04DB"    , 180 ,     0 ,    1 , [&]() { return hww.L_relIso04DB();                                                                  } );
 
+    // Fat-jet property
+    ana::histograms.addHistogram("J_nJettinessTau21"             , 180 ,   0 ,   1 , [&]() { return hww.J_nJettinessTau2() / hww.J_nJettinessTau1()             ;} );
+    ana::histograms.addHistogram("J_nJettinessTau31"             , 180 ,   0 ,   1 , [&]() { return hww.J_nJettinessTau3() / hww.J_nJettinessTau1()             ;} );
+    ana::histograms.addHistogram("J_nJettinessTau32"             , 180 ,   0 ,   1 , [&]() { return hww.J_nJettinessTau3() / hww.J_nJettinessTau2()             ;} );
+    ana::histograms.addHistogram("J_nJettinessTau1"              , 180 ,   0 ,   1 , [&]() { return hww.J_nJettinessTau2() / hww.J_nJettinessTau1()             ;} );
+    ana::histograms.addHistogram("J_nJettinessTau1"              , 180 ,   0 ,   1 , [&]() { return hww.J_nJettinessTau1()                                      ;} );
+    ana::histograms.addHistogram("J_nJettinessTau2"              , 180 ,   0 ,   1 , [&]() { return hww.J_nJettinessTau2()                                      ;} );
+    ana::histograms.addHistogram("J_nJettinessTau3"              , 180 ,   0 ,   1 , [&]() { return hww.J_nJettinessTau3()                                      ;} );
+    ana::histograms.addHistogram("J_deep_rawdisc_h4q"            , 180 ,   0 ,   1 , [&]() { return hww.J_deep_rawdisc_h4q()                                    ;} );
+    ana::histograms.addHistogram("J_deep_rawdisc_hbb"            , 180 ,   0 ,   1 , [&]() { return hww.J_deep_rawdisc_hbb()                                    ;} );
+    ana::histograms.addHistogram("J_deep_rawdisc_qcd"            , 180 ,   0 ,   1 , [&]() { return hww.J_deep_rawdisc_qcd()                                    ;} );
+    ana::histograms.addHistogram("J_deep_rawdisc_top"            , 180 ,   0 ,   1 , [&]() { return hww.J_deep_rawdisc_top()                                    ;} );
+    ana::histograms.addHistogram("J_deep_rawdisc_w"              , 180 ,   0 ,   1 , [&]() { return hww.J_deep_rawdisc_w()                                      ;} );
+    ana::histograms.addHistogram("J_deep_rawdisc_z"              , 180 ,   0 ,   1 , [&]() { return hww.J_deep_rawdisc_z()                                      ;} );
+    ana::histograms.addHistogram("J_deep_rawdisc_zbb"            , 180 ,   0 ,   1 , [&]() { return hww.J_deep_rawdisc_zbb()                                    ;} );
+    ana::histograms.addHistogram("J_softdropPuppiSubjet1_pt"     , 180 ,   0 , 600 , [&]() { return hww.J_softdropPuppiSubjet1_pt()                             ;} );
+    ana::histograms.addHistogram("J_softdropPuppiSubjet1_eta"    , 180 ,  -5 ,   5 , [&]() { return hww.J_softdropPuppiSubjet1_eta()                            ;} );
+    ana::histograms.addHistogram("J_softdropPuppiSubjet1_phi"    , 180 ,  -5 ,   5 , [&]() { return hww.J_softdropPuppiSubjet1_phi()                            ;} );
+    ana::histograms.addHistogram("J_softdropPuppiSubjet1_mass"   , 180 ,  -5 ,  80 , [&]() { return hww.J_softdropPuppiSubjet1_mass()                           ;} );
+    ana::histograms.addHistogram("J_softdropPuppiSubjet1_energy" , 180 ,  -5 , 900 , [&]() { return hww.J_softdropPuppiSubjet1_energy()                         ;} );
+    ana::histograms.addHistogram("J_softdropPuppiSubjet2_pt"     , 180 ,   0 , 450 , [&]() { return hww.J_softdropPuppiSubjet2_pt()                             ;} );
+    ana::histograms.addHistogram("J_softdropPuppiSubjet2_eta"    , 180 ,  -5 ,   5 , [&]() { return hww.J_softdropPuppiSubjet2_eta()                            ;} );
+    ana::histograms.addHistogram("J_softdropPuppiSubjet2_phi"    , 180 ,  -5 ,   5 , [&]() { return hww.J_softdropPuppiSubjet2_phi()                            ;} );
+    ana::histograms.addHistogram("J_softdropPuppiSubjet2_mass"   , 180 ,  -5 ,  40 , [&]() { return hww.J_softdropPuppiSubjet2_mass()                           ;} );
+    ana::histograms.addHistogram("J_softdropPuppiSubjet2_energy" , 180 ,  -5 , 600 , [&]() { return hww.J_softdropPuppiSubjet2_energy()                         ;} );
+    ana::histograms.addHistogram("J_npfcands"                    , 100 ,   0 , 100 , [&]() { return hww.J_npfcands()                                            ;} );
+
     // Masses
     ana::histograms.addHistogram("mQQ"       , 180 ,     0 ,  300 , [&]() { return hww.QQ_p4().mass();                                                                                                                                                                                                            } );
     ana::histograms.addHistogram("mV"        , 180 ,     0 ,  300 , [&]() { return hww.V_p4().mass();                                                                                                                                                                                                             } );
@@ -401,6 +428,16 @@ void util::create_histograms()
                 float mD2 = DR2 * Pt2 / 2.;
                 return mD1 > mD2 ? mD1 : mD2;
             });
+    ana::histograms.addHistogram("mQQ_SD"     , 180 , 0    , 300 , [&]()
+            {
+                LV J_SD = RooUtil::Calc::getLV(hww.J_p4().pt(), hww.J_p4().eta(), hww.J_p4().phi(), hww.J_softdropMass());
+                return RooUtil::Calc::DeltaR(J_SD, hww.L_p4()) < 0.8 ? (J_SD - hww.L_p4()).mass() : J_SD.mass() ;
+            } );
+    ana::histograms.addHistogram("mQQ_SDv2"   , 180 , 0    , 300 , [&]()
+            {
+                LV J_SD = RooUtil::Calc::getLV(hww.J_p4().pt(), hww.J_p4().eta(), hww.J_p4().phi(), hww.J_softdropMass());
+                return (J_SD - hww.L_p4()).mass() > 0 ? (J_SD - hww.L_p4()).mass() : J_SD.mass() ;
+            } );
 
     // Correlations
     ana::histograms.addHistogram("dr_L_QQ"   , 180 ,     0 ,    4 , [&]() { return hww.dr_L_QQ();                                                                       } );
