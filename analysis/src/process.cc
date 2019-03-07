@@ -1,6 +1,6 @@
 #include "hwwtree.h"
 #include "rooutil.h"
-#include "pfcand_calculator.h"
+#include "cxxopts.h"
 
 // ./process INPUTFILEPATH OUTPUTINDEX [NEVENTS]
 int main(int argc, char** argv)
@@ -335,63 +335,6 @@ int main(int argc, char** argv)
     // multiplicity
     histograms.addHistogram("nrecolep"               ,  4 ,   0 ,  4 , [&]() { return hww.nrecolep()          ;} );
 
-    // VBF variables
-    histograms.addHistogram("detajj"                 , 180 , 0,    6 , [&](){ return nj_ORed >= 2 ? fabs(RooUtil::Calc::DeltaEta(vbf_tag_jet0, vbf_tag_jet1)) : -999;} );
-    histograms.addHistogram("mjj"                    , 180 , 0, 2500 , [&](){ return nj_ORed >= 2 ? (vbf_tag_jet0 + vbf_tag_jet1).mass() : -999;} );
-
-    // BDT binning
-    std::vector<float> bdt_contents;
-    for (unsigned int ii = 0; ii < 18; ++ii)
-        bdt_contents.push_back(0);
-
-    for (unsigned int ii = 0; ii < 18; ++ii)
-    {
-        histograms.addHistogram(TString::Format("BDT%d", ii), 180, 0, 30, [&]() { return bdt_contents[ii]; });
-    }
-
-    //_____________________________________________________________________________
-    // Below are unused histograms
-
-    // Matching reco ak8 to gen reco isr
-    // histograms.addHistogram("V_mass"                        , 180 ,   0 , 300 , [&]() { return hww.V_mass()                        ;} );
-    // histograms.addHistogram("V_softdropMass"                , 180 ,   0 , 300 , [&]() { return hww.V_softdropMass()                ;} );
-    // histograms.addHistogram("V_nJettinessTau1"              , 180 ,   0 ,   1 , [&]() { return hww.V_nJettinessTau1()              ;} );
-    // histograms.addHistogram("V_nJettinessTau2"              , 180 ,   0 ,   1 , [&]() { return hww.V_nJettinessTau2()              ;} );
-    // histograms.addHistogram("V_nJettinessTau3"              , 180 ,   0 ,   1 , [&]() { return hww.V_nJettinessTau3()              ;} );
-    // histograms.addHistogram("V_deep_rawdisc_h4q"            , 180 ,   0 ,   1 , [&]() { return hww.V_deep_rawdisc_h4q()            ;} );
-    // histograms.addHistogram("V_deep_rawdisc_hbb"            , 180 ,   0 ,   1 , [&]() { return hww.V_deep_rawdisc_hbb()            ;} );
-    // histograms.addHistogram("V_deep_rawdisc_qcd"            , 180 ,   0 ,   1 , [&]() { return hww.V_deep_rawdisc_qcd()            ;} );
-    // histograms.addHistogram("V_deep_rawdisc_top"            , 180 ,   0 ,   1 , [&]() { return hww.V_deep_rawdisc_top()            ;} );
-    // histograms.addHistogram("V_deep_rawdisc_w"              , 180 ,   0 ,   1 , [&]() { return hww.V_deep_rawdisc_w()              ;} );
-    // histograms.addHistogram("V_deep_rawdisc_z"              , 180 ,   0 ,   1 , [&]() { return hww.V_deep_rawdisc_z()              ;} );
-    // histograms.addHistogram("V_deep_rawdisc_zbb"            , 180 ,   0 ,   1 , [&]() { return hww.V_deep_rawdisc_zbb()            ;} );
-    // histograms.addHistogram("V_softdropPuppiSubjet1_pt"     , 180 ,   0 , 900 , [&]() { return hww.V_softdropPuppiSubjet1_pt()     ;} );
-    // histograms.addHistogram("V_softdropPuppiSubjet1_eta"    , 180 ,  -5 ,   5 , [&]() { return hww.V_softdropPuppiSubjet1_eta()    ;} );
-    // histograms.addHistogram("V_softdropPuppiSubjet1_mass"   , 180 ,   0 , 150 , [&]() { return hww.V_softdropPuppiSubjet1_mass()   ;} );
-    // histograms.addHistogram("V_softdropPuppiSubjet2_pt"     , 180 ,   0 , 450 , [&]() { return hww.V_softdropPuppiSubjet2_pt()     ;} );
-    // histograms.addHistogram("V_softdropPuppiSubjet2_eta"    , 180 ,  -5 ,   5 , [&]() { return hww.V_softdropPuppiSubjet2_eta()    ;} );
-    // histograms.addHistogram("V_softdropPuppiSubjet2_mass"   , 180 ,   0 , 150 , [&]() { return hww.V_softdropPuppiSubjet2_mass()   ;} );
-    // histograms.addHistogram("V_npfcands"                    , 100 ,   0 , 100 , [&]() { return hww.V_npfcands()                    ;} );
-    // histograms.addHistogram("V_partonFlavour"               ,  40 ,   0 ,  40 , [&]() { return abs(hww.V_partonFlavour())          ;} );
-
-    // // opening angle in eta-phi space between lepton and nearest lepton
-    // histograms.addHistogram("L_ak4_alpha" , 180, -1, 3.1416, [&]()
-    //         { 
-    //             if (hww.J_near_ak4jets_p4().size() == 0)
-    //                 return -999.9;
-    //             TVector2 L(RooUtil::Calc::DeltaEta(hww.L_p4(), hww.J_p4()), RooUtil::Calc::DeltaPhi(hww.L_p4(), hww.J_p4()));
-    //             TVector2 ak4(RooUtil::Calc::DeltaEta(hww.J_near_ak4jets_p4()[0], hww.J_p4()), RooUtil::Calc::DeltaPhi(hww.J_near_ak4jets_p4()[0], hww.J_p4()));
-    //             return TMath::ACos(L*ak4 / L.Mod() / ak4.Mod());
-    //         });
-    // histograms.addHistogram("J_near_ak4jets_pt0", 180, 0, 1000, [&]() { return hww.J_near_ak4jets_p4().size() > 0 ? hww.J_near_ak4jets_p4()[0].pt() : -999; } );
-    // histograms.addHistogram("L_ak4_ratio", 180, 0, 4, [&]() { return hww.J_near_ak4jets_p4().size() > 0 ? hww.J_near_ak4jets_p4()[0].pt() / hww.L_p4().pt() : -999; } );
-
-    // histograms.addHistogram("Jmet_mass"                     , 180 ,   0 , 700 , [&]() { return abs(hww.Jmet_p4().mass())           ;} );
-    // histograms.addHistogram("Jmet_mt"                       , 180 ,   0 ,1500 , [&]() { return abs(hww.Jmet_p4().mt())             ;} );
-
-
-
-
 
 
     //=============================================================================
@@ -454,30 +397,7 @@ int main(int argc, char** argv)
     // Looping input file
     while (looper.nextEvent())
     {
-        nj_ORed = -999;
-        vbf_tag_jet0 = LV();
-        vbf_tag_jet1 = LV();
-        if (hww.nj() >= 2) // Only do if you have at least two to start with
-        {
-            // select VBF jets
-            std::vector<LV> jets_ORed; // overlap removed (OR'ed)
-            for (auto& jet : hww.jets_p4())
-            {
-                float tmpdr = RooUtil::Calc::DeltaR(jet, hww.J_p4());
-                if (tmpdr > 1.2)
-                {
-                    jets_ORed.push_back(jet);
-                }
-            }
-            nj_ORed = jets_ORed.size();
-            if (nj_ORed >= 2)
-            {
-                vbf_tag_jet0 = jets_ORed[0];
-                vbf_tag_jet1 = jets_ORed[1];
-            }
-        }
         cutflow.fill();
-
     }
 
 
@@ -498,93 +418,3 @@ int main(int argc, char** argv)
 
     delete ofile;
 }
-
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusHadStrawManCut2", [&]() { return (hww.lep_miniIsoEA()<0.02)                                     ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusHadStrawMan"    , [&]() { return (hww.recowhad_puppi_mass()>60)*(hww.recowhad_puppi_mass()<105) ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuPlusHadStrawManCut2", [&]() { return (hww.lep_miniIsoEA()<0.02)                                      ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuPlusHadStrawManCut3", [&]() { return (hww.recohiggs_max()<200.)                                      ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuPlusHadStrawMan"    , [&]() { return (hww.recowhad_puppi_mass()>60)*(hww.recowhad_puppi_mass()<105)  ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusLepStrawManCut3", [&]() { return (hww.lep_customrelIso005EA()<1.12)                                              ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusLepStrawManCut4", [&]() { return (hww.recowhad_plep_puppi_mass()<154.)                                           ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusLepStrawManCut5", [&]() { return (hww.recohiggs_min()<200.)                                                      ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusLepStrawManCut6", [&]() { return ((hww.recoisrmegajet_pt() / (hww.recowhad_puppi_pt() + hww.met_pt()) - 1)<0.2)  ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusLepStrawMan"    , [&]() { return ((hww.recowhad_mlep_puppi_mass()>70)*(hww.recowhad_mlep_puppi_mass()<100))      ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuPlusLepStrawManCut2", [&]() { return (hww.recowhad_puppi_mass()<125)                                             ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuPlusLepStrawManCut3", [&]() { return (hww.lep_customrelIso010EA()<1.28)                                          ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuPlusLepStrawManCut4", [&]() { return (hww.recowhad_plep_puppi_mass()<141.)                                       ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuPlusLepStrawManCut5", [&]() { return (hww.recohiggs_min()<200.)                                                  ; }, UNITY);
-//        cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuPlusLepStrawMan"    , [&]() { return ((hww.recowhad_mlep_puppi_mass()>75)*(hww.recowhad_mlep_puppi_mass()<105))  ; }, UNITY);
-
-    // histograms.add2DVecHistogram("zoommoremoreimage_dr", 51, -bound/8., bound/8., "zoommoremoreimage_alpha", 51, -bound/8., bound/8.,
-    //         [&]()
-    //         {
-    //             std::vector<float> rtn;
-    //             for (unsigned int ii = 0; ii < hww.Htag_pf_dr().size(); ++ii)
-    //             {
-    //                 float dr = hww.Htag_pf_dr()[ii];
-    //                 float x = dr * TMath::Sin(hww.Htag_pf_alpha()[ii]-hww.Htag_L_alpha());
-    //                 rtn.push_back(x);
-    //             }
-    //             return rtn;
-    //         },
-    //         [&]()
-    //         {
-    //             std::vector<float> rtn;
-    //             for (unsigned int ii = 0; ii < hww.Htag_pf_dr().size(); ++ii)
-    //             {
-    //                 float dr = hww.Htag_pf_dr()[ii];
-    //                 float y = dr * TMath::Cos(hww.Htag_pf_alpha()[ii]-hww.Htag_L_alpha());
-    //                 rtn.push_back(y);
-    //             }
-    //             return rtn;
-    //         },
-    //         [&]()
-    //         {
-    //             std::vector<float> rtn;
-    //             for (unsigned int ii = 0; ii < hww.Htag_pf_dr().size(); ++ii)
-    //             {
-    //                 float wgt = hww.Htag_pf_ptfrac()[ii];
-    //                 wgt *= hww.Htag_pf_puppi_wgt()[ii];
-    //                 rtn.push_back(wgt);
-    //             }
-    //             return rtn;
-    //         }
-    //         );
-
-
-    // histograms.add2DVecHistogram("zoommoreimage_dr", 51, -bound/4., bound/4., "zoommoreimage_alpha", 51, -bound/4., bound/4.,
-    //         [&]()
-    //         {
-    //             std::vector<float> rtn;
-    //             for (unsigned int ii = 0; ii < hww.Htag_pf_dr().size(); ++ii)
-    //             {
-    //                 float dr = hww.Htag_pf_dr()[ii];
-    //                 float x = dr * TMath::Sin(hww.Htag_pf_alpha()[ii]-hww.Htag_L_alpha());
-    //                 rtn.push_back(x);
-    //             }
-    //             return rtn;
-    //         },
-    //         [&]()
-    //         {
-    //             std::vector<float> rtn;
-    //             for (unsigned int ii = 0; ii < hww.Htag_pf_dr().size(); ++ii)
-    //             {
-    //                 float dr = hww.Htag_pf_dr()[ii];
-    //                 float y = dr * TMath::Cos(hww.Htag_pf_alpha()[ii]-hww.Htag_L_alpha());
-    //                 rtn.push_back(y);
-    //             }
-    //             return rtn;
-    //         },
-    //         [&]()
-    //         {
-    //             std::vector<float> rtn;
-    //             for (unsigned int ii = 0; ii < hww.Htag_pf_dr().size(); ++ii)
-    //             {
-    //                 float wgt = hww.Htag_pf_ptfrac()[ii];
-    //                 wgt *= hww.Htag_pf_puppi_wgt()[ii];
-    //                 rtn.push_back(wgt);
-    //             }
-    //             return rtn;
-    //         }
-    //         );
-
