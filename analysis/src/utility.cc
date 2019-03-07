@@ -4,36 +4,59 @@
 void util::parse_arguments(int argc, char** argv)
 {
 
-    // Argument checking
-    if (argc < 3)
+    cxxopts::Options options("doAnalysis",  "Run 2 Boosted Higgs Analysis");
+
+    options.add_options()
+        ("t,test", "Run test jobs")
+        ("i,input", "Comma separated input file list", cxxopts::value<std::string>())
+        ("o,output", "Output file name", cxxopts::value<std::string>())
+        ("n,nevents", "N events to loop over", cxxopts::value<int>()->default_value("-1"))
+        ("h,help", "Print help")
+        ;
+
+    auto result = options.parse(argc, argv);
+
+    if (result.count("help"))
     {
-        std::cout << "Usage:" << std::endl;
-        std::cout << "  $ ./process INPUTFILES OUTPUTFILE [NEVENTS]" << std::endl;
-        std::cout << std::endl;
-        std::cout << "  INPUTFILES      comma separated file list" << std::endl;
-        std::cout << "  OUTPUTFILE      output file" << std::endl;
-        std::cout << "  [NEVENTS=-1]    # of events to run over" << std::endl;
-        std::cout << std::endl;
+        std::cout << options.help() << std::endl;
+        exit(0);
+    }
+
+    if (result.count("input"))
+    {
+        ana::input_file_list_tstring = result["input"].as<std::string>();
+    }
+    else
+    {
+        std::cout << options.help() << std::endl;
+        std::cout << "ERROR: Input list is not provided! Check your arguments" << std::endl;
         exit(1);
     }
 
-    // Argument 1:
-    // Comma separated input string
-    ana::input_file_list_tstring = argv[1];
-
-    // Argument 2:
-    // Creating output file where we will put the outputs of the processing
-    ana::output_tfile = new TFile(argv[2], "create");
-
-    if (not ana::output_tfile->IsOpen())
+    if (result.count("output"))
     {
-        std::cout << "Error: output already exists! provide new output name or delete old file. OUTPUTFILE=" << argv[2] << std::endl;
+        ana::output_tfile = new TFile(result["output"].as<std::string>(), "create");
+        if (not ana::output_tfile->IsOpen())
+        {
+            std::cout << "ERROR: output already exists! provide new output name or delete old file. OUTPUTFILE=" << result["output"].as<std::string>() << std::endl;
+            exit(1);
+        }
+    }
+    else
+    {
+        std::cout << options.help() << std::endl;
+        std::cout << "ERROR: Output file name is not provided! Check your arguments" << std::endl;
         exit(1);
     }
 
-    // Argument 3:
-    // Number of events to loop over
-    ana::n_events = argc > 3 ? atoi(argv[3]) : -1;
+    if (result.count("nevents"))
+    {
+        ana::n_events = result["nevents"].as<int>();
+    }
+
+    std::cout <<  " ana::input_file_list_tstring: " << ana::input_file_list_tstring <<  std::endl;
+    std::cout <<  " ana::output_tfile: " << ana::output_tfile <<  std::endl;
+    std::cout <<  " ana::n_events: " << ana::n_events <<  std::endl;
 
     return;
 

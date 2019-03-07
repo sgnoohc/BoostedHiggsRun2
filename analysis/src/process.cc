@@ -1,10 +1,15 @@
 #include "hwwtree.h"
 #include "rooutil.h"
-#include "cxxopts.h"
+#include "utility.h"
 
 // ./process INPUTFILEPATH OUTPUTINDEX [NEVENTS]
 int main(int argc, char** argv)
 {
+
+    util::parse_arguments(argc, argv);
+
+    return 0;
+
     // Argument checking
     if (argc < 3)
     {
