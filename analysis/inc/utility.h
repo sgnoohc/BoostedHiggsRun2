@@ -28,6 +28,12 @@ namespace util
     // Create histograms
     void create_histograms();
 
+    // Book histograms
+    void book_histograms();
+
+    // Loop over events
+    void run_analysis();
+
     // Create a TTreeX object for the BDT (either for creating a training set or to evaluate)
     RooUtil::TTreeX create_bdt_ttreex();
 }

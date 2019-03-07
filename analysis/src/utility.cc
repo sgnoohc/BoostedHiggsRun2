@@ -134,6 +134,30 @@ void util::create_histograms()
 }
 
 //_____________________________________________________________________________
+void util::book_histograms()
+{
+    ana::cutflow.bookHistograms(ana::histograms);
+}
+
+//_____________________________________________________________________________
+void util::run_analysis()
+{
+    // Print cut structure before starting the loop just to visually see it
+    ana::cutflow.printCuts();
+
+    // Looping input file
+    while (ana::looper.nextEvent())
+    {
+        ana::cutflow.fill();
+    }
+
+    // Writing output file
+    ana::cutflow.saveOutput();
+
+}
+
+
+//_____________________________________________________________________________
 RooUtil::TTreeX util::create_bdt_ttreex()
 {
     ana::output_ttree = new TTree("t", "t");
