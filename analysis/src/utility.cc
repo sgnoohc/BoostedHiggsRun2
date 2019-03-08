@@ -115,7 +115,11 @@ void util::initialize_analysis()
     ana::looper.init(ana::main_tchain, &hww, ana::n_events);
 
     // Create TTreeX
-    ana::output_ttreex = create_bdt_ttreex();
+    ana::output_ttreex = create_ttreex();
+
+    // Add outputs to TTreeX
+    add_bdt_ttreex_outputs();
+    add_misc_ttreex_outputs();
 
     // Cutflow utility object that creates a tree structure of cuts
     // Need to set the output file in order to book histograms
@@ -598,100 +602,298 @@ void util::run_analysis()
 
 
 //_____________________________________________________________________________
-RooUtil::TTreeX util::create_bdt_ttreex()
+RooUtil::TTreeX util::create_ttreex()
 {
     ana::output_ttree = new TTree("t", "t");
     RooUtil::TTreeX tx(ana::output_ttree);
 
-    tx.createBranch<float>("wgt");
-
-    tx.createBranch<float>("QQ_pt");
-    tx.createBranch<float>("QQ_mass");
-    tx.createBranch<float>("J_pt");
-    tx.createBranch<float>("J_mass");
-
-    tx.createBranch<float>("dr_L_QQ");
-    tx.createBranch<float>("dr_L_J");
-
-    tx.createBranch<float>("met_pt");
-
-    tx.createBranch<float>("Lmet_pt");
-    tx.createBranch<float>("Lmet_mass");
-    tx.createBranch<float>("Lmet_mt");
-    tx.createBranch<float>("LQQ_mass");
-
-    tx.createBranch<float>("RecoH_mass_minsol12");
-
-    tx.createBranch<float>("L_pt");
-    tx.createBranch<float>("L_relIso03EA");
-    tx.createBranch<float>("L_relIso04DB");
-    tx.createBranch<float>("L_miniIsoEA");
-    tx.createBranch<float>("L_customrelIso005EA");
-    tx.createBranch<float>("L_customrelIso010EA");
-
-    tx.createBranch<float>("recoil_pt");
-    tx.createBranch<float>("isrbalance");
-
-    tx.createBranch<float>("mljreg");
-    tx.createBranch<float>("mljak4");
-    tx.createBranch<float>("dphilj");
-    tx.createBranch<float>("drlj");
-    tx.createBranch<float>("detalj");
-
-    tx.createBranch<float>("J_softdropMass");
-    tx.createBranch<float>("J_nJettinessTau1");
-    tx.createBranch<float>("J_nJettinessTau2");
-    tx.createBranch<float>("J_nJettinessTau3");
-    tx.createBranch<float>("J_deep_rawdisc_h4q");
-    tx.createBranch<float>("J_deep_rawdisc_hbb");
-    tx.createBranch<float>("J_deep_rawdisc_qcd");
-    tx.createBranch<float>("J_deep_rawdisc_top");
-    tx.createBranch<float>("J_deep_rawdisc_w");
-    tx.createBranch<float>("J_deep_bindisc_w");
-    tx.createBranch<float>("J_deep_rawdisc_z");
-    tx.createBranch<float>("J_deep_rawdisc_zbb");
-    tx.createBranch<float>("J_softdropPuppiSubjet1_pt");
-    tx.createBranch<float>("J_softdropPuppiSubjet1_eta");
-    tx.createBranch<float>("J_softdropPuppiSubjet1_mass");
-    tx.createBranch<float>("J_softdropPuppiSubjet2_pt");
-    tx.createBranch<float>("J_softdropPuppiSubjet2_eta");
-    tx.createBranch<float>("J_softdropPuppiSubjet2_mass");
-    tx.createBranch<float>("J_npfcands");
-    tx.createBranch<float>("J_partonFlavour");
-
-    tx.createBranch<float>("BDT_v1_0");
-    tx.createBranch<float>("BDT_v1_1");
-    tx.createBranch<float>("BDT_v1_2");
-    tx.createBranch<float>("BDT_v1_3");
-    tx.createBranch<float>("BDT_v1_4");
-    tx.createBranch<float>("BDT_v1_5");
-    tx.createBranch<float>("BDT_v1_6");
-    tx.createBranch<float>("BDT_v1_7");
-    tx.createBranch<float>("BDT_v1_8");
-    tx.createBranch<float>("BDT_v1_9");
-    tx.createBranch<float>("BDT_v1_10");
-    tx.createBranch<float>("BDT_v1_11");
-    tx.createBranch<float>("BDT_v1_12");
-    tx.createBranch<float>("BDT_v1_13");
-    tx.createBranch<float>("BDT_v1_14");
-    tx.createBranch<float>("BDT_v1_15");
-    tx.createBranch<float>("BDT_v1_16");
-    tx.createBranch<float>("BDT_v1_17");
-
-    tx.createBranch<float>("BDT_v2_0");
-    tx.createBranch<float>("BDT_v2_1");
-    tx.createBranch<float>("BDT_v2_2");
-    tx.createBranch<float>("BDT_v2_3");
-    tx.createBranch<float>("BDT_v2_4");
-    tx.createBranch<float>("BDT_v2_5");
-    tx.createBranch<float>("BDT_v2_6");
-    tx.createBranch<float>("BDT_v2_7");
-    tx.createBranch<float>("BDT_v2_8");
-    tx.createBranch<float>("BDT_v2_9");
-    tx.createBranch<float>("BDT_v2_10");
-    tx.createBranch<float>("BDT_v2_11");
-    tx.createBranch<float>("BDT_v2_12");
-
     return tx;
 
+}
+
+
+//_____________________________________________________________________________
+void util::add_bdt_ttreex_outputs()
+{
+    ana::output_ttreex.createBranch<float>("wgt");
+
+    ana::output_ttreex.createBranch<float>("QQ_pt");
+    ana::output_ttreex.createBranch<float>("QQ_mass");
+    ana::output_ttreex.createBranch<float>("J_pt");
+    ana::output_ttreex.createBranch<float>("J_mass");
+
+    ana::output_ttreex.createBranch<float>("dr_L_QQ");
+    ana::output_ttreex.createBranch<float>("dr_L_J");
+
+    ana::output_ttreex.createBranch<float>("met_pt");
+
+    ana::output_ttreex.createBranch<float>("Lmet_pt");
+    ana::output_ttreex.createBranch<float>("Lmet_mass");
+    ana::output_ttreex.createBranch<float>("Lmet_mt");
+    ana::output_ttreex.createBranch<float>("LQQ_mass");
+
+    ana::output_ttreex.createBranch<float>("RecoH_mass_minsol12");
+
+    ana::output_ttreex.createBranch<float>("L_pt");
+    ana::output_ttreex.createBranch<float>("L_relIso03EA");
+    ana::output_ttreex.createBranch<float>("L_relIso04DB");
+    ana::output_ttreex.createBranch<float>("L_miniIsoEA");
+    ana::output_ttreex.createBranch<float>("L_customrelIso005EA");
+    ana::output_ttreex.createBranch<float>("L_customrelIso010EA");
+
+    ana::output_ttreex.createBranch<float>("recoil_pt");
+    ana::output_ttreex.createBranch<float>("isrbalance");
+
+    ana::output_ttreex.createBranch<float>("mljreg");
+    ana::output_ttreex.createBranch<float>("mljak4");
+    ana::output_ttreex.createBranch<float>("dphilj");
+    ana::output_ttreex.createBranch<float>("drlj");
+    ana::output_ttreex.createBranch<float>("detalj");
+
+    ana::output_ttreex.createBranch<float>("J_softdropMass");
+    ana::output_ttreex.createBranch<float>("J_nJettinessTau1");
+    ana::output_ttreex.createBranch<float>("J_nJettinessTau2");
+    ana::output_ttreex.createBranch<float>("J_nJettinessTau3");
+    ana::output_ttreex.createBranch<float>("J_deep_rawdisc_h4q");
+    ana::output_ttreex.createBranch<float>("J_deep_rawdisc_hbb");
+    ana::output_ttreex.createBranch<float>("J_deep_rawdisc_qcd");
+    ana::output_ttreex.createBranch<float>("J_deep_rawdisc_top");
+    ana::output_ttreex.createBranch<float>("J_deep_rawdisc_w");
+    ana::output_ttreex.createBranch<float>("J_deep_bindisc_w");
+    ana::output_ttreex.createBranch<float>("J_deep_rawdisc_z");
+    ana::output_ttreex.createBranch<float>("J_deep_rawdisc_zbb");
+    ana::output_ttreex.createBranch<float>("J_softdropPuppiSubjet1_pt");
+    ana::output_ttreex.createBranch<float>("J_softdropPuppiSubjet1_eta");
+    ana::output_ttreex.createBranch<float>("J_softdropPuppiSubjet1_mass");
+    ana::output_ttreex.createBranch<float>("J_softdropPuppiSubjet2_pt");
+    ana::output_ttreex.createBranch<float>("J_softdropPuppiSubjet2_eta");
+    ana::output_ttreex.createBranch<float>("J_softdropPuppiSubjet2_mass");
+    ana::output_ttreex.createBranch<float>("J_npfcands");
+    ana::output_ttreex.createBranch<float>("J_partonFlavour");
+
+    ana::output_ttreex.createBranch<float>("BDT_v1_0");
+    ana::output_ttreex.createBranch<float>("BDT_v1_1");
+    ana::output_ttreex.createBranch<float>("BDT_v1_2");
+    ana::output_ttreex.createBranch<float>("BDT_v1_3");
+    ana::output_ttreex.createBranch<float>("BDT_v1_4");
+    ana::output_ttreex.createBranch<float>("BDT_v1_5");
+    ana::output_ttreex.createBranch<float>("BDT_v1_6");
+    ana::output_ttreex.createBranch<float>("BDT_v1_7");
+    ana::output_ttreex.createBranch<float>("BDT_v1_8");
+    ana::output_ttreex.createBranch<float>("BDT_v1_9");
+    ana::output_ttreex.createBranch<float>("BDT_v1_10");
+    ana::output_ttreex.createBranch<float>("BDT_v1_11");
+    ana::output_ttreex.createBranch<float>("BDT_v1_12");
+    ana::output_ttreex.createBranch<float>("BDT_v1_13");
+    ana::output_ttreex.createBranch<float>("BDT_v1_14");
+    ana::output_ttreex.createBranch<float>("BDT_v1_15");
+    ana::output_ttreex.createBranch<float>("BDT_v1_16");
+    ana::output_ttreex.createBranch<float>("BDT_v1_17");
+
+    ana::output_ttreex.createBranch<float>("BDT_v2_0");
+    ana::output_ttreex.createBranch<float>("BDT_v2_1");
+    ana::output_ttreex.createBranch<float>("BDT_v2_2");
+    ana::output_ttreex.createBranch<float>("BDT_v2_3");
+    ana::output_ttreex.createBranch<float>("BDT_v2_4");
+    ana::output_ttreex.createBranch<float>("BDT_v2_5");
+    ana::output_ttreex.createBranch<float>("BDT_v2_6");
+    ana::output_ttreex.createBranch<float>("BDT_v2_7");
+    ana::output_ttreex.createBranch<float>("BDT_v2_8");
+    ana::output_ttreex.createBranch<float>("BDT_v2_9");
+    ana::output_ttreex.createBranch<float>("BDT_v2_10");
+    ana::output_ttreex.createBranch<float>("BDT_v2_11");
+    ana::output_ttreex.createBranch<float>("BDT_v2_12");
+}
+
+//_____________________________________________________________________________
+void util::add_misc_ttreex_outputs()
+{
+    ana::output_ttreex.createBranch<float>("ak8_lepton_subtraction_dpt");
+    ana::output_ttreex.createBranch<float>("ak8_lepton_subtraction_dr");
+    ana::output_ttreex.createBranch<float>("ak8_lepton_subtraction_id");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_dpt_wrt_miniaod");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_dpt_wrt_miniaod");
+    ana::output_ttreex.createBranch<float>("ak8_miniaod_softdropMass");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_softdropMass");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_softdropMass");
+    ana::output_ttreex.createBranch<float>("ak8_miniaod_softdropSubjetDR");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_softdropSubjetDR");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_softdropSubjetDR");
+}
+
+
+//_____________________________________________________________________________
+void util::run_jet_clustering()
+{
+    if (ana::cutflow.getCut("CutISR400MuMinus").pass)
+    {
+        fastjet::ClusterSequence cs_w_lep = cluster_jets(get_particles(false), 0.8);
+        fastjet::ClusterSequence cs_wo_lep = cluster_jets(get_particles(true), 0.8);
+        fastjet::PseudoJet sd_jet_w_lep = get_softdrop_jet(cs_w_lep);
+        fastjet::PseudoJet sd_jet_wo_lep = get_softdrop_jet(cs_wo_lep);
+
+        std::vector<fastjet::PseudoJet> jets_w_lep = fastjet::sorted_by_pt(cs_w_lep.inclusive_jets());
+        std::vector<fastjet::PseudoJet> jets_wo_lep = fastjet::sorted_by_pt(cs_wo_lep.inclusive_jets());
+
+        float miniaod_pt = (hww.J_p4() * hww.J_undoJEC()).pt();
+        float recl_w_lep_pt = jets_w_lep[0].pt();
+        float recl_wo_lep_pt = jets_wo_lep[0].pt();
+
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_dpt_wrt_miniaod", miniaod_pt - recl_w_lep_pt);
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_dpt_wrt_miniaod", miniaod_pt - recl_wo_lep_pt);
+
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_softdropMass", sd_jet_w_lep.m());
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_softdropMass", sd_jet_wo_lep.m());
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_softdropSubjetDR", sd_jet_w_lep.structure_of<fastjet::contrib::SoftDrop>().delta_R());
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_softdropSubjetDR", sd_jet_wo_lep.structure_of<fastjet::contrib::SoftDrop>().delta_R());
+
+        ana::output_ttreex.setBranch<float>("ak8_miniaod_softdropMass", hww.J_softdropMass());
+        ana::output_ttreex.setBranch<float>("ak8_miniaod_softdropSubjetDR",
+                RooUtil::Calc::DeltaR(
+                    RooUtil::Calc::getLV(hww.J_softdropPuppiSubjet1_pt(),hww.J_softdropPuppiSubjet1_eta(),hww.J_softdropPuppiSubjet1_phi(),hww.J_softdropPuppiSubjet1_mass()),
+                    RooUtil::Calc::getLV(hww.J_softdropPuppiSubjet2_pt(),hww.J_softdropPuppiSubjet2_eta(),hww.J_softdropPuppiSubjet2_phi(),hww.J_softdropPuppiSubjet2_mass())
+                    )
+                );
+    }
+}
+
+//__________________________________________________________________________________________________
+// Do clusterinng where the input: particles is a list of Pseudo jets (constituents such as PF or calo clusters etc.)
+// Perofrom Anti-kt clustering on vector of PseudoJets (probably a PF candidate list)
+fastjet::ClusterSequence util::cluster_jets(std::vector<fastjet::PseudoJet> particles, double R)
+{
+    // choose a jet definition
+    fastjet::JetDefinition jet_def(fastjet::antikt_algorithm, R);
+
+    // run the clustering, extract the jets
+    fastjet::ClusterSequence cs(particles, jet_def);
+    std::vector<fastjet::PseudoJet> jets = fastjet::sorted_by_pt(cs.inclusive_jets());
+
+#ifdef DEBUG
+    // print out some infos
+    std::cout << "Clustering with " << jet_def.description() << std::endl;
+
+    // print the jets
+    std::cout <<   "        pt y phi" << std::endl;
+    for (unsigned i = 0; i < jets.size(); i++)
+    {
+
+        std::cout << "jet " << i << ": "<< jets[i].pt() << " " << jets[i].rap() << " " << jets[i].phi() << std::endl;
+
+        std::vector<fastjet::PseudoJet> constituents = jets[i].constituents();
+
+        for (unsigned j = 0; j < constituents.size(); j++)
+        {
+            std::cout << "    constituent " << j << "'s pt: " << constituents[j].pt() << std::endl;
+        }
+    }
+#endif
+
+    return cs;
+}
+
+//----------------------------------------------------------------------
+/// overloaded jet info output
+std::ostream & operator<<(std::ostream & ostr, const fastjet::PseudoJet & jet) 
+{
+    if (jet == 0)
+    {
+        ostr << " 0 ";
+    }
+    else
+    {
+        ostr << " pt = " << jet.pt()
+            << " m = " << jet.m()
+            << " y = " << jet.rap()
+            << " phi = " << jet.phi();
+    }
+    return ostr;
+}
+
+//__________________________________________________________________________________________________
+// Get a vector of pseudojets with PF candidates
+std::vector<fastjet::PseudoJet> util::get_particles(bool subtract_lepton)
+{
+    std::vector<fastjet::PseudoJet> particles;
+
+    // Htag_pf_p4 contains the pf candidates around the fat-jet candidate
+    // For a puppi jet reclustering, pf candidates are weighted by each weight
+
+    for (unsigned int ipf = 0; ipf < hww.Htag_pf_p4().size(); ++ipf)
+    {
+        float puppi_wgt = hww.Htag_pf_puppi_wgt()[ipf];
+
+        if (puppi_wgt == 0)
+            continue;
+
+        if (subtract_lepton)
+        {
+            float dr = RooUtil::Calc::DeltaR(hww.Htag_pf_p4()[ipf], hww.L_p4());
+            if (dr < 0.1 and hww.Htag_pf_id()[ipf] == hww.L_id())
+            {
+                ana::output_ttreex.setBranch<float>("ak8_lepton_subtraction_dpt", hww.Htag_pf_p4()[ipf].pt() - hww.L_p4().pt());
+                ana::output_ttreex.setBranch<float>("ak8_lepton_subtraction_dr", dr);
+                ana::output_ttreex.setBranch<float>("ak8_lepton_subtraction_id", hww.Htag_pf_id()[ipf]);
+                continue;
+            }
+        }
+        LV pf = hww.Htag_pf_p4()[ipf] * puppi_wgt;
+
+        float px = pf.px();
+        float py = pf.py();
+        float pz = pf.pz();
+        float E  = pf.energy();
+        particles.push_back(fastjet::PseudoJet(px, py, pz, E));
+    }
+
+    return particles;
+}
+
+//__________________________________________________________________________________________________
+// Perform SoftDrop grooming and return the groomed PseudoJet
+fastjet::PseudoJet util::get_softdrop_jet(fastjet::ClusterSequence cs)
+{
+    // give the soft drop groomer a short name
+    // Use a symmetry cut z > z_cut R^beta
+    // By default, there is no mass-drop requirement
+    double z_cut = 0.10;
+    double beta  = 2.0;
+    fastjet::contrib::SoftDrop sd(beta, z_cut);
+
+    std::vector<fastjet::PseudoJet> jets = fastjet::sorted_by_pt(cs.inclusive_jets());
+
+#ifdef DEBUG
+    cout << "SoftDrop groomer is: " << sd.description() << endl;
+#endif
+
+    // Run SoftDrop and examine the output
+    fastjet::PseudoJet sd_jet = sd(jets[0]);
+
+#ifdef DEBUG
+    cout << endl;
+    cout << "original    jet: " << jets[0] << endl;
+    cout << "SoftDropped jet: " << sd_jet << endl;
+
+    assert(sd_jet != 0); //because soft drop is a groomer (not a tagger), it should always return a soft-dropped jet
+
+    cout << "  delta_R between subjets: " << sd_jet.structure_of<fastjet::contrib::SoftDrop>().delta_R() << endl;
+    cout << "  symmetry measure(z):     " << sd_jet.structure_of<fastjet::contrib::SoftDrop>().symmetry() << endl;
+    cout << "  mass drop(mu):           " << sd_jet.structure_of<fastjet::contrib::SoftDrop>().mu() << endl;
+#endif
+
+    return sd_jet;
+
+    // for (unsigned ijet = 0; ijet < jets.size(); ijet++) {
+    //     // Run SoftDrop and examine the output
+    //     fastjet::PseudoJet sd_jet = sd(jets[ijet]);
+    //     cout << endl;
+    //     cout << "original    jet: " << jets[ijet] << endl;
+    //     cout << "SoftDropped jet: " << sd_jet << endl;
+
+    //     assert(sd_jet != 0); //because soft drop is a groomer (not a tagger), it should always return a soft-dropped jet
+
+    //     cout << "  delta_R between subjets: " << sd_jet.structure_of<fastjet::contrib::SoftDrop>().delta_R() << endl;
+    //     cout << "  symmetry measure(z):     " << sd_jet.structure_of<fastjet::contrib::SoftDrop>().symmetry() << endl;
+    //     cout << "  mass drop(mu):           " << sd_jet.structure_of<fastjet::contrib::SoftDrop>().mu() << endl;
+    // }
 }

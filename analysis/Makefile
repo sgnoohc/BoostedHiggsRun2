@@ -23,12 +23,13 @@ CXXFLAGS   += $(ROOTCFLAGS)
 CFLAGS      = $(ROOTCFLAGS) -Wall -Wno-unused-function -g -O2 -fPIC -fno-var-tracking
 EXTRACFLAGS = $(shell rooutil-config) -Iinc
 EXTRAFLAGS  = -fPIC -ITMultiDrawTreePlayer -Wunused-variable -lTMVA -lEG -lGenVector -lXMLIO -lMLP -lTreePlayer
+FASTJETCFG = $(shell fastjet/fastjet-install/bin/fastjet-config --cxxflags --libs --plugins) -lNsubjettiness -lRecursiveTools
 
 $(EXE): $(OBJECTS)
-	$(LD) $(CXXFLAGS) $(LDFLAGS) $(OBJECTS) $(ROOTLIBS) $(EXTRAFLAGS) -o $@
+	$(LD) $(CXXFLAGS) $(LDFLAGS) $(OBJECTS) $(ROOTLIBS) $(FASTJETCFG) $(EXTRAFLAGS) -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cc
-	$(CC) $(CFLAGS) $(EXTRACFLAGS) -o $@ $< -c 
+	$(CC) $(CFLAGS) $(FASTJETCFG) $(EXTRACFLAGS) -o $@ $< -c 
 
 clean:
 	rm -f src/*.o $(EXE)
