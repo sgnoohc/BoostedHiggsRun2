@@ -391,6 +391,22 @@ if __name__ == "__main__":
                 "special_dir" : "run2_80x_cms4_hww/ProjectMetis",
                 },
 
+            {"sample" : DBSSample(
+                dataset = "/QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v2/MINIAODSIM",
+                xsec=32100,
+                kfact=1.0,
+                efact=1.0,
+                # allow_invalid_files=allow_invalid_files,
+                allow_invalid_files=False,
+                ),
+                "pset_args"   : "data=False",
+                "cmsswver"    : "CMSSW_8_0_26_patch1",
+                "tarfile"     : "/nfs-7/userdata/libCMS3/lib_CMS4_V08-00-06_826p1.tar.gz",
+                "tag"         : "CMS4_V08-00-06_826p1_AllPF",
+                "pset"        : "pset_moriondremc.py",
+                "special_dir" : "run2_80x_cms4_hww/ProjectMetis",
+                },
+
             ]
 
     for i in range(10000):

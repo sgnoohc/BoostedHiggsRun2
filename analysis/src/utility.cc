@@ -229,7 +229,22 @@ void util::set_cuts()
                 ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+lepton+charge+"GenLep", [&]() { return ana::input_file_list_tstring.Contains("M125") ? hww.gen_whad_p4().pt() <  hww.gen_wlep_p4().pt() : 1; }, UNITY);
 
                 ana::cutflow.getCut("CutISR"+ISRbin+lepton+charge);
-                ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+lepton+charge+"Had", [&]() { return (hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt() < 0); }, UNITY);
+                ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+lepton+charge+"Had", [&]()
+                        {
+                            return (hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt() < 0)
+                                    and
+                                    (hww.HLT_IsoTkMu24()                               || 
+                                     hww.HLT_IsoMu24()                                 || 
+                                     hww.HLT_Mu50()                                    || 
+                                     hww.HLT_TkMu50()                                  || 
+                                     hww.HLT_AK8PFHT700_TrimR0p1PT0p03Mass50()         || 
+                                     hww.HLT_AK8PFJet360_TrimMass30()                  || 
+                                     hww.HLT_PFHT800()                                 || 
+                                     hww.HLT_PFHT900()                                 || 
+                                     hww.HLT_PFHT650_WideJetMJJ900DEtaJJ1p5()          || 
+                                     hww.HLT_PFHT650_WideJetMJJ950DEtaJJ1p5()          || 
+                                     hww.HLT_AK8PFDiJet280_200_TrimMass30_CSVM_0p20());
+                        }, UNITY);
                 {
                     ana::cutflow.getCut("CutISR"+ISRbin+lepton+charge+"Had");
                     ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+lepton+charge+"Had"+"GenHad", [&]() { return ana::input_file_list_tstring.Contains("M125") ? hww.gen_whad_p4().pt() >= hww.gen_wlep_p4().pt() : 1; }, UNITY);
@@ -245,7 +260,11 @@ void util::set_cuts()
                     ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+lepton+charge+"Had"+"GenLepOn", [&]() { return ana::input_file_list_tstring.Contains("M125") ? hww.gen_whad_p4().pt() <  hww.gen_wlep_p4().pt() and hww.gen_wlep_p4().mass() >= 60. : 1; }, UNITY);
                 }
                 ana::cutflow.getCut("CutISR"+ISRbin+lepton+charge);
-                ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+lepton+charge+"Lep", [&]() { return hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt() > 0; }, UNITY);
+                ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+lepton+charge+"Lep", [&]()
+                        {
+                            return (hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt() > 0)
+                                    and (hww.HLT_TkMu50() or hww.HLT_Mu50());
+                        }, UNITY);
                 {
                     ana::cutflow.getCut("CutISR"+ISRbin+lepton+charge+"Lep");
                     ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+lepton+charge+"Lep"+"GenHad", [&]() { return ana::input_file_list_tstring.Contains("M125") ? hww.gen_whad_p4().pt() >= hww.gen_wlep_p4().pt() : 1; }, UNITY);
@@ -277,6 +296,8 @@ void util::set_cuts()
         // ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusHadStrawManCut5", [&]() { return hww.L_customrelIso005EA() < 1.2                 ;}, UNITY);
         // ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusHadStrawManCut6", [&]() { return (hww.QQ_p4() + hww.L_p4() + hww.neu_p4()).mass() < 170;}, UNITY);
 
+        ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusHadSubjetPt", [&]() { return hww.J_softdropPuppiSubjet1_pt() > 20 and hww.J_softdropPuppiSubjet2_pt() > 20.; }, UNITY);
+        // ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusHadNPFcands", [&]() { return hww.J_npfcands() < 65; }, UNITY);
         // ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusHadStrawManCut1", [&]() { return hww.QQ_p4().mass() < 95. and hww.QQ_p4().mass() > 70.; }, UNITY);
         ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusHadStrawManCut2", [&]() { return ((hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() < (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass() ? (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol1()).mass() : (hww.QQ_p4() + hww.L_p4() + hww.neu_p4_sol2()).mass()) < 180; }, UNITY);
         // ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusHadStrawManCut3", [&]() { return hww.J_softdropMass() > 80; }, UNITY);
@@ -475,10 +496,11 @@ void util::create_histograms()
             } );
 
     // Correlations
-    ana::histograms.addHistogram("dr_L_QQ"    , 180 ,     0 ,    4 , [&]() { return hww.dr_L_QQ();                                                                       } );
-    ana::histograms.addHistogram("deltaFrac"  , 180 ,    -2 ,    2 , [&]() { return hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt(); } );
-    ana::histograms.addHistogram("mRatio"     , 180 ,     0 ,    4 , [&]() { return hww.V_p4().mass() / hww.J_p4().mass();                                               } );
-    ana::histograms.addHistogram("mRatio_SD"  , 180 ,     0 ,    4 , [&]() { return hww.V_softdropMass() / hww.J_softdropMass();                                         } );
+    ana::histograms.addHistogram("dr_L_QQ"    , 180 ,     0 ,      4 , [&]() { return hww.dr_L_QQ();                                                                       } );
+    ana::histograms.addHistogram("deltaFrac"  , 180 ,    -2 ,      2 , [&]() { return hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt(); } );
+    ana::histograms.addHistogram("mRatio"     , 180 ,     0 ,      4 , [&]() { return hww.V_p4().mass() / hww.J_p4().mass();                                               } );
+    ana::histograms.addHistogram("mRatio_SD"  , 180 ,     0 ,      4 , [&]() { return hww.V_softdropMass() / hww.J_softdropMass();                                         } );
+    ana::histograms.addHistogram("dphiRJ"     , 180 ,     0 , 3.1416 , [&]() { return fabs(RooUtil::Calc::DeltaPhi(hww.Recoil_p4(), hww.J_p4()));                          } );
 
     ana::histograms.addHistogram("detaLsubjet_max", 180, 0, 4, [&]()
             {
