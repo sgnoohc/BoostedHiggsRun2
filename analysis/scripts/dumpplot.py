@@ -28,6 +28,10 @@ else:
 
 filter_pattern = ','.join(args.filter_patterns)
 
+# In case if it is a nbmed, print 1 because that one is 1 bin so I can get a yield
+if "nbmed" in filter_pattern:
+    sig_scale = 1
+
 input_path_dir = args.input_dir
 
 # parsing input job tag based on the structure that it is outputs/BABYTAG/JOBTAG/merged
@@ -46,9 +50,11 @@ bkg_fnames = [
 
 sig_fnames = [
         "{}/merged/higgs.root".format(input_path_dir),
-        #"{}/merged/VBFHToWWToLNuQQ_merged.root".format(output_path_dir),
+        # "{}/merged/GluGluHToWWToLNuQQ_merged.root".format(input_path_dir),
         # "outputs/HWW2016_v5.0.0/test15/merged/VHToNonbb_merged.root",
         ]
+
+legend_labels = ["t#bar{t}", "W#rightarrowlv", "WW", "QCD"]
 
 p.dump_plot(
         dirname=output_dir+"/log" if args.yaxis_log else output_dir+"/lin",
@@ -56,10 +62,12 @@ p.dump_plot(
         sig_fnames=sig_fnames,
         filter_pattern=filter_pattern,
         signal_scale=sig_scale,
+        legend_labels=legend_labels,
         extraoptions={
             "nbins":int(args.nbins),
             "print_yield":True,
             "yaxis_log":args.yaxis_log,
+            "legend_smart":False if args.yaxis_log else True,
             "yaxis_range":args.yaxis_range.split(',') if args.yaxis_range else [],
             "remove_underflow":args.rm_udflow,
             "bkg_sort_method": "unsorted",
