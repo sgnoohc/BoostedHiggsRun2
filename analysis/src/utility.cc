@@ -589,7 +589,7 @@ void util::run_analysis()
     while (ana::looper.nextEvent())
     {
         ana::cutflow.fill();
-        run_jet_clustering();
+        run_jet_clustering_study();
     }
 
     // Writing output file
@@ -713,16 +713,22 @@ void util::add_misc_ttreex_outputs()
     ana::output_ttreex.createBranch<float>("gen_q1_pt");
     ana::output_ttreex.createBranch<float>("gen_dr_qq");
     ana::output_ttreex.createBranch<float>("gen_mass_qq");
+    ana::output_ttreex.createBranch<float>("gen_mass_lqq");
     ana::output_ttreex.createBranch<float>("deltaFrac");
+    ana::output_ttreex.createBranch<float>("gen_whad_pt");
+    ana::output_ttreex.createBranch<float>("gen_wlep_pt");
 
     ana::output_ttreex.createBranch<float>("ak8_lepton_subtraction_dpt");
     ana::output_ttreex.createBranch<float>("ak8_lepton_subtraction_dr");
     ana::output_ttreex.createBranch<float>("ak8_lepton_subtraction_id");
 
     ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_dpt_wrt_miniaod");
-    ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_dpt_wrt_miniaod");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_deta_wrt_miniaod");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_dphi_wrt_miniaod");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_dmass_wrt_miniaod");
 
     ana::output_ttreex.createBranch<float>("ak8_miniaod_softdropMass");
+    ana::output_ttreex.createBranch<float>("ak8_miniaod_mass");
 
     ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_mass");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_mass");
@@ -741,6 +747,7 @@ void util::add_misc_ttreex_outputs()
     ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_nearest_dr");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_nearest_pt");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_mass_w_nearest");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_softdropMass_w_nearest");
 
     ana::output_ttreex.createBranch<float>("ak8_miniaod_softdropSubjetDR");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_softdropSubjetDR");
@@ -780,17 +787,25 @@ void util::run_jet_clustering_study()
 
         // The leading one will be my reclustered jet of interest
         float recl_w_lep_pt = jets_w_lep[0].pt();
-        float recl_wo_lep_pt = jets_wo_lep[0].pt();
+        float recl_w_lep_eta = jets_w_lep[0].eta();
+        float recl_w_lep_phi = jets_w_lep[0].phi();
+        float recl_w_lep_mass = jets_w_lep[0].m();
 
         // Just accessing mini AOD jet
-        float miniaod_pt = (hww.J_p4() * hww.J_undoJEC()).pt();
+        LV raw_J = hww.J_p4() * hww.J_undoJEC();
+        float miniaod_pt = raw_J.pt();
+        float miniaod_eta = raw_J.eta();
+        float miniaod_phi = raw_J.phi();
+        float miniaod_mass = raw_J.mass();
 
-        // Accessing the sub-jets in the groomed jets
+        // Accessing the sub-raw_J
         std::vector<fastjet::PseudoJet> sd_jet_w_lep_pieces = fastjet::sorted_by_pt(sd_jet_w_lep.pieces());
         std::vector<fastjet::PseudoJet> sd_jet_wo_lep_pieces = fastjet::sorted_by_pt(sd_jet_wo_lep.pieces());
 
         ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_dpt_wrt_miniaod", miniaod_pt - recl_w_lep_pt);
-        ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_dpt_wrt_miniaod", miniaod_pt - recl_wo_lep_pt);
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_deta_wrt_miniaod", miniaod_eta - recl_w_lep_eta);
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_dphi_wrt_miniaod", miniaod_phi - recl_w_lep_phi);
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_dmass_wrt_miniaod", miniaod_mass - recl_w_lep_mass);
 
         ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_mass", jets_w_lep[0].m());
         ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_mass", jets_wo_lep[0].m());
@@ -831,12 +846,27 @@ void util::run_jet_clustering_study()
                 ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_nearest_dr", dr);
                 ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_nearest_pt", pt);
                 ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_mass_w_nearest", mass);
+
+                // Computing softdrop after adding the nearest jet
+                fastjet::PseudoJet combined_jet = jets_wo_lep[0];
+                combined_jet += jets_wo_lep[i_nearest];
+
+                double z_cut = 0.10;
+                double beta  = 0.0;
+                fastjet::contrib::SoftDrop sd(beta, z_cut);
+
+                // Run SoftDrop and examine the output
+                fastjet::PseudoJet sd_jet = sd(combined_jet);
+
+                ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_softdropMass_w_nearest", sd_jet.m());
             }
+
         }
 
         ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_softdropSubjetDR", sd_jet_w_lep.structure_of<fastjet::contrib::SoftDrop>().delta_R());
         ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_softdropSubjetDR", sd_jet_wo_lep.structure_of<fastjet::contrib::SoftDrop>().delta_R());
 
+        ana::output_ttreex.setBranch<float>("ak8_miniaod_mass", hww.J_p4().mass());
         ana::output_ttreex.setBranch<float>("ak8_miniaod_softdropMass", hww.J_softdropMass());
         ana::output_ttreex.setBranch<float>("ak8_miniaod_softdropSubjetDR",
                 RooUtil::Calc::DeltaR(
@@ -850,6 +880,9 @@ void util::run_jet_clustering_study()
         ana::output_ttreex.setBranch<float>("gen_q1_pt", hww.gen_q1_p4().pt());
         ana::output_ttreex.setBranch<float>("gen_dr_qq", RooUtil::Calc::DeltaR(hww.gen_q0_p4(), hww.gen_q1_p4()));
         ana::output_ttreex.setBranch<float>("gen_mass_qq", (hww.gen_q0_p4() + hww.gen_q1_p4()).mass());
+        ana::output_ttreex.setBranch<float>("gen_mass_lqq", (hww.gen_q0_p4() + hww.gen_q1_p4() + hww.gen_lep_p4()).mass());
+        ana::output_ttreex.setBranch<float>("gen_whad_pt", hww.gen_whad_p4().pt());
+        ana::output_ttreex.setBranch<float>("gen_wlep_pt", hww.gen_wlep_p4().pt());
 
         // Compute reco level related quantities
         ana::output_ttreex.setBranch<float>("deltaFrac", hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt());
@@ -961,7 +994,7 @@ fastjet::PseudoJet util::get_softdrop_jet(fastjet::ClusterSequence cs)
     // Use a symmetry cut z > z_cut R^beta
     // By default, there is no mass-drop requirement
     double z_cut = 0.10;
-    double beta  = 2.0;
+    double beta  = 0.0;
     fastjet::contrib::SoftDrop sd(beta, z_cut);
 
     std::vector<fastjet::PseudoJet> jets = fastjet::sorted_by_pt(cs.inclusive_jets());
