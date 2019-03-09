@@ -54,10 +54,10 @@ namespace util
     //
 
     // Run jet clustering ourselves
-    void run_jet_clustering();
+    void run_jet_clustering_study();
 
     // Do clusterinng where the input: particles is a list of Pseudo jets (constituents such as PF or calo clusters etc.)
-    fastjet::ClusterSequence cluster_jets(std::vector<fastjet::PseudoJet> particles, double R);
+    fastjet::ClusterSequence cluster_jets(std::vector<fastjet::PseudoJet> particles, double R, fastjet::JetAlgorithm jetalgo=fastjet::antikt_algorithm);
 
     // Get a vector of pseudojets with PF candidates around the candidate fat-jet from hww baby
     std::vector<fastjet::PseudoJet> get_particles(bool subtract_lepton, bool do_not_subtract_puppi=false, bool log_subtracted_lepton=false);

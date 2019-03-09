@@ -709,6 +709,8 @@ void util::add_bdt_ttreex_outputs()
 //_____________________________________________________________________________
 void util::add_misc_ttreex_outputs()
 {
+    ana::output_ttreex.createBranch<float>("gen_q0_pt");
+    ana::output_ttreex.createBranch<float>("gen_q1_pt");
     ana::output_ttreex.createBranch<float>("gen_dr_qq");
     ana::output_ttreex.createBranch<float>("gen_mass_qq");
     ana::output_ttreex.createBranch<float>("deltaFrac");
@@ -716,19 +718,30 @@ void util::add_misc_ttreex_outputs()
     ana::output_ttreex.createBranch<float>("ak8_lepton_subtraction_dpt");
     ana::output_ttreex.createBranch<float>("ak8_lepton_subtraction_dr");
     ana::output_ttreex.createBranch<float>("ak8_lepton_subtraction_id");
+
     ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_dpt_wrt_miniaod");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_dpt_wrt_miniaod");
+
     ana::output_ttreex.createBranch<float>("ak8_miniaod_softdropMass");
+
     ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_mass");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_mass");
     ana::output_ttreex.createBranch<float>("ak12_reclustered_wo_lepton_mass");
     ana::output_ttreex.createBranch<float>("ak15_reclustered_wo_lepton_mass");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_nopuppi_mass");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_ca_mass");
+
     ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_softdropMass");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_softdropMass");
     ana::output_ttreex.createBranch<float>("ak12_reclustered_wo_lepton_softdropMass");
     ana::output_ttreex.createBranch<float>("ak15_reclustered_wo_lepton_softdropMass");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_nopuppi_softdropMass");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_ca_softdropMass");
+
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_nearest_dr");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_nearest_pt");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_mass_w_nearest");
+
     ana::output_ttreex.createBranch<float>("ak8_miniaod_softdropSubjetDR");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_softdropSubjetDR");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_softdropSubjetDR");
@@ -736,7 +749,7 @@ void util::add_misc_ttreex_outputs()
 
 
 //_____________________________________________________________________________
-void util::run_jet_clustering()
+void util::run_jet_clustering_study()
 {
     if (ana::cutflow.getCut("CutISR400MuMinus").pass)
     {
@@ -747,6 +760,7 @@ void util::run_jet_clustering()
         fastjet::ClusterSequence cs_wo_lep_12 = cluster_jets(get_particles(true), 1.2);
         fastjet::ClusterSequence cs_wo_lep_15 = cluster_jets(get_particles(true), 1.5);
         fastjet::ClusterSequence cs_wo_lep_nopuppi = cluster_jets(get_particles(true, true), 0.8);
+        fastjet::ClusterSequence cs_wo_lep_ca = cluster_jets(get_particles(true), 0.8, fastjet::cambridge_algorithm);
 
         // Then, get_softdrop_jet function takes the leading jet and spits out the groomed jet (pseudojet object)
         fastjet::PseudoJet sd_jet_w_lep = get_softdrop_jet(cs_w_lep);
@@ -754,6 +768,7 @@ void util::run_jet_clustering()
         fastjet::PseudoJet sd_jet_wo_lep_12 = get_softdrop_jet(cs_wo_lep_12);
         fastjet::PseudoJet sd_jet_wo_lep_15 = get_softdrop_jet(cs_wo_lep_15);
         fastjet::PseudoJet sd_jet_wo_lep_nopuppi = get_softdrop_jet(cs_wo_lep_nopuppi);
+        fastjet::PseudoJet sd_jet_wo_lep_ca = get_softdrop_jet(cs_wo_lep_ca);
 
         // Access the non-groomed reclustered jets
         std::vector<fastjet::PseudoJet> jets_w_lep = fastjet::sorted_by_pt(cs_w_lep.inclusive_jets());
@@ -761,6 +776,7 @@ void util::run_jet_clustering()
         std::vector<fastjet::PseudoJet> jets_wo_lep_12 = fastjet::sorted_by_pt(cs_wo_lep_12.inclusive_jets());
         std::vector<fastjet::PseudoJet> jets_wo_lep_15 = fastjet::sorted_by_pt(cs_wo_lep_15.inclusive_jets());
         std::vector<fastjet::PseudoJet> jets_wo_lep_nopuppi = fastjet::sorted_by_pt(cs_wo_lep_nopuppi.inclusive_jets());
+        std::vector<fastjet::PseudoJet> jets_wo_lep_ca = fastjet::sorted_by_pt(cs_wo_lep_ca.inclusive_jets());
 
         // The leading one will be my reclustered jet of interest
         float recl_w_lep_pt = jets_w_lep[0].pt();
@@ -781,12 +797,42 @@ void util::run_jet_clustering()
         ana::output_ttreex.setBranch<float>("ak12_reclustered_wo_lepton_mass", jets_wo_lep_12[0].m());
         ana::output_ttreex.setBranch<float>("ak15_reclustered_wo_lepton_mass", jets_wo_lep_15[0].m());
         ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_nopuppi_mass", jets_wo_lep_nopuppi[0].m());
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_ca_mass", jets_wo_lep_ca[0].m());
 
         ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_softdropMass", sd_jet_w_lep.m());
         ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_softdropMass", sd_jet_wo_lep.m());
         ana::output_ttreex.setBranch<float>("ak12_reclustered_wo_lepton_softdropMass", sd_jet_wo_lep_12.m());
         ana::output_ttreex.setBranch<float>("ak15_reclustered_wo_lepton_softdropMass", sd_jet_wo_lep_15.m());
         ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_nopuppi_softdropMass", sd_jet_wo_lep_nopuppi.m());
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_ca_softdropMass", sd_jet_wo_lep_ca.m());
+
+        // If I have more than 1 clustered AK8 jets, then loop over to find the leading one in the Rmod < 2*R (1.6)
+        if (jets_wo_lep.size() > 1)
+        {
+            // Finding the closest jet by looping over and computing deltaR and comparing
+            unsigned int i_nearest = -1;
+            float dr = -999;
+            float mass = -999;
+            float pt = -999;
+            for (unsigned int ii = 1; ii < jets_wo_lep.size(); ++ii)
+            {
+                // float tmp = jets_wo_lep[0].delta_R(jets_wo_lep[ii]);
+                float tmp = jets_wo_lep[ii].pt();
+                if (tmp > pt)
+                {
+                    i_nearest = ii;
+                    dr = jets_wo_lep[0].delta_R(jets_wo_lep[ii]);
+                    pt = jets_wo_lep[ii].pt();
+                    mass = (getLV(jets_wo_lep[0]) + getLV(jets_wo_lep[ii])).mass();
+                }
+            }
+            if (i_nearest > 0)
+            {
+                ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_nearest_dr", dr);
+                ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_nearest_pt", pt);
+                ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_mass_w_nearest", mass);
+            }
+        }
 
         ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_softdropSubjetDR", sd_jet_w_lep.structure_of<fastjet::contrib::SoftDrop>().delta_R());
         ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_softdropSubjetDR", sd_jet_wo_lep.structure_of<fastjet::contrib::SoftDrop>().delta_R());
@@ -800,6 +846,8 @@ void util::run_jet_clustering()
                 );
 
         // Compute gen level related quantities
+        ana::output_ttreex.setBranch<float>("gen_q0_pt", hww.gen_q0_p4().pt());
+        ana::output_ttreex.setBranch<float>("gen_q1_pt", hww.gen_q1_p4().pt());
         ana::output_ttreex.setBranch<float>("gen_dr_qq", RooUtil::Calc::DeltaR(hww.gen_q0_p4(), hww.gen_q1_p4()));
         ana::output_ttreex.setBranch<float>("gen_mass_qq", (hww.gen_q0_p4() + hww.gen_q1_p4()).mass());
 
@@ -813,10 +861,10 @@ void util::run_jet_clustering()
 //__________________________________________________________________________________________________
 // Do clusterinng where the input: particles is a list of Pseudo jets (constituents such as PF or calo clusters etc.)
 // Perofrom Anti-kt clustering on vector of PseudoJets (probably a PF candidate list)
-fastjet::ClusterSequence util::cluster_jets(std::vector<fastjet::PseudoJet> particles, double R)
+fastjet::ClusterSequence util::cluster_jets(std::vector<fastjet::PseudoJet> particles, double R, fastjet::JetAlgorithm jetalgo)
 {
     // choose a jet definition
-    fastjet::JetDefinition jet_def(fastjet::antikt_algorithm, R);
+    fastjet::JetDefinition jet_def(jetalgo, R);
 
     // run the clustering, extract the jets
     fastjet::ClusterSequence cs(particles, jet_def);
