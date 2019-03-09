@@ -69,4 +69,7 @@ namespace util
 // For easy printing of fastjet::PseudoJet to std::cout
 ostream & operator<<(ostream & ostr, const fastjet::PseudoJet & jet);
 
+// For turning PseudoJet to LV
+LV getLV(fastjet::PseudoJet&);
+
 #endif

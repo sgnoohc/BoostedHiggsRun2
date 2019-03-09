@@ -96,8 +96,8 @@ echo ">>> ls -l"
 ls -l
 echo ">>> export COREDIR=$PWD/CORE/"
 export COREDIR=$PWD/CORE/
-echo ">>> ./doAnalysis -i ${INPUTFILENAMES} -o output.root -n -1 -C -H"
-./doAnalysis -i ${INPUTFILENAMES} -o output.root -n -1 -C -H
+echo ">>> ./doAnalysis -i ${INPUTFILENAMES} -o output.root -n -1 -C -H -T"
+./doAnalysis -i ${INPUTFILENAMES} -o output.root -n -1 -C -H -T
 
 ###################################################################################################
 # ProjectMetis/CondorTask specific (Copying files over to hadoop)
