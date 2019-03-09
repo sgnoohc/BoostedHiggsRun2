@@ -60,7 +60,7 @@ namespace util
     fastjet::ClusterSequence cluster_jets(std::vector<fastjet::PseudoJet> particles, double R);
 
     // Get a vector of pseudojets with PF candidates around the candidate fat-jet from hww baby
-    std::vector<fastjet::PseudoJet> get_particles(bool subtract_lepton);
+    std::vector<fastjet::PseudoJet> get_particles(bool subtract_lepton, bool do_not_subtract_puppi=false, bool log_subtracted_lepton=false);
 
     // Perform SoftDrop grooming and return the groomed PseudoJet
     fastjet::PseudoJet get_softdrop_jet(fastjet::ClusterSequence cs);

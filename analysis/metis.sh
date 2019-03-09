@@ -96,8 +96,20 @@ echo ">>> ls -l"
 ls -l
 echo ">>> export COREDIR=$PWD/CORE/"
 export COREDIR=$PWD/CORE/
+echo ">>> export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/fastjet/fastjet-install/lib"
+export LD_LIBRARY_PATH=$PWD/fastjet/fastjet-install/lib:$LD_LIBRARY_PATH
 echo ">>> ./doAnalysis -i ${INPUTFILENAMES} -o output.root -n -1 -C -H -T"
+echo $LD_LIBRARY_PATH
+ldd ./doAnalysis
 ./doAnalysis -i ${INPUTFILENAMES} -o output.root -n -1 -C -H -T
+
+if [ $? -eq 0 ]; then
+    echo "Success"
+else
+    echo "Failed!!!"
+    exit
+fi
+
 
 ###################################################################################################
 # ProjectMetis/CondorTask specific (Copying files over to hadoop)

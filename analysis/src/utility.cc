@@ -711,6 +711,7 @@ void util::add_misc_ttreex_outputs()
 {
     ana::output_ttreex.createBranch<float>("gen_dr_qq");
     ana::output_ttreex.createBranch<float>("gen_mass_qq");
+    ana::output_ttreex.createBranch<float>("deltaFrac");
 
     ana::output_ttreex.createBranch<float>("ak8_lepton_subtraction_dpt");
     ana::output_ttreex.createBranch<float>("ak8_lepton_subtraction_dr");
@@ -718,10 +719,16 @@ void util::add_misc_ttreex_outputs()
     ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_dpt_wrt_miniaod");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_dpt_wrt_miniaod");
     ana::output_ttreex.createBranch<float>("ak8_miniaod_softdropMass");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_mass");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_mass");
+    ana::output_ttreex.createBranch<float>("ak12_reclustered_wo_lepton_mass");
+    ana::output_ttreex.createBranch<float>("ak15_reclustered_wo_lepton_mass");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_nopuppi_mass");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_softdropMass");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_softdropMass");
     ana::output_ttreex.createBranch<float>("ak12_reclustered_wo_lepton_softdropMass");
     ana::output_ttreex.createBranch<float>("ak15_reclustered_wo_lepton_softdropMass");
+    ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_nopuppi_softdropMass");
     ana::output_ttreex.createBranch<float>("ak8_miniaod_softdropSubjetDR");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_w_lepton_softdropSubjetDR");
     ana::output_ttreex.createBranch<float>("ak8_reclustered_wo_lepton_softdropSubjetDR");
@@ -736,19 +743,24 @@ void util::run_jet_clustering()
 
         // Do the jet reculstering the ClusterSequence is an object that holds the entire jet cluster information
         fastjet::ClusterSequence cs_w_lep = cluster_jets(get_particles(false), 0.8);
-        fastjet::ClusterSequence cs_wo_lep = cluster_jets(get_particles(true), 0.8);
+        fastjet::ClusterSequence cs_wo_lep = cluster_jets(get_particles(true, false, true), 0.8);
         fastjet::ClusterSequence cs_wo_lep_12 = cluster_jets(get_particles(true), 1.2);
         fastjet::ClusterSequence cs_wo_lep_15 = cluster_jets(get_particles(true), 1.5);
+        fastjet::ClusterSequence cs_wo_lep_nopuppi = cluster_jets(get_particles(true, true), 0.8);
 
         // Then, get_softdrop_jet function takes the leading jet and spits out the groomed jet (pseudojet object)
         fastjet::PseudoJet sd_jet_w_lep = get_softdrop_jet(cs_w_lep);
         fastjet::PseudoJet sd_jet_wo_lep = get_softdrop_jet(cs_wo_lep);
         fastjet::PseudoJet sd_jet_wo_lep_12 = get_softdrop_jet(cs_wo_lep_12);
         fastjet::PseudoJet sd_jet_wo_lep_15 = get_softdrop_jet(cs_wo_lep_15);
+        fastjet::PseudoJet sd_jet_wo_lep_nopuppi = get_softdrop_jet(cs_wo_lep_nopuppi);
 
         // Access the non-groomed reclustered jets
         std::vector<fastjet::PseudoJet> jets_w_lep = fastjet::sorted_by_pt(cs_w_lep.inclusive_jets());
         std::vector<fastjet::PseudoJet> jets_wo_lep = fastjet::sorted_by_pt(cs_wo_lep.inclusive_jets());
+        std::vector<fastjet::PseudoJet> jets_wo_lep_12 = fastjet::sorted_by_pt(cs_wo_lep_12.inclusive_jets());
+        std::vector<fastjet::PseudoJet> jets_wo_lep_15 = fastjet::sorted_by_pt(cs_wo_lep_15.inclusive_jets());
+        std::vector<fastjet::PseudoJet> jets_wo_lep_nopuppi = fastjet::sorted_by_pt(cs_wo_lep_nopuppi.inclusive_jets());
 
         // The leading one will be my reclustered jet of interest
         float recl_w_lep_pt = jets_w_lep[0].pt();
@@ -764,10 +776,17 @@ void util::run_jet_clustering()
         ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_dpt_wrt_miniaod", miniaod_pt - recl_w_lep_pt);
         ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_dpt_wrt_miniaod", miniaod_pt - recl_wo_lep_pt);
 
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_mass", jets_w_lep[0].m());
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_mass", jets_wo_lep[0].m());
+        ana::output_ttreex.setBranch<float>("ak12_reclustered_wo_lepton_mass", jets_wo_lep_12[0].m());
+        ana::output_ttreex.setBranch<float>("ak15_reclustered_wo_lepton_mass", jets_wo_lep_15[0].m());
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_nopuppi_mass", jets_wo_lep_nopuppi[0].m());
+
         ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_softdropMass", sd_jet_w_lep.m());
         ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_softdropMass", sd_jet_wo_lep.m());
         ana::output_ttreex.setBranch<float>("ak12_reclustered_wo_lepton_softdropMass", sd_jet_wo_lep_12.m());
         ana::output_ttreex.setBranch<float>("ak15_reclustered_wo_lepton_softdropMass", sd_jet_wo_lep_15.m());
+        ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_nopuppi_softdropMass", sd_jet_wo_lep_nopuppi.m());
 
         ana::output_ttreex.setBranch<float>("ak8_reclustered_w_lepton_softdropSubjetDR", sd_jet_w_lep.structure_of<fastjet::contrib::SoftDrop>().delta_R());
         ana::output_ttreex.setBranch<float>("ak8_reclustered_wo_lepton_softdropSubjetDR", sd_jet_wo_lep.structure_of<fastjet::contrib::SoftDrop>().delta_R());
@@ -782,8 +801,10 @@ void util::run_jet_clustering()
 
         // Compute gen level related quantities
         ana::output_ttreex.setBranch<float>("gen_dr_qq", RooUtil::Calc::DeltaR(hww.gen_q0_p4(), hww.gen_q1_p4()));
-        ana::output_ttreex.setBranch<float>("gen_mass_qq", (hww.gen_q0_p4(), hww.gen_q1_p4()).mass());
+        ana::output_ttreex.setBranch<float>("gen_mass_qq", (hww.gen_q0_p4() + hww.gen_q1_p4()).mass());
 
+        // Compute reco level related quantities
+        ana::output_ttreex.setBranch<float>("deltaFrac", hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt());
 
         ana::output_ttreex.fill();
     }
@@ -844,7 +865,7 @@ std::ostream & operator<<(std::ostream & ostr, const fastjet::PseudoJet & jet)
 
 //__________________________________________________________________________________________________
 // Get a vector of pseudojets with PF candidates
-std::vector<fastjet::PseudoJet> util::get_particles(bool subtract_lepton)
+std::vector<fastjet::PseudoJet> util::get_particles(bool subtract_lepton, bool do_not_subtract_puppi, bool log_subtracted_lepton)
 {
     std::vector<fastjet::PseudoJet> particles;
 
@@ -855,7 +876,7 @@ std::vector<fastjet::PseudoJet> util::get_particles(bool subtract_lepton)
     {
         float puppi_wgt = hww.Htag_pf_puppi_wgt()[ipf];
 
-        if (puppi_wgt == 0)
+        if (puppi_wgt == 0 and not do_not_subtract_puppi)
             continue;
 
         if (subtract_lepton)
@@ -863,13 +884,16 @@ std::vector<fastjet::PseudoJet> util::get_particles(bool subtract_lepton)
             float dr = RooUtil::Calc::DeltaR(hww.Htag_pf_p4()[ipf], hww.L_p4());
             if (dr < 0.1 and hww.Htag_pf_id()[ipf] == hww.L_id())
             {
-                ana::output_ttreex.setBranch<float>("ak8_lepton_subtraction_dpt", hww.Htag_pf_p4()[ipf].pt() - hww.L_p4().pt());
-                ana::output_ttreex.setBranch<float>("ak8_lepton_subtraction_dr", dr);
-                ana::output_ttreex.setBranch<float>("ak8_lepton_subtraction_id", hww.Htag_pf_id()[ipf]);
+                if (log_subtracted_lepton)
+                {
+                    ana::output_ttreex.setBranch<float>("ak8_lepton_subtraction_dpt", hww.Htag_pf_p4()[ipf].pt() - hww.L_p4().pt());
+                    ana::output_ttreex.setBranch<float>("ak8_lepton_subtraction_dr", dr);
+                    ana::output_ttreex.setBranch<float>("ak8_lepton_subtraction_id", hww.Htag_pf_id()[ipf]);
+                }
                 continue;
             }
         }
-        LV pf = hww.Htag_pf_p4()[ipf] * puppi_wgt;
+        LV pf = do_not_subtract_puppi ? hww.Htag_pf_p4()[ipf] : hww.Htag_pf_p4()[ipf] * puppi_wgt;
 
         float px = pf.px();
         float py = pf.py();
