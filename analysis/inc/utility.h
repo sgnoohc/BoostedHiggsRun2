@@ -19,6 +19,7 @@
 // fastjet
 #include "fastjet/ClusterSequence.hh"
 #include "fastjet/contrib/SoftDrop.hh"
+#include "fastjet/contrib/Nsubjettiness.hh"
 
 namespace util
 {
@@ -63,7 +64,7 @@ namespace util
     std::vector<fastjet::PseudoJet> get_particles(bool subtract_lepton, bool do_not_subtract_puppi=false, bool log_subtracted_lepton=false);
 
     // Perform SoftDrop grooming and return the groomed PseudoJet
-    fastjet::PseudoJet get_softdrop_jet(fastjet::ClusterSequence cs);
+    fastjet::PseudoJet get_softdrop_jet(fastjet::PseudoJet&);
 }
 
 // For easy printing of fastjet::PseudoJet to std::cout

@@ -12,7 +12,7 @@ def main():
     else:
         force = False
 
-    job_tag = "test40_20190308"
+    job_tag = "test48_20190308"
     input_ntup_tag = "HWW2016_v5.0.3"
     base_dir_path = "/hadoop/cms/store/user/phchang/metis/baby/{}/".format(input_ntup_tag)
     tar_files = ["doAnalysis", "setup.sh", "fastjet"]
@@ -29,8 +29,8 @@ def main():
     samples_map = {}
     files_per_output_map = {}
     for sample in all_samples:
-        if "Glu" not in sample:
-            continue
+        # if "Glu" not in sample:
+        #     continue
         if "Single" in sample:
             continue
         sample_rawname = os.path.basename(sample)
