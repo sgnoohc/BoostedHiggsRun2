@@ -58,6 +58,7 @@ def get_hists(histnames):
     output_dirpath = "outputs/HWW2016_v5.0.1/test66_20180306/merged" # without QQ mass
     output_dirpath = "outputs/HWW2016_v5.0.2/test71_20180306/merged" # without QQ mass
     output_dirpath = "outputs/HWW2016_v5.0.3/test_20180307/merged" # without QQ mass
+    output_dirpath = "outputs/HWW2016_v5.0.3/test49_20180308/merged" # without QQ mass
 
     suffix = "*MINIAODSIM"
     suffix = "_merged"

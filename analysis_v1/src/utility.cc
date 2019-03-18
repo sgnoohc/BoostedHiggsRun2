@@ -13,7 +13,8 @@ void util::parse_arguments(int argc, char** argv)
         ("t,test", "Run test job. i.e. overrides output option to 'test.root' and 'recreate's the file.")
         ("H,hist", "Book histogram")
         ("C,cutflow", "Book cutflows")
-        ("T,tree", "write ttree")
+        ("study_reclustering", "study reclustering of the jets")
+        ("make_slim_ttree", "make slim ttree")
         ("h,help", "Print help")
         ;
 
@@ -83,13 +84,35 @@ void util::parse_arguments(int argc, char** argv)
         ana::do_cutflow = false;
     }
 
-    if (result.count("tree"))
+    // Among the following options only one can be turned on
+    if (result.count("study_reclustering") + result.count("make_slim_ttree") <= 1)
     {
-        ana::write_ttree = true;
+        if (result.count("study_reclustering"))
+        {
+            ana::study_reclustering = true;
+        }
+        else
+        {
+            ana::study_reclustering = false;
+        }
+        if (result.count("make_slim_ttree"))
+        {
+            ana::make_slim_ttree = true;
+        }
+        else
+        {
+            ana::make_slim_ttree = false;
+        }
     }
     else
     {
-        ana::write_ttree = false;
+        std::cout << "ERROR:" << std::endl;
+        std::cout << "Among the following options only one can be turned on!" << std::endl;
+        std::cout << "More than one is detected!" << std::endl;
+        std::cout << "------------------------------------------------------" << std::endl;
+        std::cout << "study_reclustering : turned on ? " << result.count("study_reclustering") << std::endl;
+        std::cout << "make_slim_ttree : turned on ? " << result.count("make_slim_ttree") << std::endl;
+        exit(1);
     }
 
     std::cout <<  "=========================================================" << std::endl;
@@ -118,8 +141,7 @@ void util::initialize_analysis()
     ana::output_ttreex = create_ttreex();
 
     // Add outputs to TTreeX
-    // add_bdt_ttreex_outputs();
-    add_misc_ttreex_outputs();
+    add_ttreex_outputs();
 
     // Cutflow utility object that creates a tree structure of cuts
     // Need to set the output file in order to book histograms
@@ -149,26 +171,27 @@ void util::set_cuts()
     ana::cutflow.addCutToLastActiveCut("CutTrigger" ,
             [&]()
             {
-                return
-                hww.HLT_Ele27_WPLoose_Gsf()                       || 
-                hww.HLT_Ele30_WPLoose_Gsf()                       || 
-                hww.HLT_Ele45_WPLoose_Gsf()                       || 
-                hww.HLT_Ele105_CaloIdVT_GsfTrkIdT()               || 
-                hww.HLT_Ele115_CaloIdVT_GsfTrkIdT()               || 
-                hww.HLT_IsoTkMu24()                               || 
-                hww.HLT_IsoMu24()                                 || 
-                hww.HLT_SingleMu50()                              || 
-                hww.HLT_SingleEl40()                              || 
-                hww.HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165()       || 
-                hww.HLT_Mu50()                                    || 
-                hww.HLT_TkMu50()                                  || 
-                hww.HLT_AK8PFHT700_TrimR0p1PT0p03Mass50()         || 
-                hww.HLT_AK8PFJet360_TrimMass30()                  || 
-                hww.HLT_PFHT800()                                 || 
-                hww.HLT_PFHT900()                                 || 
-                hww.HLT_PFHT650_WideJetMJJ900DEtaJJ1p5()          || 
-                hww.HLT_PFHT650_WideJetMJJ950DEtaJJ1p5()          || 
-                hww.HLT_AK8PFDiJet280_200_TrimMass30_CSVM_0p20();
+                return 1;
+                // return
+                // hww.HLT_Ele27_WPLoose_Gsf()                       || 
+                // hww.HLT_Ele30_WPLoose_Gsf()                       || 
+                // hww.HLT_Ele45_WPLoose_Gsf()                       || 
+                // hww.HLT_Ele105_CaloIdVT_GsfTrkIdT()               || 
+                // hww.HLT_Ele115_CaloIdVT_GsfTrkIdT()               || 
+                // hww.HLT_IsoTkMu24()                               || 
+                // hww.HLT_IsoMu24()                                 || 
+                // hww.HLT_SingleMu50()                              || 
+                // hww.HLT_SingleEl40()                              || 
+                // hww.HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165()       || 
+                // hww.HLT_Mu50()                                    || 
+                // hww.HLT_TkMu50()                                  || 
+                // hww.HLT_AK8PFHT700_TrimR0p1PT0p03Mass50()         || 
+                // hww.HLT_AK8PFJet360_TrimMass30()                  || 
+                // hww.HLT_PFHT800()                                 || 
+                // hww.HLT_PFHT900()                                 || 
+                // hww.HLT_PFHT650_WideJetMJJ900DEtaJJ1p5()          || 
+                // hww.HLT_PFHT650_WideJetMJJ950DEtaJJ1p5()          || 
+                // hww.HLT_AK8PFDiJet280_200_TrimMass30_CSVM_0p20();
             } , UNITY);
     ana::cutflow.addCutToLastActiveCut("CutBVeto" , [&]() { return hww.nbmed() == 0; } , UNITY );
     ana::cutflow.addCutToLastActiveCut("CutNLep" , [&]() { return hww.L_p4().pt() > 0 and fabs(hww.L_dxy()) < 0.01; } , UNITY );
@@ -237,17 +260,19 @@ void util::set_cuts()
                         {
                             return (hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt() < 0)
                                     and
-                                    (hww.HLT_AK8PFHT700_TrimR0p1PT0p03Mass50()         || 
+                                    (
                                      hww.HLT_Mu50()                                    || 
                                      hww.HLT_TkMu50()                                  || 
                                      hww.HLT_IsoMu24()                                 || 
                                      hww.HLT_IsoTkMu24()                               || 
+                                     hww.HLT_AK8PFHT700_TrimR0p1PT0p03Mass50()         || 
                                      hww.HLT_AK8PFJet360_TrimMass30()                  || 
                                      hww.HLT_PFHT800()                                 || 
                                      hww.HLT_PFHT900()                                 || 
                                      hww.HLT_PFHT650_WideJetMJJ900DEtaJJ1p5()          || 
                                      hww.HLT_PFHT650_WideJetMJJ950DEtaJJ1p5()          || 
-                                     hww.HLT_AK8PFDiJet280_200_TrimMass30_CSVM_0p20());
+                                     hww.HLT_AK8PFDiJet280_200_TrimMass30_CSVM_0p20())
+                                    ;
                         }, UNITY);
                 {
                     ana::cutflow.getCut("CutISR"+ISRbin+lepton+charge+"Had");
@@ -267,7 +292,9 @@ void util::set_cuts()
                 ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+lepton+charge+"Lep", [&]()
                         {
                             return (hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt() > 0)
-                                    and (hww.HLT_TkMu50() or hww.HLT_Mu50());
+                                    and (hww.HLT_TkMu50() or hww.HLT_Mu50())
+                                    and (hww.L_p4().pt() > 52.);
+                                    ;
                         }, UNITY);
                 {
                     ana::cutflow.getCut("CutISR"+ISRbin+lepton+charge+"Lep");
@@ -328,7 +355,7 @@ void util::set_cuts()
 
         // CutMuMinusLep
         ana::cutflow.getCut("CutISR"+ISRbin+"MuMinusLep");
-        // ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusLepStrawManCut1", [&]() { return (hww.dr_L_QQ() > 0.12)                          ; }, UNITY);
+        ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusLepStrawManCut1", [&]() { return (hww.dr_L_QQ() > 0.12)                          ; }, UNITY);
         // ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusLepStrawManCut2", [&]() { return (hww.J_npfcands() > 15)                         ; }, UNITY);
         // ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusLepStrawManCut3", [&]() { return ((hww.L_p4() + hww.J_p4()).mass() < 150.)       ; }, UNITY);
         // ana::cutflow.addCutToLastActiveCut("CutISR"+ISRbin+"MuMinusLepStrawManCut4", [&]() { return (hww.J_softdropMass() > 20)                     ; }, UNITY);
@@ -589,14 +616,19 @@ void util::run_analysis()
     while (ana::looper.nextEvent())
     {
         ana::cutflow.fill();
-        // run_jet_clustering_study();
+        if (ana::study_reclustering)
+            run_study_reclustering();
+        else if (ana::make_slim_ttree)
+            make_slim_ttree();
     }
 
     // Writing output file
     ana::cutflow.saveOutput();
 
     // Writing TTree output to TFile
-    if (ana::write_ttree)
+    if (ana::study_reclustering)
+        ana::output_ttreex.save(ana::output_tfile);
+    else if (ana::make_slim_ttree)
         ana::output_ttreex.save(ana::output_tfile);
 
 }
@@ -605,7 +637,11 @@ void util::run_analysis()
 //_____________________________________________________________________________
 RooUtil::TTreeX util::create_ttreex()
 {
-    ana::output_ttree = new TTree("t", "t");
+    if (ana::make_slim_ttree)
+        ana::output_ttree = ana::main_tchain->CloneTree(0);
+        // ana::output_ttree = new TTree("t", "t");
+    else if (ana::study_reclustering)
+        ana::output_ttree = new TTree("t", "t");
     RooUtil::TTreeX tx(ana::output_ttree);
 
     return tx;
@@ -707,7 +743,7 @@ void util::add_bdt_ttreex_outputs()
 }
 
 //_____________________________________________________________________________
-void util::add_misc_ttreex_outputs()
+void util::add_reclustering_study_ttreex_outputs()
 {
     ana::output_ttreex.createBranch<float>("wgt");
 
@@ -783,9 +819,245 @@ void util::add_misc_ttreex_outputs()
 
 }
 
+//_____________________________________________________________________________
+void util::add_slim_ttreex_outputs()
+{
+    // Reclustered jets
+    ana::output_ttreex.createBranch<LV>("W_p4");
+    ana::output_ttreex.createBranch<LV>("W_SD_p4");
+    ana::output_ttreex.createBranch<float>("mW_SD");
+    ana::output_ttreex.createBranch<float>("W_nJettinessTau21");
+    ana::output_ttreex.createBranch<float>("W_nJettinessTau31");
+    ana::output_ttreex.createBranch<float>("W_nJettinessTau32");
+    ana::output_ttreex.createBranch<float>("W_nJettinessTau1");
+    ana::output_ttreex.createBranch<float>("W_nJettinessTau2");
+    ana::output_ttreex.createBranch<float>("W_nJettinessTau3");
+
+
+    // Object kinematics
+    ana::output_ttreex.createBranch<float>("ak8_pt0");
+    ana::output_ttreex.createBranch<float>("ak8_pt1");
+    ana::output_ttreex.createBranch<float>("L_pt");
+    ana::output_ttreex.createBranch<float>("L_eta");
+    ana::output_ttreex.createBranch<float>("L_abseta");
+    ana::output_ttreex.createBranch<float>("J_pt");
+    ana::output_ttreex.createBranch<float>("J_eta");
+    ana::output_ttreex.createBranch<float>("H_pt");
+    ana::output_ttreex.createBranch<float>("H_eta");
+    ana::output_ttreex.createBranch<float>("QQ_pt");
+    ana::output_ttreex.createBranch<float>("QQ_eta");
+    ana::output_ttreex.createBranch<float>("V_pt");
+    ana::output_ttreex.createBranch<float>("V_eta");
+    ana::output_ttreex.createBranch<float>("R_pt");
+    ana::output_ttreex.createBranch<float>("R_eta");
+    ana::output_ttreex.createBranch<float>("Lmet_pt");
+
+    // Lepton property
+    ana::output_ttreex.createBranch<float>("L_sip3d");
+    ana::output_ttreex.createBranch<float>("L_absip3d");
+    ana::output_ttreex.createBranch<float>("L_absdxy");
+    ana::output_ttreex.createBranch<float>("L_absdz");
+
+    // Fat-jet property
+    ana::output_ttreex.createBranch<float>("J_nJettinessTau21");
+    ana::output_ttreex.createBranch<float>("J_nJettinessTau31");
+    ana::output_ttreex.createBranch<float>("J_nJettinessTau32");
+
+    // Masses
+    ana::output_ttreex.createBranch<float>("mQQ");
+    ana::output_ttreex.createBranch<float>("mV");
+    ana::output_ttreex.createBranch<float>("mJ");
+    ana::output_ttreex.createBranch<float>("RecoH_max");
+    ana::output_ttreex.createBranch<float>("RecoH_min");
+    ana::output_ttreex.createBranch<float>("mDmax");
+    ana::output_ttreex.createBranch<float>("mDmin");
+    ana::output_ttreex.createBranch<float>("mLsubjet_max");
+    ana::output_ttreex.createBranch<float>("mLsubjet_min");
+
+    // Correlations
+    ana::output_ttreex.createBranch<float>("deltaFrac");
+    ana::output_ttreex.createBranch<float>("deltaFracv2");
+    ana::output_ttreex.createBranch<float>("mLW");
+    ana::output_ttreex.createBranch<float>("mRatio");
+    ana::output_ttreex.createBranch<float>("mRatio_SD");
+    ana::output_ttreex.createBranch<float>("dphiRJ");
+
+    ana::output_ttreex.createBranch<float>("dphiLsubjet_max");
+    ana::output_ttreex.createBranch<float>("dphiLsubjet_min");
+    ana::output_ttreex.createBranch<float>("detaLsubjet_max");
+    ana::output_ttreex.createBranch<float>("detaLsubjet_min");
+    ana::output_ttreex.createBranch<float>("drLsubjet_max");
+    ana::output_ttreex.createBranch<float>("drLsubjet_min");
+
+    ana::output_ttreex.createBranch<float>("LSF1");
+    ana::output_ttreex.createBranch<float>("LSF2");
+    ana::output_ttreex.createBranch<float>("LSF_min");
+    ana::output_ttreex.createBranch<float>("LSF_max");
+
+}
 
 //_____________________________________________________________________________
-void util::run_jet_clustering_study()
+void util::add_ttreex_outputs()
+{
+    if (ana::make_slim_ttree)
+        add_slim_ttreex_outputs();
+    if (ana::study_reclustering)
+        add_reclustering_study_ttreex_outputs();
+}
+
+//_____________________________________________________________________________
+void util::make_slim_ttree()
+{
+    if (ana::cutflow.getCut("CutISR400MuMinus").pass)
+    {
+
+        // Do the jet reculstering the ClusterSequence is an object that holds the entire jet cluster information
+        fastjet::ClusterSequence cs_wo_lep = cluster_jets(get_particles(true), 0.8);
+
+        // Access the non-groomed reclustered jets
+        std::vector<fastjet::PseudoJet> jets_wo_lep = fastjet::sorted_by_pt(cs_wo_lep.inclusive_jets());
+
+        // Then, get_softdrop_jet function takes the leading jet and spits out the groomed jet (pseudojet object)
+        fastjet::PseudoJet sd_jet_wo_lep = jets_wo_lep.size() > 0 ? get_softdrop_jet(jets_wo_lep[0]) : fastjet::PseudoJet();
+
+        LV W_p4 = jets_wo_lep.size() > 0 ? getLV(jets_wo_lep[0]) : LV();
+        LV W_SD_p4 = getLV(sd_jet_wo_lep);
+
+        ana::output_ttreex.setBranch<LV>("W_p4", W_p4);
+        ana::output_ttreex.setBranch<LV>("W_SD_p4", W_SD_p4);
+        ana::output_ttreex.setBranch<float>("mW_SD", sd_jet_wo_lep.m());
+
+        // Re-compute nTau to reproduce miniaod
+        // https://github.com/cms-sw/cmssw/blob/CMSSW_8_0_3_patchX/RecoJets/JetProducers/python/nJettinessAdder_cfi.py
+        // https://github.com/cms-sw/cmssw/blob/76f5d38567bfc85949371c5b46d2a597cd2b128e/RecoJets/JetProducers/plugins/NjettinessAdder.cc
+        // https://github.com/cms-sw/cmssw/blob/76f5d38567bfc85949371c5b46d2a597cd2b128e/RecoJets/JetProducers/interface/NjettinessAdder.h
+        fastjet::contrib::Nsubjettiness      nSub1_beta1(1, fastjet::contrib::OnePass_KT_Axes(), fastjet::contrib::NormalizedMeasure(1.0, 0.8));
+        fastjet::contrib::Nsubjettiness      nSub2_beta1(2, fastjet::contrib::OnePass_KT_Axes(), fastjet::contrib::NormalizedMeasure(1.0, 0.8));
+        fastjet::contrib::Nsubjettiness      nSub3_beta1(3, fastjet::contrib::OnePass_KT_Axes(), fastjet::contrib::NormalizedMeasure(1.0, 0.8));
+        fastjet::contrib::NsubjettinessRatio nSub31_beta1(3, 1, fastjet::contrib::OnePass_KT_Axes(), fastjet::contrib::NormalizedMeasure(1.0, 0.8));
+        fastjet::contrib::NsubjettinessRatio nSub32_beta1(3, 2, fastjet::contrib::OnePass_KT_Axes(), fastjet::contrib::NormalizedMeasure(1.0, 0.8));
+        fastjet::contrib::NsubjettinessRatio nSub21_beta1(2, 1, fastjet::contrib::OnePass_KT_Axes(), fastjet::contrib::NormalizedMeasure(1.0, 0.8));
+        float nTau1_wo_lep  = jets_wo_lep.size() > 0 ? nSub1_beta1(jets_wo_lep[0]) : -999;
+        float nTau2_wo_lep  = jets_wo_lep.size() > 0 ? nSub2_beta1(jets_wo_lep[0]) : -999;
+        float nTau3_wo_lep  = jets_wo_lep.size() > 0 ? nSub3_beta1(jets_wo_lep[0]) : -999;
+        float nTau31_wo_lep = jets_wo_lep.size() > 0 ? nSub31_beta1(jets_wo_lep[0]) : -999;
+        float nTau32_wo_lep = jets_wo_lep.size() > 0 ? nSub32_beta1(jets_wo_lep[0]) : -999;
+        float nTau21_wo_lep = jets_wo_lep.size() > 0 ? nSub21_beta1(jets_wo_lep[0]) : -999;
+
+        // Set njettiness
+        ana::output_ttreex.setBranch<float>("W_nJettinessTau1", nTau1_wo_lep);
+        ana::output_ttreex.setBranch<float>("W_nJettinessTau2", nTau2_wo_lep);
+        ana::output_ttreex.setBranch<float>("W_nJettinessTau3", nTau3_wo_lep);
+        ana::output_ttreex.setBranch<float>("W_nJettinessTau31", nTau31_wo_lep);
+        ana::output_ttreex.setBranch<float>("W_nJettinessTau32", nTau32_wo_lep);
+        ana::output_ttreex.setBranch<float>("W_nJettinessTau21", nTau21_wo_lep);
+
+        // Object kinematics
+        ana::output_ttreex.setBranch<float>("ak8_pt0", hww.ak8jets_p4().size() > 0 ? hww.ak8jets_p4()[0].pt() : -999);
+        ana::output_ttreex.setBranch<float>("ak8_pt1", hww.ak8jets_p4().size() > 1 ? hww.ak8jets_p4()[1].pt() : -999);
+        ana::output_ttreex.setBranch<float>("L_pt", hww.L_p4().pt());
+        ana::output_ttreex.setBranch<float>("L_eta", hww.L_p4().eta());
+        ana::output_ttreex.setBranch<float>("L_abseta", fabs(hww.L_p4().eta()));
+        ana::output_ttreex.setBranch<float>("J_pt", hww.J_p4().pt());
+        ana::output_ttreex.setBranch<float>("J_eta", hww.J_p4().eta());
+        ana::output_ttreex.setBranch<float>("H_pt", hww.H_p4().pt());
+        ana::output_ttreex.setBranch<float>("H_eta", hww.H_p4().eta());
+        ana::output_ttreex.setBranch<float>("QQ_pt", hww.QQ_p4().pt());
+        ana::output_ttreex.setBranch<float>("QQ_eta", hww.QQ_p4().eta());
+        ana::output_ttreex.setBranch<float>("V_pt", hww.V_p4().pt());
+        ana::output_ttreex.setBranch<float>("V_eta", hww.V_p4().eta());
+        ana::output_ttreex.setBranch<float>("R_pt", hww.Recoil_p4().pt());
+        ana::output_ttreex.setBranch<float>("R_eta", hww.Recoil_p4().eta());
+        ana::output_ttreex.setBranch<float>("Lmet_pt", hww.Lmet_p4().pt());
+
+        // Lepton property
+        ana::output_ttreex.setBranch<float>("L_sip3d", fabs(hww.L_ip3d() / hww.L_ip3derr()));
+        ana::output_ttreex.setBranch<float>("L_absip3d", fabs(hww.L_ip3d()));
+        ana::output_ttreex.setBranch<float>("L_absdxy", fabs(hww.L_dxy()));
+        ana::output_ttreex.setBranch<float>("L_absdz", fabs(hww.L_dz()));
+
+        // Fat-jet property
+        ana::output_ttreex.setBranch<float>("J_nJettinessTau21", hww.J_nJettinessTau2() / hww.J_nJettinessTau1() );
+        ana::output_ttreex.setBranch<float>("J_nJettinessTau31", hww.J_nJettinessTau3() / hww.J_nJettinessTau1() );
+        ana::output_ttreex.setBranch<float>("J_nJettinessTau32", hww.J_nJettinessTau3() / hww.J_nJettinessTau2() );
+
+        // Masses
+        ana::output_ttreex.setBranch<float>("mQQ", hww.QQ_p4().mass());
+        ana::output_ttreex.setBranch<float>("mV", hww.V_p4().mass());
+        ana::output_ttreex.setBranch<float>("mJ", hww.J_p4().mass());
+        float massh1 = (W_SD_p4 + hww.L_p4() + hww.neu_p4_sol1()).mass();
+        float massh2 = (W_SD_p4 + hww.L_p4() + hww.neu_p4_sol2()).mass();
+        ana::output_ttreex.setBranch<float>("RecoH_max", massh1 > massh2 ? massh1 : massh2);
+        ana::output_ttreex.setBranch<float>("RecoH_min", massh1 > massh2 ? massh2 : massh1);
+
+        // Mass variable from B2G-18-008
+        LV Lv1 = hww.L_p4() + hww.neu_p4_sol1();
+        LV Lv2 = hww.L_p4() + hww.neu_p4_sol2();
+        // float DR1 = RooUtil::Calc::DeltaR(Lv1, hww.QQ_p4());
+        // float DR2 = RooUtil::Calc::DeltaR(Lv2, hww.QQ_p4());
+        // float Pt1 = (Lv1 + hww.QQ_p4()).pt();
+        // float Pt2 = (Lv2 + hww.QQ_p4()).pt();
+        float DR1 = RooUtil::Calc::DeltaR(Lv1, W_SD_p4);
+        float DR2 = RooUtil::Calc::DeltaR(Lv2, W_SD_p4);
+        float Pt1 = (Lv1 + W_SD_p4).pt();
+        float Pt2 = (Lv2 + W_SD_p4).pt();
+        float mD1 = DR1 * Pt1 / 2.;
+        float mD2 = DR2 * Pt2 / 2.;
+        ana::output_ttreex.setBranch<float>("mDmax", mD1 > mD2 ? mD1 : mD2);
+        ana::output_ttreex.setBranch<float>("mDmin", mD1 > mD2 ? mD2 : mD1);
+
+        // Correlations
+        ana::output_ttreex.setBranch<float>("deltaFrac", hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - hww.QQ_p4().pt() / hww.Recoil_p4().pt());
+        ana::output_ttreex.setBranch<float>("deltaFracv2", hww.Lmet_p4().pt() / hww.Recoil_p4().pt() - W_SD_p4.pt() / hww.Recoil_p4().pt());
+        ana::output_ttreex.setBranch<float>("mLW", (hww.L_p4() + W_SD_p4).mass());
+        ana::output_ttreex.setBranch<float>("mRatio", hww.V_p4().mass() / W_p4.mass());
+        ana::output_ttreex.setBranch<float>("mRatio_SD", hww.V_softdropMass() / W_SD_p4.mass());
+        ana::output_ttreex.setBranch<float>("dphiRJ", fabs(RooUtil::Calc::DeltaPhi(hww.Recoil_p4(), hww.J_p4())));
+
+        // Correlations if the subjet exists
+        if (sd_jet_wo_lep.has_pieces())
+        {
+
+            std::vector<fastjet::PseudoJet> sd_jet_wo_lep_pieces = fastjet::sorted_by_pt(sd_jet_wo_lep.pieces());
+
+            LV subjet1 = getLV(sd_jet_wo_lep_pieces[0]);
+            LV subjet2 = getLV(sd_jet_wo_lep_pieces[1]);
+            float m1 = (hww.L_p4() + subjet1).mass();
+            float m2 = (hww.L_p4() + subjet2).mass();
+            float dphi1 = fabs(RooUtil::Calc::DeltaPhi(hww.L_p4(), subjet1));
+            float dphi2 = fabs(RooUtil::Calc::DeltaPhi(hww.L_p4(), subjet2));
+            float deta1 = fabs(RooUtil::Calc::DeltaEta(hww.L_p4(), subjet1));
+            float deta2 = fabs(RooUtil::Calc::DeltaEta(hww.L_p4(), subjet2));
+            float dr1 = fabs(RooUtil::Calc::DeltaR(hww.L_p4(), subjet1));
+            float dr2 = fabs(RooUtil::Calc::DeltaR(hww.L_p4(), subjet2));
+            float lsf1 = hww.L_p4().pt() / subjet1.pt();
+            float lsf2 = hww.L_p4().pt() / subjet2.pt();
+
+            ana::output_ttreex.setBranch<float>("mLsubjet_max", m1 > m2 ? m1 : m2);
+            ana::output_ttreex.setBranch<float>("mLsubjet_min", m1 > m2 ? m2 : m1);
+            ana::output_ttreex.setBranch<float>("dphiLsubjet_max", m1 > m2 ? dphi1 : dphi2);
+            ana::output_ttreex.setBranch<float>("dphiLsubjet_min", m1 > m2 ? dphi2 : dphi1);
+            ana::output_ttreex.setBranch<float>("detaLsubjet_max", m1 > m2 ? deta1 : deta2);
+            ana::output_ttreex.setBranch<float>("detaLsubjet_min", m1 > m2 ? deta2 : deta1);
+            ana::output_ttreex.setBranch<float>("drLsubjet_max", m1 > m2 ? dr1 : dr2);
+            ana::output_ttreex.setBranch<float>("drLsubjet_min", m1 > m2 ? dr2 : dr1);
+
+            ana::output_ttreex.setBranch<float>("LSF1", lsf1);
+            ana::output_ttreex.setBranch<float>("LSF2", lsf2);
+            ana::output_ttreex.setBranch<float>("LSF_max", m1 > m2 ? lsf1 : lsf2);
+            ana::output_ttreex.setBranch<float>("LSF_min", m1 > m2 ? lsf2 : lsf1);
+
+        }
+
+
+        ana::output_ttreex.fill();
+
+    }
+
+}
+
+//_____________________________________________________________________________
+void util::run_study_reclustering()
 {
     if (ana::cutflow.getCut("CutISR400MuMinus").pass)
     {

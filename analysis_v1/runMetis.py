@@ -12,7 +12,7 @@ def main():
     else:
         force = False
 
-    job_tag = "test48_20190308"
+    job_tag = "test55_20190312"
     input_ntup_tag = "HWW2016_v5.0.3"
     base_dir_path = "/hadoop/cms/store/user/phchang/metis/baby/{}/".format(input_ntup_tag)
     tar_files = ["doAnalysis", "setup.sh", "fastjet"]

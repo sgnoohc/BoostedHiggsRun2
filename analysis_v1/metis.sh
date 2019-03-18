@@ -98,10 +98,10 @@ echo ">>> export COREDIR=$PWD/CORE/"
 export COREDIR=$PWD/CORE/
 echo ">>> export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/fastjet/fastjet-install/lib"
 export LD_LIBRARY_PATH=$PWD/fastjet/fastjet-install/lib:$LD_LIBRARY_PATH
-echo ">>> ./doAnalysis -i ${INPUTFILENAMES} -o output.root -n -1 -C -H -T"
+echo ">>> ./doAnalysis -i ${INPUTFILENAMES} -o output.root -n -1 -C -H --make_slim_ttree"
 echo $LD_LIBRARY_PATH
 ldd ./doAnalysis
-./doAnalysis -i ${INPUTFILENAMES} -o output.root -n -1 -C -H -T
+./doAnalysis -i ${INPUTFILENAMES} -o output.root -n -1 -C -H --make_slim_ttree
 
 if [ $? -eq 0 ]; then
     echo "Success"

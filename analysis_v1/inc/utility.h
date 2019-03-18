@@ -44,18 +44,27 @@ namespace util
     // Create a TTreeX object
     RooUtil::TTreeX create_ttreex();
 
+    // Add outputs to the TTreeX object based on the user options
+    void add_ttreex_outputs();
+
     // Add outputs to the TTreeX object for the BDT (either for creating a training set or to evaluate)
     void add_bdt_ttreex_outputs();
 
-    // Add outputs of generic categories for various reasons
-    void add_misc_ttreex_outputs();
+    // Add outputs related to the jet reclustering studies
+    void add_reclustering_study_ttreex_outputs();
+
+    // Add slim ttreex outputs
+    void add_slim_ttreex_outputs();
 
     //
     // Jet clustering related functions
     //
 
-    // Run jet clustering ourselves
-    void run_jet_clustering_study();
+    // Create slim ttree
+    void make_slim_ttree();
+
+    // Do various things related to running jet clustering ourselves in order to study
+    void run_study_reclustering();
 
     // Do clusterinng where the input: particles is a list of Pseudo jets (constituents such as PF or calo clusters etc.)
     fastjet::ClusterSequence cluster_jets(std::vector<fastjet::PseudoJet> particles, double R, fastjet::JetAlgorithm jetalgo=fastjet::antikt_algorithm);
